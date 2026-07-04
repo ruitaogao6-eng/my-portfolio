@@ -4,14 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>工业设计师 · 杨一</title>
-    <!-- Font Awesome 6 (免费版) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== 全局重置 & 变量 ===== */
-        *,
-        *::before,
-        *::after {
+        /* ===== 全局重置 ===== */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -33,10 +31,7 @@
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: var(--font);
             background-color: var(--bg-primary);
@@ -44,17 +39,8 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
 
         .container {
             max-width: 1280px;
@@ -62,7 +48,7 @@
             padding: 0 40px;
         }
 
-        /* ===== 导航栏（无下划线，纯文字加粗 + 固定顶部） ===== */
+        /* ===== 导航栏 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -71,31 +57,17 @@
             z-index: 1000;
             padding: 16px 0;
             background: rgba(248, 246, 243, 0.92);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(232, 228, 222, 0.4);
         }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
 
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
-            letter-spacing: -0.03em;
             color: var(--text-primary);
         }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-wrapper {
-            position: relative;
-        }
+        .logo span { color: var(--accent); }
 
         .nav-links {
             display: flex;
@@ -105,36 +77,26 @@
             font-size: 0.95rem;
         }
 
-        /* ----- 导航链接样式（无下划线，纯文字） ----- */
+        /* ---- 修改点1：导航仅悬停变黑加粗，无任何高亮停留 ---- */
         .nav-links a,
         .dropdown-menu a {
             color: var(--text-secondary);
-            transition: color 0.25s ease, font-weight 0.25s ease;
+            font-weight: 500;
+            transition: color 0.2s, font-weight 0.2s;
             padding: 4px 0;
             cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: 500;
         }
-
-        /* 悬停效果（非激活状态） */
+        /* 悬停时变黑加粗 */
         .nav-links a:hover,
         .dropdown-menu a:hover {
             color: var(--text-primary);
-        }
-
-        /* 激活状态：颜色加深 + 加粗 */
-        .nav-links a.active-link,
-        .dropdown-menu a.active-link {
-            color: var(--text-primary);
             font-weight: 700;
         }
-
-        /* 移除所有下划线 */
+        /* 移除所有下划线和激活样式 */
         .nav-links a::after,
-        .dropdown-menu a::after {
-            display: none !important;
-        }
+        .dropdown-menu a::after { display: none !important; }
+        .nav-links a.active-link,
+        .dropdown-menu a.active-link { color: var(--text-secondary); font-weight: 500; }
 
         /* ===== 下拉菜单（移动端） ===== */
         .hamburger {
@@ -142,31 +104,20 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            padding: 4px;
             background: none;
             border: none;
             z-index: 1001;
         }
-
         .hamburger span {
             display: block;
             width: 26px;
             height: 2px;
             background: var(--text-primary);
-            border-radius: 4px;
             transition: var(--transition);
-            transform-origin: center;
         }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .dropdown-menu {
             display: none;
@@ -182,27 +133,16 @@
             border: 1px solid var(--border-light);
             z-index: 999;
         }
-
-        .dropdown-menu.open {
-            display: block;
-        }
-
+        .dropdown-menu.open { display: block; }
         .dropdown-menu a {
             display: block;
             padding: 12px 28px;
             color: var(--text-secondary);
-            transition: color 0.25s ease, font-weight 0.25s ease;
-            font-size: 0.95rem;
-            cursor: pointer;
             font-weight: 500;
+            font-size: 0.95rem;
         }
-
         .dropdown-menu a:hover {
             background: var(--border-light);
-            color: var(--text-primary);
-        }
-
-        .dropdown-menu a.active-link {
             color: var(--text-primary);
             font-weight: 700;
         }
@@ -210,43 +150,30 @@
         /* ===== Hero ===== */
         .hero {
             padding: 140px 0 80px 0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            min-height: 100vh;
         }
-
         .hero-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
         }
-
         .hero-content h1 {
             font-size: clamp(2.8rem, 6vw, 4.8rem);
             font-weight: 800;
-            letter-spacing: -0.04em;
             line-height: 1.1;
             margin-bottom: 24px;
         }
-
-        .hero-content h1 .highlight {
-            color: var(--accent);
-        }
-
+        .hero-content h1 .highlight { color: var(--accent); }
         .hero-content p {
             font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 480px;
             margin-bottom: 40px;
-            line-height: 1.7;
         }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
         .btn {
             display: inline-block;
@@ -259,26 +186,21 @@
             cursor: pointer;
             background: var(--text-primary);
             color: #fff;
-            text-decoration: none;
         }
-
         .btn-outline {
             background: transparent;
             color: var(--text-primary);
             border: 1.5px solid var(--border-light);
         }
-
         .btn-outline:hover {
             border-color: var(--text-primary);
             background: var(--text-primary);
             color: #fff;
         }
-
         .btn-primary {
             background: var(--accent);
             color: #fff;
         }
-
         .btn-primary:hover {
             background: var(--accent-dark);
             transform: translateY(-2px);
@@ -291,26 +213,20 @@
             justify-content: center;
             align-items: center;
         }
-
         .hero-image .img-placeholder {
             width: 100%;
             aspect-ratio: 1 / 1;
             max-width: 480px;
             border-radius: var(--radius);
             background: linear-gradient(145deg, #e8e4de, #d6d0c8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             box-shadow: var(--shadow-md);
             overflow: hidden;
         }
-
         .hero-image .img-placeholder img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         .floating-badge {
             position: absolute;
             bottom: 10%;
@@ -324,37 +240,24 @@
             gap: 14px;
             font-weight: 600;
             font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-
-        .floating-badge i {
-            font-size: 1.6rem;
-            color: var(--accent);
-        }
+        .floating-badge i { font-size: 1.6rem; color: var(--accent); }
 
         /* ===== 作品集 ===== */
-        .section {
-            padding: 80px 0 100px 0;
-        }
-
+        .section { padding: 80px 0 100px 0; }
         .section-header {
             text-align: center;
             max-width: 640px;
             margin: 0 auto 60px auto;
         }
-
         .section-header h2 {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
             margin-bottom: 12px;
         }
-
-        .section-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; }
 
         .filter-tabs {
             display: flex;
@@ -363,7 +266,6 @@
             flex-wrap: wrap;
             margin-bottom: 48px;
         }
-
         .filter-tabs button {
             padding: 10px 28px;
             border-radius: 60px;
@@ -376,12 +278,10 @@
             transition: var(--transition);
             font-family: var(--font);
         }
-
         .filter-tabs button:hover {
             border-color: var(--text-primary);
             color: var(--text-primary);
         }
-
         .filter-tabs button.active {
             background: var(--text-primary);
             color: #fff;
@@ -393,7 +293,6 @@
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 32px;
         }
-
         .work-item {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -401,36 +300,22 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
             border: 1px solid rgba(232, 228, 222, 0.3);
+            cursor: default; /* 修改点3：移除点击跳转 */
         }
-
-        .work-item:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .work-item a {
-            display: block;
-            text-decoration: none;
-        }
-
+        .work-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
         .work-thumb {
             aspect-ratio: 4 / 3;
             background: #e8e4de;
             overflow: hidden;
             position: relative;
         }
-
         .work-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
-
-        .work-item:hover .work-thumb img {
-            transform: scale(1.04);
-        }
-
+        .work-item:hover .work-thumb img { transform: scale(1.04); }
         .work-thumb .work-overlay {
             position: absolute;
             inset: 0;
@@ -444,21 +329,9 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
-
-        .work-item:hover .work-overlay {
-            opacity: 1;
-        }
-
-        .work-info {
-            padding: 22px 24px 26px;
-        }
-
-        .work-info h3 {
-            font-weight: 700;
-            font-size: 1.15rem;
-            margin-bottom: 4px;
-        }
-
+        .work-item:hover .work-overlay { opacity: 1; }
+        .work-info { padding: 22px 24px 26px; }
+        .work-info h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: 4px; }
         .work-info .tag {
             display: inline-block;
             font-size: 0.75rem;
@@ -479,7 +352,6 @@
             gap: 60px;
             align-items: center;
         }
-
         .about-image .img-placeholder {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -488,27 +360,22 @@
             overflow: hidden;
             box-shadow: var(--shadow-md);
         }
-
         .about-image .img-placeholder img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         .about-text h2 {
             font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
             margin-bottom: 20px;
         }
-
         .about-text p {
             color: var(--text-secondary);
             font-size: 1.05rem;
             margin-bottom: 18px;
             line-height: 1.8;
         }
-
         .about-text .signature {
             font-family: 'Georgia', serif;
             font-size: 1.6rem;
@@ -516,14 +383,12 @@
             margin-top: 8px;
             font-style: italic;
         }
-
         .about-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-top: 32px;
         }
-
         .stat-item {
             background: var(--bg-card);
             padding: 20px 16px;
@@ -532,14 +397,7 @@
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-light);
         }
-
-        .stat-item .number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: block;
-        }
-
+        .stat-item .number { font-size: 1.8rem; font-weight: 800; display: block; }
         .stat-item .label {
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -558,7 +416,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .contact-section::before {
             content: '';
             position: absolute;
@@ -570,7 +427,6 @@
             border-radius: 50%;
             pointer-events: none;
         }
-
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -579,27 +435,18 @@
             position: relative;
             z-index: 1;
         }
-
         .contact-info h2 {
             font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
             margin-bottom: 16px;
         }
-
         .contact-info p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.05rem;
             margin-bottom: 32px;
             max-width: 400px;
         }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
+        .contact-links { display: flex; flex-direction: column; gap: 14px; }
         .contact-links a {
             display: flex;
             align-items: center;
@@ -607,19 +454,9 @@
             color: rgba(255, 255, 255, 0.8);
             transition: var(--transition);
             font-size: 1rem;
-            text-decoration: none;
         }
-
-        .contact-links a:hover {
-            color: #fff;
-            transform: translateX(4px);
-        }
-
-        .contact-links a i {
-            width: 24px;
-            font-size: 1.2rem;
-            color: var(--accent);
-        }
+        .contact-links a:hover { color: #fff; transform: translateX(4px); }
+        .contact-links a i { width: 24px; font-size: 1.2rem; color: var(--accent); }
 
         .contact-form input,
         .contact-form textarea {
@@ -635,24 +472,15 @@
             margin-bottom: 16px;
             backdrop-filter: blur(4px);
         }
-
         .contact-form input::placeholder,
-        .contact-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
+        .contact-form textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
             border-color: var(--accent);
             background: rgba(255, 255, 255, 0.1);
         }
-
-        .contact-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
+        .contact-form textarea { min-height: 120px; resize: vertical; }
         .contact-form .btn {
             background: var(--accent);
             color: #fff;
@@ -664,7 +492,6 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
         .contact-form .btn:hover {
             background: var(--accent-dark);
             transform: translateY(-2px);
@@ -683,26 +510,18 @@
             font-size: 0.9rem;
             color: var(--text-muted);
         }
-
-        .footer-socials {
-            display: flex;
-            gap: 20px;
-        }
-
+        .footer-socials { display: flex; gap: 20px; }
         .footer-socials a {
             color: var(--text-muted);
             transition: all 0.3s ease;
             font-size: 1.3rem;
-            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: transparent;
         }
-
         .footer-socials a:hover {
             color: var(--text-primary);
             background: var(--border-light);
@@ -723,14 +542,10 @@
             justify-content: center;
             align-items: center;
         }
-
-        .qr-modal.open {
-            display: flex;
-        }
-
+        .qr-modal.open { display: flex; }
         .qr-modal-content {
             background: #fff;
-            padding: 40px 40px 35px 40px;
+            padding: 40px;
             border-radius: 24px;
             max-width: 340px;
             width: 90%;
@@ -739,7 +554,6 @@
             animation: qrFadeIn 0.3s ease;
             position: relative;
         }
-
         .qr-modal-content .close-btn {
             position: absolute;
             top: 12px;
@@ -749,175 +563,77 @@
             cursor: pointer;
             background: none;
             border: none;
-            transition: color 0.2s;
         }
-
-        .qr-modal-content .close-btn:hover {
-            color: #333;
-        }
-
-        .qr-modal-content h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-        }
-
-        .qr-modal-content .sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
+        .qr-modal-content .close-btn:hover { color: #333; }
+        .qr-modal-content h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+        .qr-modal-content .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
         .qr-modal-content img {
             width: 200px;
             height: 200px;
             margin: 0 auto 16px;
-            display: block;
             border-radius: 12px;
             border: 1px solid var(--border-light);
         }
-
-        .qr-modal-content .hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
+        .qr-modal-content .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
         @keyframes qrFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.92) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         /* ===== 响应式 ===== */
         @media (max-width: 1024px) {
-            .hero-grid {
-                gap: 40px;
-            }
-            .about-grid {
-                gap: 40px;
-            }
-            .contact-grid {
-                gap: 40px;
-            }
+            .hero-grid { gap: 40px; }
+            .about-grid { gap: 40px; }
+            .contact-grid { gap: 40px; }
         }
-
         @media (max-width: 900px) {
-            .container {
-                padding: 0 24px;
-            }
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-actions {
-                justify-content: center;
-            }
-            .hero-image .img-placeholder {
-                max-width: 360px;
-                margin: 0 auto;
-            }
-            .floating-badge {
-                bottom: 0;
-                right: 10%;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .about-stats {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .contact-info p {
-                max-width: 100%;
-            }
-            .contact-section {
-                padding: 50px 30px;
-            }
+            .container { padding: 0 24px; }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 40px; }
+            .hero-actions { justify-content: center; }
+            .hero-image .img-placeholder { max-width: 360px; margin: 0 auto; }
+            .floating-badge { bottom: 0; right: 10%; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .about-stats { grid-template-columns: repeat(3, 1fr); }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-info p { max-width: 100%; }
+            .contact-section { padding: 50px 30px; }
         }
-
         @media (max-width: 640px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .work-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            .hero {
-                padding: 120px 0 40px 0;
-                min-height: auto;
-            }
-            .floating-badge {
-                display: none;
-            }
-            .footer {
-                flex-direction: column;
-                text-align: center;
-            }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .work-grid { grid-template-columns: 1fr; }
+            .about-stats { grid-template-columns: 1fr 1fr; }
+            .hero { padding: 120px 0 40px 0; min-height: auto; }
+            .floating-badge { display: none; }
+            .footer { flex-direction: column; text-align: center; }
         }
-
         @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
-            }
-            .contact-section {
-                padding: 40px 20px;
-            }
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-            .filter-tabs button {
-                padding: 8px 18px;
-                font-size: 0.8rem;
-            }
+            .container { padding: 0 16px; }
+            .contact-section { padding: 40px 20px; }
+            .about-stats { grid-template-columns: 1fr; }
+            .filter-tabs button { padding: 8px 18px; font-size: 0.8rem; }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- ===== 导航栏（新增首页） ===== -->
+    <!-- ===== 导航栏（仅悬停变黑加粗） ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <div class="nav-wrapper">
                 <ul class="nav-links" id="navLinks">
-                    <li><a data-target="home" class="active-link">首页</a></li>
+                    <li><a data-target="home">首页</a></li>
                     <li><a data-target="work">作品</a></li>
                     <li><a data-target="about">关于</a></li>
                     <li><a data-target="contact">联系</a></li>
                 </ul>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a data-target="home" class="active-link">首页</a>
+                    <a data-target="home">首页</a>
                     <a data-target="work">作品</a>
                     <a data-target="about">关于</a>
                     <a data-target="contact">联系</a>
@@ -945,8 +661,9 @@
                         让每一件作品都成为功能与艺术的平衡。
                     </p>
                     <div class="hero-actions">
-                        <a class="btn btn-primary" data-target="work">查看作品</a>
-                        <a class="btn btn-outline" data-target="contact">合作洽谈</a>
+                        <!-- 修改点2：两个按钮分别跳转到作品和联系 -->
+                        <a class="btn btn-primary" id="goToWork">查看作品</a>
+                        <a class="btn btn-outline" id="goToContact">合作洽谈</a>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -979,82 +696,71 @@
             </div>
 
             <div class="work-grid" id="workGrid">
+                <!-- 修改点3：移除所有 href 链接，作品卡片不再跳转 -->
                 <div class="work-item reveal" data-category="家具">
-                    <a href="detail.html?id=1">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=2" alt="流线椅" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>流线椅</h3>
-                            <span class="tag">家具</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=2" alt="流线椅" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>流线椅</h3>
+                        <span class="tag">家具</span>
+                    </div>
                 </div>
 
                 <div class="work-item reveal" data-category="消费电子">
-                    <a href="detail.html?id=2">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=3" alt="智能音箱" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>智能音箱 · 极光</h3>
-                            <span class="tag">消费电子</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=3" alt="智能音箱" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>智能音箱 · 极光</h3>
+                        <span class="tag">消费电子</span>
+                    </div>
                 </div>
 
                 <div class="work-item reveal" data-category="家居">
-                    <a href="detail.html?id=3">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=4" alt="模块化灯具" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>模块化灯具 · 棱</h3>
-                            <span class="tag">家居</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=4" alt="模块化灯具" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>模块化灯具 · 棱</h3>
+                        <span class="tag">家居</span>
+                    </div>
                 </div>
 
                 <div class="work-item reveal" data-category="概念">
-                    <a href="detail.html?id=4">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=5" alt="未来出行概念" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>未来出行 · 畅想</h3>
-                            <span class="tag">概念</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=5" alt="未来出行概念" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>未来出行 · 畅想</h3>
+                        <span class="tag">概念</span>
+                    </div>
                 </div>
 
                 <div class="work-item reveal" data-category="家具">
-                    <a href="detail.html?id=5">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=6" alt="极简办公桌" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>极简办公桌 · 静</h3>
-                            <span class="tag">家具</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=6" alt="极简办公桌" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>极简办公桌 · 静</h3>
+                        <span class="tag">家具</span>
+                    </div>
                 </div>
 
                 <div class="work-item reveal" data-category="消费电子">
-                    <a href="detail.html?id=6">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=7" alt="便携投影仪" loading="lazy" />
-                            <div class="work-overlay">查看详情 →</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>便携投影仪 · 光羽</h3>
-                            <span class="tag">消费电子</span>
-                        </div>
-                    </a>
+                    <div class="work-thumb">
+                        <img src="https://picsum.photos/600/450?random=7" alt="便携投影仪" loading="lazy" />
+                        <div class="work-overlay">查看详情</div>
+                    </div>
+                    <div class="work-info">
+                        <h3>便携投影仪 · 光羽</h3>
+                        <span class="tag">消费电子</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1161,126 +867,69 @@
         (function() {
             'use strict';
 
-            // ===== 导航交互逻辑（无下划线版 + 新增首页） =====
-            const links = document.querySelectorAll('.nav-links a, .dropdown-menu a');
-            const sections = ['home', 'work', 'about', 'contact'];
+            // ============================================================
+            // 修改点1：导航仅悬停变黑加粗 —— 无需任何 JS，纯 CSS 实现
+            // ============================================================
 
-            // 切换激活项
-            function setActive(targetLink) {
-                // 移除所有 active-link
-                links.forEach(link => link.classList.remove('active-link'));
-                // 目标设为 active-link
-                targetLink.classList.add('active-link');
-            }
-
-            // ----- 点击逻辑 -----
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // 只处理导航链接的点击
-                    if (!this.closest('.nav-links') && !this.closest('.dropdown-menu')) return;
-                    e.preventDefault();
-
-                    if (this.classList.contains('active-link')) return;
-
-                    const targetId = this.getAttribute('data-target');
-
-                    // 1. 立即切换高亮
-                    setActive(this);
-
-                    // 2. 关闭滚动检测干扰（500ms 冷却期）
-                    window._scrollCooldown = true;
-                    setTimeout(() => {
-                        window._scrollCooldown = false;
-                    }, 500);
-
-                    // 3. 关闭移动端菜单
-                    document.getElementById('dropdownMenu').classList.remove('open');
-                    document.getElementById('hamburger').classList.remove('active');
-
-                    // 4. 平滑滚动到目标区域
-                    if (targetId === 'home') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    } else {
-                        const target = document.getElementById(targetId);
-                        if (target) {
-                            const offset = 80;
-                            const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                            window.scrollTo({ top: top, behavior: 'smooth' });
-                        }
-                    }
-                });
+            // ============================================================
+            // 修改点2：两个按钮跳转修正
+            // ============================================================
+            document.getElementById('goToWork').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('work').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
-            // ===== 滚动检测（更新高亮）=====
-            function updateActiveOnScroll() {
-                // 如果处于冷却期，不执行滚动更新
-                if (window._scrollCooldown) return;
+            document.getElementById('goToContact').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
 
-                let current = '';
-                const scrollPos = window.scrollY + 120;
+            // ============================================================
+            // 修改点3：作品卡片点击不跳转 —— 已移除所有 href，无需额外处理
+            // ============================================================
 
-                // 检查 home 区域（页面顶部）
-                if (scrollPos < 300) {
-                    current = 'home';
-                } else {
-                    // 检查其他区域
-                    for (let id of sections) {
-                        if (id === 'home') continue;
-                        const section = document.getElementById(id);
-                        if (section) {
-                            const top = section.offsetTop;
-                            const height = section.offsetHeight;
-                            if (scrollPos >= top && scrollPos < top + height) {
-                                current = id;
-                                break;
-                            }
-                        }
-                    }
-                }
+            // ============================================================
+            // 修改点4：分类筛选 —— 点击后只保留该分类可见，其他隐藏
+            // ============================================================
+            const filterBtns = document.querySelectorAll('.filter-tabs button');
+            const workItems = document.querySelectorAll('.work-item');
 
-                // 如果没有任何区域匹配，默认选中 "home"
-                if (!current) {
-                    current = 'home';
-                }
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 切换按钮激活状态
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
 
-                // 检查当前激活的是否已经正确
-                let currentActive = null;
-                links.forEach(link => {
-                    if (link.classList.contains('active-link')) {
-                        currentActive = link;
-                    }
-                });
+                    const filter = this.dataset.filter;
 
-                // 如果当前没有激活项，或者激活项不对应，则切换
-                if (!currentActive || currentActive.getAttribute('data-target') !== current) {
-                    let targetLink = null;
-                    links.forEach(link => {
-                        if (link.getAttribute('data-target') === current) {
-                            targetLink = link;
+                    workItems.forEach(item => {
+                        const category = item.dataset.category;
+                        if (filter === 'all' || category === filter) {
+                            // 显示匹配项
+                            item.style.display = 'block';
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                            item.style.pointerEvents = 'auto'; // 可交互
+                        } else {
+                            // 隐藏不匹配项
+                            item.style.display = 'none';
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.94)';
+                            item.style.pointerEvents = 'none'; // 不可点击
                         }
                     });
-                    if (targetLink) {
-                        setActive(targetLink);
-                    }
-                }
-            }
-
-            // 监听滚动事件，用 throttle 优化
-            let scrollTimeout;
-            window.addEventListener('scroll', function() {
-                if (scrollTimeout) return;
-                scrollTimeout = setTimeout(() => {
-                    updateActiveOnScroll();
-                    scrollTimeout = null;
-                }, 80);
+                });
             });
 
-            // 页面加载完成后执行一次
-            window.addEventListener('load', function() {
-                setTimeout(updateActiveOnScroll, 150);
+            // 初始化：全部可见
+            workItems.forEach(item => {
+                item.style.display = 'block';
+                item.style.pointerEvents = 'auto';
             });
 
-            // ===== 汉堡菜单 =====
+            // ============================================================
+            // 汉堡菜单（移动端）
+            // ============================================================
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -1297,40 +946,25 @@
                 }
             });
 
-            // ===== 作品筛选 =====
-            const filterBtns = document.querySelectorAll('.filter-tabs button');
-            const workItems = document.querySelectorAll('.work-item');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.dataset.filter;
-                    workItems.forEach(item => {
-                        const category = item.dataset.category;
-                        if (filter === 'all' || category === filter) {
-                            item.style.display = 'block';
-                            setTimeout(() => {
-                                item.style.opacity = '1';
-                                item.style.transform = 'scale(1)';
-                            }, 80);
-                        } else {
-                            item.style.opacity = '0';
-                            item.style.transform = 'scale(0.94)';
-                            setTimeout(() => {
-                                item.style.display = 'none';
-                            }, 300);
-                        }
-                    });
+            // 导航点击：平滑滚动到对应区域 + 关闭移动端菜单
+            document.querySelectorAll('.nav-links a, .dropdown-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                    dropdownMenu.classList.remove('open');
+                    hamburger.classList.remove('active');
                 });
             });
 
-            workItems.forEach(item => {
-                item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            });
-
-            // ===== 滚动动画 =====
+            // ============================================================
+            // 滚动动画（作品卡片入场）
+            // ============================================================
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1342,7 +976,9 @@
 
             revealElements.forEach(el => revealObserver.observe(el));
 
-            // ===== 微信二维码弹窗 =====
+            // ============================================================
+            // 微信二维码弹窗
+            // ============================================================
             const modal = document.getElementById('wechatModal');
             const wechatBtn = document.getElementById('wechatBtn');
             const closeBtn = document.getElementById('qrCloseBtn');
@@ -1359,20 +995,16 @@
 
             wechatBtn.addEventListener('click', openModal);
             closeBtn.addEventListener('click', closeModal);
-
             modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
-                }
+                if (e.target === modal) closeModal();
             });
-
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
+                if (e.key === 'Escape') closeModal();
             });
 
-            // ===== 表单提交 =====
+            // ============================================================
+            // 表单提交
+            // ============================================================
             const contactForm = document.getElementById('contactForm');
             contactForm.addEventListener('submit', function(e) {
                 const action = this.getAttribute('action');
@@ -1391,5 +1023,6 @@
 
         })();
     </script>
+
 </body>
 </html>
