@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航交互测试</title>
+    <style>
+        body {
+            padding: 100px 40px;
+            font-family: system-ui, sans-serif;
+        }
+        .test-nav {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            padding: 0;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+        .test-nav a {
+            position: relative;
+            text-decoration: none;
+            color: #555;
+            padding: 4px 0;
+            cursor: pointer;
+        }
+        .test-nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 3px;
+            background: #c7a17a;
+            transition: width 0.3s ease;
+        }
+        /* 悬停滑入 */
+        .test-nav a.hover-in::after {
+            width: 100% !important;
+        }
+        /* 悬停滑出 */
+        .test-nav a.hover-out::after {
+            width: 0 !important;
+            transition: width 0.3s ease;
+        }
+        /* 激活固定 */
+        .test-nav a.active-link::after {
+            width: 100% !important;
+            transition: none !important;
+        }
+        .test-nav a.active-link {
+            color: #000;
+        }
+        .info {
+            margin-top: 50px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .info p { margin: 4px 0; }
+        .info .active-log { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>🧪 导航交互测试</h2>
+    <p style="color: #666; margin-bottom: 24px;">请测试悬停和点击行为，观察下方的状态日志。</p>
+
+    <ul class="test-nav" id="testNav">
+        <li><a data-target="work" class="active-link">作品</a></li>
+        <li><a data-target="about">关于</a></li>
+        <li><a data-target="contact">联系</a></li>
+    </ul>
+
+    <div class="info" id="statusLog">
+        <p>📌 当前激活：<span class="active-log" id="currentActive">作品</span></p>
+        <p>🖱️ 上次操作：<span id="lastAction">无</span></p>
+    </div>
+
+    <script>
+        (function() {
+            const links = document.querySelectorAll('.test-nav a');
+            const activeLog = document.getElementById('currentActive');
+            const actionLog = document.getElementById('lastAction');
+
+            // 更新日志
+            function updateLog(activeText, action) {
+                activeLog.textContent = activeText;
+                if (action) actionLog.textContent = action;
+            }
+
+            // 清除所有状态（保留 active-link）
+            function clearAllStates() {
+                links.forEach(link => {
+                    link.classList.remove('hover-in', 'hover-out');
+                });
+            }
+
+            // 切换激活
+            function setActive(targetLink) {
+                // 移除旧的 active
+                links.forEach(link => link.classList.remove('active-link'));
+                // 目标设为 active
+                targetLink.classList.add('active-link');
+                // 清除悬停状态
+                targetLink.classList.remove('hover-in', 'hover-out');
+                clearAllStates();
+                updateLog(targetLink.textContent, '点击切换 → ' + targetLink.textContent);
+            }
+
+            // ----- 悬停逻辑 -----
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('active-link')) {
+                        this.classList.remove('hover-out');
+                        this.classList.add('hover-in');
+                        actionLog.textContent = '悬停移入 → ' + this.textContent;
+                    } else {
+                        actionLog.textContent = '悬停激活项（无变化）';
+                    }
+                });
+
+                link.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('active-link')) {
+                        this.classList.remove('hover-in');
+                        this.classList.add('hover-out');
+                        actionLog.textContent = '悬停移出 → ' + this.textContent;
+                    }
+                });
+            });
+
+            // ----- 点击逻辑 -----
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (this.classList.contains('active-link')) {
+                        actionLog.textContent = '点击当前激活项（无变化）';
+                        return;
+                    }
+                    setActive(this);
+                });
+            });
+
+            // 初始状态：作品激活
+            const initial = document.querySelector('.test-nav a[data-target="work"]');
+            if (initial) setActive(initial);
+
+            // 额外：点击页面空白清除悬停日志（方便观察）
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.test-nav')) {
+                    // 不清理悬停状态，只是日志提醒
+                    actionLog.textContent = '点击外部，悬停状态保持不变';
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
