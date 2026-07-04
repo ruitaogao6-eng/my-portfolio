@@ -7,79 +7,398 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         :root {
-            --bg-primary: #f8f6f3; --bg-card: #ffffff; --text-primary: #1c1c1c;
-            --text-secondary: #5a5a5a; --text-muted: #8a8a8a; --accent: #c7a17a;
-            --accent-dark: #a88462; --border-light: #e8e4de; --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
-            --shadow-md: 0 12px 40px rgba(0,0,0,0.07); --radius: 20px;
-            --transition: 0.25s ease; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --bg-primary: #f8f6f3;
+            --bg-card: #ffffff;
+            --text-primary: #1c1c1c;
+            --text-secondary: #5a5a5a;
+            --text-muted: #8a8a8a;
+            --accent: #c7a17a;
+            --accent-dark: #a88462;
+            --border-light: #e8e4de;
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
+            --radius: 20px;
+            --transition: 0.25s ease;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        body { font-family: var(--font); background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; height: auto; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 40px; }
+        body {
+            font-family: var(--font);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
 
-        /* ===== 导航 ===== */
+        /* ===== 导航（与首页一致） ===== */
         .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            padding: 12px 0; background: rgba(248,246,243,0.92);
-            backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,228,222,0.4);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 12px 0;
+            background: rgba(248, 246, 243, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
         }
-        .navbar .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); }
-        .logo span { color: var(--accent); }
+        .navbar .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        .logo span {
+            color: var(--accent);
+        }
         .nav-links {
-            display: flex; gap: 28px; list-style: none; font-weight: 500; font-size: 0.95rem; align-items: center;
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
         }
-        .nav-links a { color: var(--text-secondary); font-weight: 500; transition: color 0.2s; padding: 4px 0; }
-        .nav-links a:hover { color: var(--text-primary); font-weight: 700; }
-        .nav-links a::after { display: none !important; }
-
-        .detail-hero { padding: 120px 0 40px 0; }
-        .detail-hero img { width: 100%; max-height: 500px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow-md); }
-        .detail-content { padding: 30px 0 80px 0; }
-        .detail-content h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
-        .detail-content .meta { display: flex; gap: 24px; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; flex-wrap: wrap; }
-        .detail-content .meta span { display: flex; align-items: center; gap: 6px; }
-        .detail-content .desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 720px; margin-bottom: 40px; line-height: 1.9; }
-        .detail-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
-        .detail-gallery img { width: 100%; border-radius: 16px; box-shadow: var(--shadow-sm); }
-
-        .detail-nav-bottom {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-top: 40px; margin-top: 40px; border-top: 1px solid var(--border-light);
+        .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 4px 0;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
         }
-        .detail-nav-bottom a { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-        .detail-nav-bottom a:hover { color: var(--text-primary); }
-        .detail-nav-bottom a.disabled { opacity: 0.3; pointer-events: none; cursor: default; }
-        .detail-nav-bottom .back-link { color: var(--text-muted); font-weight: 400; }
-        .detail-nav-bottom .back-link:hover { color: var(--text-secondary); }
+        .nav-links a:hover {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .nav-links a::after {
+            display: none !important;
+        }
+        .phone-number {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: default;
+        }
+        .phone-number a {
+            color: inherit;
+            text-decoration: none;
+            cursor: default;
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .phone-number a {
+                cursor: pointer;
+                pointer-events: auto;
+            }
+        }
+        .lang-switch {
+            background: none;
+            border: 1.5px solid var(--border-light);
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+            background: transparent;
+            white-space: nowrap;
+        }
+        .lang-switch:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
 
+        /* ===== 返回全部作品按钮（固定在导航下方） ===== */
+        .sub-navbar {
+            position: fixed;
+            top: 68px;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .sub-navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        .sub-navbar .back-link {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sub-navbar .back-link:hover {
+            color: var(--text-primary);
+        }
+        .sub-navbar .back-link i {
+            font-size: 0.8rem;
+        }
+
+        /* ===== 详情内容 ===== */
+        .detail-hero {
+            padding: 160px 0 40px 0;
+        }
+        .detail-hero img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+        .detail-content {
+            padding: 30px 0 80px 0;
+        }
+        .detail-content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+        .detail-content .meta {
+            display: flex;
+            gap: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .detail-content .meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .detail-content .desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin-bottom: 40px;
+            line-height: 1.9;
+        }
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .detail-gallery img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            padding: 40px 0 30px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .footer-socials a:hover {
+            color: var(--text-primary);
+            background: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 24px;
+            }
+            .sub-navbar .container {
+                padding: 0 24px;
+            }
+            .navbar .container {
+                padding: 0 24px;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar .container {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-links {
+                gap: 16px;
+                font-size: 0.85rem;
+            }
+            .phone-number {
+                font-size: 0.8rem;
+            }
+        }
         @media (max-width: 640px) {
-            .container { padding: 0 20px; }
-            .detail-content h1 { font-size: 2rem; }
-            .detail-gallery { grid-template-columns: 1fr; }
-            .detail-hero { padding: 100px 0 20px 0; }
-            .nav-links { display: none; }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .detail-content h1 {
+                font-size: 2rem;
+            }
+            .detail-gallery {
+                grid-template-columns: 1fr;
+            }
+            .detail-hero {
+                padding: 200px 0 20px 0;
+            }
+            .sub-navbar {
+                top: 60px;
+                padding: 8px 0;
+            }
+            .sub-navbar .back-link {
+                font-size: 0.8rem;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
         }
-        @media (max-width: 900px) { .navbar .container { padding: 0 24px; } }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(248, 246, 243, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 16px 0;
+            min-width: 180px;
+            border: 1px solid var(--border-light);
+            z-index: 999;
+        }
+        .dropdown-menu.open {
+            display: block;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 28px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .dropdown-menu a:hover {
+            background: var(--border-light);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ===== 导航 ===== -->
-    <nav class="navbar">
+    <!-- ===== 导航（与首页一致） ===== -->
+    <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">首页</a></li>
                 <li><a href="index.html#work">作品</a></li>
                 <li><a href="index.html#about">关于</a></li>
                 <li><a href="index.html#contact">联系</a></li>
+                <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
+                <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
+            <button class="hamburger" id="hamburger" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- ===== 返回全部作品按钮 ===== -->
+    <div class="sub-navbar" id="subNavbar">
+        <div class="container">
+            <a href="category.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
+            <span style="font-size:0.8rem;color:var(--text-muted);" id="detailCounter"></span>
+        </div>
+    </div>
 
     <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
@@ -103,14 +422,19 @@
                 <img src="https://picsum.photos/600/400?random=11" alt="细节1" loading="lazy" />
                 <img src="https://picsum.photos/600/400?random=12" alt="细节2" loading="lazy" />
             </div>
-
-            <div class="detail-nav-bottom">
-                <a href="#" id="bottomPrevLink"><i class="fas fa-chevron-left"></i> 上一篇</a>
-                <a href="index.html#work" class="back-link"><i class="fas fa-th"></i> 全部作品</a>
-                <a href="#" id="bottomNextLink">下一篇 <i class="fas fa-chevron-right"></i></a>
-            </div>
         </div>
     </section>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="footer container">
+        <span>&copy; 2026 杨一 · 工业设计</span>
+        <div class="footer-socials">
+            <a href="javascript:void(0)" id="wechatBtn" aria-label="微信"><i class="fab fa-weixin"></i></a>
+            <a href="https://www.douyin.com/your-id" target="_blank" aria-label="抖音"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.xiaohongshu.com/your-id" target="_blank" aria-label="小红书"><i class="fas fa-pen-fancy"></i></a>
+            <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站"><i class="fab fa-bilibili"></i></a>
+        </div>
+    </footer>
 
     <script>
         (function() {
@@ -120,17 +444,26 @@
                 3: { title: '模块化灯具 · 棱', category: '家居', desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。', mainImg: 'https://picsum.photos/1200/600?random=22' },
                 4: { title: '未来出行 · 畅想', category: '概念', desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。', mainImg: 'https://picsum.photos/1200/600?random=23' },
                 5: { title: '极简办公桌 · 静', category: '家具', desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。', mainImg: 'https://picsum.photos/1200/600?random=24' },
-                6: { title: '便携投影仪 · 光羽', category: '消费电子', desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。', mainImg: 'https://picsum.photos/1200/600?random=25' }
+                6: { title: '便携投影仪 · 光羽', category: '消费电子', desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。', mainImg: 'https://picsum.photos/1200/600?random=25' },
+                7: { title: '悬浮台灯 · 云影', category: '家居', desc: '悬浮台灯以磁悬浮技术为核心，灯体悬浮于底座之上，营造出轻盈而梦幻的光影效果。', mainImg: 'https://picsum.photos/1200/600?random=33' },
+                8: { title: '模块化置物架 · 叠', category: '概念', desc: '叠系列置物架采用模块化设计，可根据空间需求自由组合，材质为再生竹与金属，兼顾环保与结构美感。', mainImg: 'https://picsum.photos/1200/600?random=34' },
+                9: { title: '竹编灯具 · 织', category: '家居', desc: '织灯具以传统竹编工艺为灵感，将自然光影与现代照明技术结合，营造温暖而富有层次的空间氛围。', mainImg: 'https://picsum.photos/1200/600?random=35' },
+                10: { title: '折叠自行车 · 翼', category: '概念', desc: '翼折叠自行车以轻量化碳纤维打造，折叠后可轻松携带，适合城市通勤与短途旅行。', mainImg: 'https://picsum.photos/1200/600?random=36' },
+                11: { title: '陶瓷茶具 · 山韵', category: '家居', desc: '山韵茶具以传统陶瓷工艺结合现代极简设计，每一件都是手工制作，呈现自然质朴的质感。', mainImg: 'https://picsum.photos/1200/600?random=37' },
+                12: { title: '智能手环 · 隐', category: '消费电子', desc: '隐智能手环以极简无屏设计，通过触控与震动反馈交互，全天候健康监测，佩戴如无物。', mainImg: 'https://picsum.photos/1200/600?random=38' },
+                13: { title: '模块化插座 · 集', category: '家具', desc: '集插座系统以模块化设计，可自由组合电源与数据接口，适配不同场景需求，材质为再生塑料与铝合金。', mainImg: 'https://picsum.photos/1200/600?random=39' },
+                14: { title: '便携水壶 · 流', category: '概念', desc: '流水壶以极简曲线设计，采用食品级硅胶与不锈钢，可折叠收纳，适合户外出行。', mainImg: 'https://picsum.photos/1200/600?random=40' },
+                15: { title: '木质时钟 · 晷', category: '家居', desc: '晷时钟以实木与黄铜打造，指针缓慢移动，在光影中感受时间的流动，既是时钟也是雕塑。', mainImg: 'https://picsum.photos/1200/600?random=41' },
+                16: { title: '无线充电器 · 浮', category: '消费电子', desc: '浮无线充电器采用磁吸悬浮设计，设备充电时可悬停于空中，兼具科技感与实用性。', mainImg: 'https://picsum.photos/1200/600?random=42' },
+                17: { title: '收纳系统 · 方', category: '家具', desc: '方收纳系统以模块化网格设计，可根据空间自由组合，材质为再生纸浆与金属框架。', mainImg: 'https://picsum.photos/1200/600?random=43' },
+                18: { title: '空气净化器 · 净', category: '消费电子', desc: '净空气净化器以极简柱状设计，360°进风与出风，高效过滤PM2.5与甲醛，低噪运行。', mainImg: 'https://picsum.photos/1200/600?random=44' },
+                19: { title: '餐桌 · 合', category: '家具', desc: '合餐桌以实木与金属结合，可伸缩设计满足不同人数用餐需求，线条简洁优雅。', mainImg: 'https://picsum.photos/1200/600?random=45' },
+                20: { title: '灯具 · 光晕', category: '家居', desc: '光晕灯具以亚克力与LED结合，光线均匀柔和，适合多种空间氛围，简约而不简单。', mainImg: 'https://picsum.photos/1200/600?random=46' }
             };
 
-            const ids = Object.keys(projectData).map(Number);
-            const total = ids.length;
             const params = new URLSearchParams(window.location.search);
             let currentId = parseInt(params.get('id')) || 1;
             if (!projectData[currentId]) currentId = 1;
-            const currentIndex = ids.indexOf(currentId);
-            const prevId = currentIndex > 0 ? ids[currentIndex - 1] : null;
-            const nextId = currentIndex < total - 1 ? ids[currentIndex + 1] : null;
 
             function renderProject(id) {
                 const data = projectData[id];
@@ -139,36 +472,16 @@
                 document.getElementById('detailCategory').textContent = data.category;
                 document.getElementById('detailDesc').textContent = data.desc;
                 document.getElementById('detailMainImg').src = data.mainImg;
-                const newUrl = window.location.pathname + '?id=' + id;
-                window.history.pushState({ id: id }, '', newUrl);
-                updateNavButtons(id);
+                // 更新计数器
+                const total = Object.keys(projectData).length;
+                const idx = Object.keys(projectData).indexOf(String(id));
+                document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
             }
-
-            function updateNavButtons(id) {
-                const idx = ids.indexOf(id);
-                const hasPrev = idx > 0;
-                const hasNext = idx < total - 1;
-                [document.getElementById('bottomPrevLink'), document.getElementById('bottomNextLink')].forEach(el => {
-                    el.classList.remove('disabled');
-                });
-                document.getElementById('bottomPrevLink').classList.toggle('disabled', !hasPrev);
-                document.getElementById('bottomNextLink').classList.toggle('disabled', !hasNext);
-                document.getElementById('bottomPrevLink').onclick = function(e) { e.preventDefault(); if (hasPrev) goToPrev(); };
-                document.getElementById('bottomNextLink').onclick = function(e) { e.preventDefault(); if (hasNext) goToNext(); };
-            }
-
-            function goToPrev() { if (prevId !== null) { currentId = prevId;
-                    renderProject(currentId); } }
-
-            function goToNext() { if (nextId !== null) { currentId = nextId;
-                    renderProject(currentId); } }
 
             renderProject(currentId);
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft') { e.preventDefault();
-                    goToPrev(); } else if (e.key === 'ArrowRight') { e.preventDefault();
-                    goToNext(); }
-            });
+
+            // 记录当前id到localStorage，供二级界面“上一步”使用
+            localStorage.setItem('lastDetailId', currentId);
         })();
     </script>
 </body>
