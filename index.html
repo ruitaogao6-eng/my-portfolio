@@ -126,7 +126,10 @@
             border-radius: 2px;
         }
 
-        .nav-links a:hover::after,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .nav-links a.active::after {
             width: 100%;
         }
@@ -200,12 +203,12 @@
             color: var(--text-primary);
         }
 
-        /* ===== Hero - 修改点1：大幅缩小间距 ===== */
+        /* ===== Hero - 修改点1：恢复第一版间距 ===== */
         .hero {
-            padding: 80px 0 30px 0;
+            padding: 140px 0 80px 0;
             display: flex;
             align-items: center;
-            min-height: 80vh;
+            min-height: 100vh;
         }
 
         .hero-grid {
@@ -220,7 +223,7 @@
             font-weight: 800;
             letter-spacing: -0.04em;
             line-height: 1.1;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .hero-content h1 .highlight {
@@ -228,10 +231,10 @@
         }
 
         .hero-content p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 480px;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
             line-height: 1.7;
         }
 
@@ -243,7 +246,7 @@
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 14px 34px;
             border-radius: 60px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -288,7 +291,7 @@
         .hero-image .img-placeholder {
             width: 100%;
             aspect-ratio: 1 / 1;
-            max-width: 440px;
+            max-width: 480px;
             border-radius: var(--radius);
             background: linear-gradient(145deg, #e8e4de, #d6d0c8);
             display: flex;
@@ -306,47 +309,47 @@
 
         .floating-badge {
             position: absolute;
-            bottom: 5%;
+            bottom: 10%;
             right: 0;
             background: rgba(255, 255, 255, 0.85);
-            padding: 14px 22px;
+            padding: 16px 24px;
             border-radius: 16px;
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(8px);
         }
 
         .floating-badge i {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--accent);
         }
 
-        /* ===== 作品集 - 修改点1：缩小间距 ===== */
+        /* ===== 作品集 - 修改点1：恢复第一版间距 ===== */
         .section {
-            padding: 30px 0 50px 0;
+            padding: 80px 0 100px 0;
         }
 
         .section-header {
             text-align: center;
             max-width: 640px;
-            margin: 0 auto 30px auto;
+            margin: 0 auto 60px auto;
         }
 
         .section-header h2 {
-            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .section-header p {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .filter-tabs {
@@ -354,16 +357,16 @@
             justify-content: center;
             gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 30px;
+            margin-bottom: 48px;
         }
 
         .filter-tabs button {
-            padding: 8px 24px;
+            padding: 10px 28px;
             border-radius: 60px;
             border: 1.5px solid var(--border-light);
             background: transparent;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
@@ -383,8 +386,8 @@
 
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
         }
 
         .work-item {
@@ -397,7 +400,7 @@
         }
 
         .work-item:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-md);
         }
 
@@ -443,18 +446,18 @@
         }
 
         .work-info {
-            padding: 18px 22px 22px;
+            padding: 22px 24px 26px;
         }
 
         .work-info h3 {
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             margin-bottom: 4px;
         }
 
         .work-info .tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.06em;
@@ -462,14 +465,14 @@
             background: rgba(199, 161, 122, 0.12);
             padding: 4px 14px;
             border-radius: 40px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* ===== 关于我 ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
         }
 
@@ -489,37 +492,37 @@
         }
 
         .about-text h2 {
-            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .about-text p {
             color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 14px;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
             line-height: 1.8;
         }
 
         .about-text .signature {
             font-family: 'Georgia', serif;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--accent);
-            margin-top: 6px;
+            margin-top: 8px;
             font-style: italic;
         }
 
         .about-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 26px;
+            gap: 16px;
+            margin-top: 32px;
         }
 
         .stat-item {
             background: var(--bg-card);
-            padding: 16px 14px;
+            padding: 20px 16px;
             border-radius: 16px;
             text-align: center;
             box-shadow: var(--shadow-sm);
@@ -527,14 +530,14 @@
         }
 
         .stat-item .number {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: var(--text-primary);
             display: block;
         }
 
         .stat-item .label {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -546,7 +549,7 @@
             background: var(--text-primary);
             color: #fff;
             border-radius: var(--radius);
-            padding: 60px 50px;
+            padding: 80px 60px;
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
@@ -567,30 +570,30 @@
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
             position: relative;
             z-index: 1;
         }
 
         .contact-info h2 {
-            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .contact-info p {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
-            margin-bottom: 28px;
+            font-size: 1.05rem;
+            margin-bottom: 32px;
             max-width: 400px;
         }
 
         .contact-links {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .contact-links a {
@@ -599,7 +602,7 @@
             gap: 14px;
             color: rgba(255, 255, 255, 0.8);
             transition: var(--transition);
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-decoration: none;
         }
 
@@ -609,23 +612,23 @@
         }
 
         .contact-links a i {
-            width: 22px;
-            font-size: 1.1rem;
+            width: 24px;
+            font-size: 1.2rem;
             color: var(--accent);
         }
 
         .contact-form input,
         .contact-form textarea {
             width: 100%;
-            padding: 14px 18px;
+            padding: 16px 20px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.06);
             color: #fff;
             font-family: var(--font);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: var(--transition);
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             backdrop-filter: blur(4px);
         }
 
@@ -642,7 +645,7 @@
         }
 
         .contact-form textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
@@ -650,7 +653,7 @@
             background: var(--accent);
             color: #fff;
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border-radius: 12px;
             font-weight: 600;
             border: none;
@@ -664,34 +667,34 @@
             box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
         }
 
-        /* ===== 页脚 - 修改点2：底部图标优化 ===== */
+        /* ===== 页脚 ===== */
         .footer {
-            padding: 32px 0 26px;
+            padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 16px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
 
         .footer-socials {
             display: flex;
-            gap: 16px;
+            gap: 20px;
         }
 
         .footer-socials a {
             color: var(--text-muted);
             transition: all 0.3s ease;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: transparent;
         }
@@ -723,9 +726,9 @@
 
         .qr-modal-content {
             background: #fff;
-            padding: 32px 32px 28px 32px;
+            padding: 40px 40px 35px 40px;
             border-radius: 24px;
-            max-width: 320px;
+            max-width: 340px;
             width: 90%;
             text-align: center;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
@@ -735,9 +738,9 @@
 
         .qr-modal-content .close-btn {
             position: absolute;
-            top: 10px;
-            right: 16px;
-            font-size: 22px;
+            top: 12px;
+            right: 18px;
+            font-size: 24px;
             color: #999;
             cursor: pointer;
             background: none;
@@ -750,31 +753,31 @@
         }
 
         .qr-modal-content h3 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .qr-modal-content .sub {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .qr-modal-content img {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 14px;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 16px;
             display: block;
             border-radius: 12px;
             border: 1px solid var(--border-light);
         }
 
         .qr-modal-content .hint {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         @keyframes qrFadeIn {
@@ -817,7 +820,7 @@
                 justify-content: center;
             }
             .hero-image .img-placeholder {
-                max-width: 340px;
+                max-width: 360px;
                 margin: 0 auto;
             }
             .floating-badge {
@@ -838,7 +841,7 @@
                 max-width: 100%;
             }
             .contact-section {
-                padding: 40px 28px;
+                padding: 50px 30px;
             }
         }
 
@@ -856,7 +859,7 @@
                 grid-template-columns: 1fr 1fr;
             }
             .hero {
-                padding: 100px 0 30px 0;
+                padding: 120px 0 40px 0;
                 min-height: auto;
             }
             .floating-badge {
@@ -866,9 +869,6 @@
                 flex-direction: column;
                 text-align: center;
             }
-            .section {
-                padding: 20px 0 30px 0;
-            }
         }
 
         @media (max-width: 480px) {
@@ -876,14 +876,14 @@
                 padding: 0 16px;
             }
             .contact-section {
-                padding: 30px 18px;
+                padding: 40px 20px;
             }
             .about-stats {
                 grid-template-columns: 1fr;
             }
             .filter-tabs button {
-                padding: 6px 16px;
-                font-size: 0.75rem;
+                padding: 8px 18px;
+                font-size: 0.8rem;
             }
         }
 
@@ -1129,15 +1129,15 @@
             <a href="javascript:void(0)" id="wechatBtn" aria-label="微信">
                 <i class="fab fa-weixin"></i>
             </a>
-            <!-- 2. 小红书 → 用 fa-pen-fancy 替代（您也可以换成自己的SVG） -->
+            <!-- 2. 小红书 -->
             <a href="https://www.xiaohongshu.com/your-id" target="_blank" aria-label="小红书">
                 <i class="fas fa-pen-fancy"></i>
             </a>
-            <!-- 3. B站 → 用 fa-tv 替代（您也可以换成自己的SVG） -->
+            <!-- 3. B站 -->
             <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站">
                 <i class="fas fa-tv"></i>
             </a>
-            <!-- 4. 普象网 → 用 fa-cube 保持（您也可以换成自己的SVG） -->
+            <!-- 4. 普象网 -->
             <a href="https://www.puxiang.com/your-id" target="_blank" aria-label="普象网">
                 <i class="fas fa-cube"></i>
             </a>
@@ -1196,7 +1196,7 @@
                 }
             });
 
-            // ===== 导航高亮 =====
+            // ===== 修改点2：修复导航高亮（确保所有导航元素都识别正确） =====
             const sections = ['work', 'about', 'contact'];
             const navAnchors = document.querySelectorAll('.nav-links a, .dropdown-menu a');
 
@@ -1215,11 +1215,23 @@
                 });
                 navAnchors.forEach(anchor => {
                     anchor.classList.remove('active');
+                    // 精确匹配 data-target 属性与当前滚动位置
                     if (anchor.getAttribute('data-target') === current) {
                         anchor.classList.add('active');
                     }
                 });
             }
+
+            // 增加对点击导航链接后强制高亮的处理
+            document.querySelectorAll('[data-target]').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    // 点击后立即更新高亮
+                    const targetId = this.getAttribute('data-target');
+                    setTimeout(() => {
+                        updateActiveLink();
+                    }, 100);
+                });
+            });
 
             window.addEventListener('scroll', updateActiveLink);
             window.addEventListener('load', updateActiveLink);
