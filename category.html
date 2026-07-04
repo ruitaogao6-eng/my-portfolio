@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全部作品 · 杨一</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* 复用主页样式，只做必要修改 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #f8f6f3; --bg-card: #ffffff; --text-primary: #1c1c1c;
+            --text-secondary: #5a5a5a; --text-muted: #8a8a8a; --accent: #c7a17a;
+            --accent-dark: #a88462; --border-light: #e8e4de; --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
+            --shadow-md: 0 12px 40px rgba(0,0,0,0.07); --radius: 20px;
+            --transition: 0.25s ease; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body { font-family: var(--font); background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+        /* ===== 导航（与主页一致，简化版） ===== */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 12px 0; background: rgba(248,246,243,0.92);
+            backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,228,222,0.4);
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); }
+        .logo span { color: var(--accent); }
+        .nav-links {
+            display: flex; gap: 28px; list-style: none; font-weight: 500; font-size: 0.95rem; align-items: center;
+        }
+        .nav-links a { color: var(--text-secondary); font-weight: 500; transition: color 0.2s; padding: 4px 0; }
+        .nav-links a:hover { color: var(--text-primary); font-weight: 700; }
+        .nav-links a::after { display: none !important; }
+        .back-home { color: var(--text-secondary); font-size: 0.9rem; }
+        .back-home:hover { color: var(--text-primary); }
+
+        /* ===== 分类 ===== */
+        .section { padding: 100px 0 60px 0; }
+        .section-header { text-align: center; max-width: 640px; margin: 0 auto 40px auto; }
+        .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 12px; }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; }
+
+        .filter-tabs {
+            display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 48px;
+        }
+        .filter-tabs button {
+            background: transparent; border: none; font-family: var(--font); font-size: 1rem;
+            font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 8px; padding: 4px 8px;
+        }
+        .filter-tabs button .num {
+            display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px;
+            border-radius: 50%; background: var(--border-light); color: var(--text-secondary);
+            font-size: 0.75rem; font-weight: 600; transition: var(--transition);
+        }
+        .filter-tabs button.active { color: var(--text-primary); font-weight: 700; }
+        .filter-tabs button.active .num { background: var(--accent); color: #fff; }
+        .filter-tabs button:hover .num { background: var(--accent); color: #fff; }
+
+        .work-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px;
+        }
+        .work-item {
+            background: var(--bg-card); border-radius: var(--radius); overflow: hidden;
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+            border: 1px solid rgba(232,228,222,0.3);
+        }
+        .work-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+        .work-item a { display: block; }
+        .work-thumb { aspect-ratio: 4/3; background: #e8e4de; overflow: hidden; position: relative; }
+        .work-thumb img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .work-item:hover .work-thumb img { transform: scale(1.04); }
+        .work-thumb .work-overlay {
+            position: absolute; inset: 0; background: rgba(28,28,28,0.3); opacity: 0;
+            transition: var(--transition); display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 600; font-size: 0.9rem;
+        }
+        .work-item:hover .work-overlay { opacity: 1; }
+        .work-info { padding: 18px 22px 22px; }
+        .work-info h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+        .work-info .tag {
+            display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: var(--accent); background: rgba(199,161,122,0.12);
+            padding: 4px 14px; border-radius: 40px; margin-top: 4px;
+        }
+
+        .footer { padding: 40px 0 30px; border-top: 1px solid var(--border-light); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+
+        @media (max-width: 900px) { .container { padding: 0 24px; } }
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .work-grid { grid-template-columns: 1fr; }
+            .section { padding: 80px 0 40px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 导航 ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Studio<span>·</span>Y</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#work">作品</a></li>
+                <li><a href="index.html#about">关于</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+                <li><a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> 返回</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== 全部作品 ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>全部作品</h2>
+                <p>所有设计项目一览</p>
+            </div>
+
+            <div class="filter-tabs" id="filterTabs">
+                <!-- 由 JS 生成 -->
+            </div>
+
+            <div class="work-grid" id="workGrid">
+                <!-- 由 JS 生成 -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer container">
+        <span>&copy; 2026 杨一 · 工业设计</span>
+    </footer>
+
+    <script>
+        (function() {
+            const projects = [
+                { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
+                { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
+                { id: 3, title: '模块化灯具 · 棱', category: '家居', img: 'https://picsum.photos/600/450?random=4' },
+                { id: 4, title: '未来出行 · 畅想', category: '概念', img: 'https://picsum.photos/600/450?random=5' },
+                { id: 5, title: '极简办公桌 · 静', category: '家具', img: 'https://picsum.photos/600/450?random=6' },
+                { id: 6, title: '便携投影仪 · 光羽', category: '消费电子', img: 'https://picsum.photos/600/450?random=7' }
+            ];
+
+            const categories = ['全部', '家具', '消费电子', '家居', '概念'];
+            const nums = ['', '01', '02', '03', '04'];
+            let currentFilter = '全部';
+
+            function renderFilters() {
+                const container = document.getElementById('filterTabs');
+                container.innerHTML = '';
+                categories.forEach((cat, idx) => {
+                    const btn = document.createElement('button');
+                    btn.setAttribute('data-filter', cat);
+                    if (cat === currentFilter) btn.classList.add('active');
+                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${cat}`;
+                    btn.addEventListener('click', function() {
+                        currentFilter = cat;
+                        renderFilters();
+                        renderProjects();
+                    });
+                    container.appendChild(btn);
+                });
+            }
+
+            function renderProjects() {
+                const grid = document.getElementById('workGrid');
+                grid.innerHTML = '';
+                let filtered = projects;
+                if (currentFilter !== '全部') {
+                    filtered = projects.filter(p => p.category === currentFilter);
+                }
+                if (filtered.length === 0) {
+                    grid.innerHTML =
+                        '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px 0;">暂无作品</p>';
+                    return;
+                }
+                filtered.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'work-item';
+                    item.innerHTML = `
+                        <a href="detail.html?id=${p.id}">
+                            <div class="work-thumb">
+                                <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                                <div class="work-overlay">查看详情</div>
+                            </div>
+                            <div class="work-info">
+                                <h3>${p.title}</h3>
+                                <span class="tag">${p.category}</span>
+                            </div>
+                        </a>
+                    `;
+                    grid.appendChild(item);
+                });
+            }
+
+            renderFilters();
+            renderProjects();
+        })();
+    </script>
+</body>
+</html>
