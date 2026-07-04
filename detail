@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>作品详情 · 杨一</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8f6f3;
+            --text-primary: #1c1c1c;
+            --text-secondary: #5a5a5a;
+            --text-muted: #8a8a8a;
+            --accent: #c7a17a;
+            --accent-dark: #a88462;
+            --border-light: #e8e4de;
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
+            --radius: 20px;
+            --transition: 0.3s ease;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(248, 246, 243, 0.92);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .detail-hero {
+            padding: 120px 0 40px 0;
+        }
+
+        .detail-hero img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .detail-content {
+            padding: 30px 0 80px 0;
+        }
+
+        .detail-content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .detail-content .meta {
+            display: flex;
+            gap: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .detail-content .meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-content .desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin-bottom: 40px;
+            line-height: 1.9;
+        }
+
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .detail-gallery img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* 修改点5：去掉了一处返回按钮，只保留导航栏的 */
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 20px;
+            }
+            .detail-content h1 {
+                font-size: 2rem;
+            }
+            .detail-gallery {
+                grid-template-columns: 1fr;
+            }
+            .detail-hero {
+                padding: 100px 0 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Studio<span>·</span>Y</a>
+            <!-- 修改点5：只保留导航栏的返回按钮 -->
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回作品集</a>
+        </div>
+    </nav>
+
+    <section class="detail-hero">
+        <div class="container">
+            <img id="detailMainImg" src="https://picsum.photos/1200/600?random=10" alt="作品主图" loading="lazy" />
+        </div>
+    </section>
+
+    <section class="detail-content">
+        <div class="container">
+            <h1 id="detailTitle">流线椅</h1>
+            <div class="meta">
+                <span><i class="fas fa-tag"></i> <span id="detailCategory">家具</span></span>
+                <span><i class="far fa-calendar-alt"></i> 2025</span>
+                <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
+            </div>
+            <p class="desc" id="detailDesc">
+                流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与
+                再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
+            </p>
+
+            <div class="detail-gallery">
+                <img src="https://picsum.photos/600/400?random=11" alt="细节1" loading="lazy" />
+                <img src="https://picsum.photos/600/400?random=12" alt="细节2" loading="lazy" />
+            </div>
+
+            <!-- 修改点5：此处返回按钮已删除，只保留导航栏一个 -->
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            const projectData = {
+                1: {
+                    title: '流线椅',
+                    category: '家具',
+                    desc: '流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。',
+                    mainImg: 'https://picsum.photos/1200/600?random=20'
+                },
+                2: {
+                    title: '智能音箱 · 极光',
+                    category: '消费电子',
+                    desc: '极光智能音箱融合声学科技与极简美学。织物网罩与金属机身的碰撞，配合氛围灯效，让音乐不仅是听觉体验，更是视觉享受。',
+                    mainImg: 'https://picsum.photos/1200/600?random=21'
+                },
+                3: {
+                    title: '模块化灯具 · 棱',
+                    category: '家居',
+                    desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。',
+                    mainImg: 'https://picsum.photos/1200/600?random=22'
+                },
+                4: {
+                    title: '未来出行 · 畅想',
+                    category: '概念',
+                    desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。',
+                    mainImg: 'https://picsum.photos/1200/600?random=23'
+                },
+                5: {
+                    title: '极简办公桌 · 静',
+                    category: '家具',
+                    desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。',
+                    mainImg: 'https://picsum.photos/1200/600?random=24'
+                },
+                6: {
+                    title: '便携投影仪 · 光羽',
+                    category: '消费电子',
+                    desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。',
+                    mainImg: 'https://picsum.photos/1200/600?random=25'
+                }
+            };
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id') || '1';
+            const data = projectData[id] || projectData['1'];
+
+            document.getElementById('detailTitle').textContent = data.title;
+            document.getElementById('detailCategory').textContent = data.category;
+            document.getElementById('detailDesc').textContent = data.desc;
+            document.getElementById('detailMainImg').src = data.mainImg;
+        })();
+    </script>
+</body>
+</html>
