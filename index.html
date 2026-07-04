@@ -75,9 +75,10 @@
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
+            align-items: center;
         }
 
-        /* ---- 修改点1：导航仅悬停变黑加粗，无任何高亮停留 ---- */
+        /* 导航链接仅悬停变黑加粗 */
         .nav-links a,
         .dropdown-menu a {
             color: var(--text-secondary);
@@ -86,17 +87,32 @@
             padding: 4px 0;
             cursor: pointer;
         }
-        /* 悬停时变黑加粗 */
         .nav-links a:hover,
         .dropdown-menu a:hover {
             color: var(--text-primary);
             font-weight: 700;
         }
-        /* 移除所有下划线和激活样式 */
         .nav-links a::after,
         .dropdown-menu a::after { display: none !important; }
-        .nav-links a.active-link,
-        .dropdown-menu a.active-link { color: var(--text-secondary); font-weight: 500; }
+
+        /* ---- 语言切换按钮 ---- */
+        .lang-switch {
+            background: none;
+            border: 1.5px solid var(--border-light);
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+            background: transparent;
+        }
+        .lang-switch:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
 
         /* ===== 下拉菜单（移动端） ===== */
         .hamburger {
@@ -300,9 +316,9 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
             border: 1px solid rgba(232, 228, 222, 0.3);
-            cursor: default; /* 修改点3：移除点击跳转 */
         }
         .work-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+        .work-item a { display: block; }
         .work-thumb {
             aspect-ratio: 4 / 3;
             background: #e8e4de;
@@ -621,22 +637,23 @@
 </head>
 <body>
 
-    <!-- ===== 导航栏（仅悬停变黑加粗） ===== -->
+    <!-- ===== 导航栏 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <div class="nav-wrapper">
                 <ul class="nav-links" id="navLinks">
-                    <li><a data-target="home">首页</a></li>
-                    <li><a data-target="work">作品</a></li>
-                    <li><a data-target="about">关于</a></li>
-                    <li><a data-target="contact">联系</a></li>
+                    <li><a data-target="home" data-lang="nav-home">首页</a></li>
+                    <li><a data-target="work" data-lang="nav-work">作品</a></li>
+                    <li><a data-target="about" data-lang="nav-about">关于</a></li>
+                    <li><a data-target="contact" data-lang="nav-contact">联系</a></li>
+                    <li><button class="lang-switch" id="langSwitch">EN</button></li>
                 </ul>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a data-target="home">首页</a>
-                    <a data-target="work">作品</a>
-                    <a data-target="about">关于</a>
-                    <a data-target="contact">联系</a>
+                    <a data-target="home" data-lang="nav-home">首页</a>
+                    <a data-target="work" data-lang="nav-work">作品</a>
+                    <a data-target="about" data-lang="nav-about">关于</a>
+                    <a data-target="contact" data-lang="nav-contact">联系</a>
                 </div>
                 <button class="hamburger" id="hamburger" aria-label="菜单">
                     <span></span>
@@ -653,17 +670,16 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <h1>
-                        工业设计<br />
-                        <span class="highlight">塑造生活</span> 的形态
+                        <span data-lang="hero-title-line1">工业设计</span><br />
+                        <span class="highlight" data-lang="hero-title-line2">塑造生活</span> <span data-lang="hero-title-line3">的形态</span>
                     </h1>
-                    <p>
+                    <p data-lang="hero-desc">
                         我是杨一，工业设计师。专注于可持续产品、人机交互与美学表达。
                         让每一件作品都成为功能与艺术的平衡。
                     </p>
                     <div class="hero-actions">
-                        <!-- 修改点2：两个按钮分别跳转到作品和联系 -->
-                        <a class="btn btn-primary" id="goToWork">查看作品</a>
-                        <a class="btn btn-outline" id="goToContact">合作洽谈</a>
+                        <a class="btn btn-primary" id="goToWork" data-lang="btn-work">查看作品</a>
+                        <a class="btn btn-outline" id="goToContact" data-lang="btn-contact">合作洽谈</a>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -672,7 +688,7 @@
                     </div>
                     <div class="floating-badge">
                         <i class="fas fa-pencil-ruler"></i>
-                        <span>8年 · 设计经验</span>
+                        <span data-lang="badge-experience">8年 · 设计经验</span>
                     </div>
                 </div>
             </div>
@@ -683,84 +699,95 @@
     <section class="section" id="work">
         <div class="container">
             <div class="section-header reveal">
-                <h2>精选作品</h2>
-                <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
+                <h2 data-lang="work-title">精选作品</h2>
+                <p data-lang="work-desc">从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
 
             <div class="filter-tabs reveal">
-                <button class="active" data-filter="all">全部</button>
-                <button data-filter="家具">家具</button>
-                <button data-filter="消费电子">消费电子</button>
-                <button data-filter="家居">家居</button>
-                <button data-filter="概念">概念</button>
+                <button class="active" data-filter="all" data-lang="filter-all">全部</button>
+                <button data-filter="家具" data-lang="filter-furniture">家具</button>
+                <button data-filter="消费电子" data-lang="filter-electronics">消费电子</button>
+                <button data-filter="家居" data-lang="filter-home">家居</button>
+                <button data-filter="概念" data-lang="filter-concept">概念</button>
             </div>
 
             <div class="work-grid" id="workGrid">
-                <!-- 修改点3：移除所有 href 链接，作品卡片不再跳转 -->
                 <div class="work-item reveal" data-category="家具">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=2" alt="流线椅" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>流线椅</h3>
-                        <span class="tag">家具</span>
-                    </div>
+                    <a href="detail.html?id=1">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=2" alt="流线椅" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-chair">流线椅</h3>
+                            <span class="tag" data-lang="tag-furniture">家具</span>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="work-item reveal" data-category="消费电子">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=3" alt="智能音箱" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>智能音箱 · 极光</h3>
-                        <span class="tag">消费电子</span>
-                    </div>
+                    <a href="detail.html?id=2">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=3" alt="智能音箱" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-speaker">智能音箱 · 极光</h3>
+                            <span class="tag" data-lang="tag-electronics">消费电子</span>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="work-item reveal" data-category="家居">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=4" alt="模块化灯具" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>模块化灯具 · 棱</h3>
-                        <span class="tag">家居</span>
-                    </div>
+                    <a href="detail.html?id=3">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=4" alt="模块化灯具" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-lamp">模块化灯具 · 棱</h3>
+                            <span class="tag" data-lang="tag-home">家居</span>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="work-item reveal" data-category="概念">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=5" alt="未来出行概念" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>未来出行 · 畅想</h3>
-                        <span class="tag">概念</span>
-                    </div>
+                    <a href="detail.html?id=4">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=5" alt="未来出行概念" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-concept">未来出行 · 畅想</h3>
+                            <span class="tag" data-lang="tag-concept">概念</span>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="work-item reveal" data-category="家具">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=6" alt="极简办公桌" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>极简办公桌 · 静</h3>
-                        <span class="tag">家具</span>
-                    </div>
+                    <a href="detail.html?id=5">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=6" alt="极简办公桌" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-desk">极简办公桌 · 静</h3>
+                            <span class="tag" data-lang="tag-furniture">家具</span>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="work-item reveal" data-category="消费电子">
-                    <div class="work-thumb">
-                        <img src="https://picsum.photos/600/450?random=7" alt="便携投影仪" loading="lazy" />
-                        <div class="work-overlay">查看详情</div>
-                    </div>
-                    <div class="work-info">
-                        <h3>便携投影仪 · 光羽</h3>
-                        <span class="tag">消费电子</span>
-                    </div>
+                    <a href="detail.html?id=6">
+                        <div class="work-thumb">
+                            <img src="https://picsum.photos/600/450?random=7" alt="便携投影仪" loading="lazy" />
+                            <div class="work-overlay" data-lang="view-detail">查看详情</div>
+                        </div>
+                        <div class="work-info">
+                            <h3 data-lang="work-projector">便携投影仪 · 光羽</h3>
+                            <span class="tag" data-lang="tag-electronics">消费电子</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -776,29 +803,29 @@
                     </div>
                 </div>
                 <div class="about-text reveal">
-                    <h2>用设计 <br />回应真实需求</h2>
-                    <p>
+                    <h2 data-lang="about-title">用设计 <br />回应真实需求</h2>
+                    <p data-lang="about-p1">
                         我毕业于中央美术学院工业设计专业，先后在深圳、上海的设计事务所工作。
                         我相信好的设计不只是好看，更在于它如何与使用者产生共鸣。
                     </p>
-                    <p>
+                    <p data-lang="about-p2">
                         从概念草图到量产落地，我全程参与每一个环节。擅长将材料、工艺与人机工学
                         融合，创造出既有温度又有质感的作品。
                     </p>
-                    <div class="signature">— 杨一</div>
+                    <div class="signature" data-lang="about-signature">— 杨一</div>
 
                     <div class="about-stats">
                         <div class="stat-item">
-                            <span class="number">8+</span>
-                            <span class="label">年经验</span>
+                            <span class="number" data-lang="stat-years">8+</span>
+                            <span class="label" data-lang="stat-years-label">年经验</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">36</span>
-                            <span class="label">落地项目</span>
+                            <span class="number" data-lang="stat-projects">36</span>
+                            <span class="label" data-lang="stat-projects-label">落地项目</span>
                         </div>
                         <div class="stat-item">
-                            <span class="number">12</span>
-                            <span class="label">设计奖项</span>
+                            <span class="number" data-lang="stat-awards">12</span>
+                            <span class="label" data-lang="stat-awards-label">设计奖项</span>
                         </div>
                     </div>
                 </div>
@@ -812,21 +839,21 @@
             <div class="contact-section reveal">
                 <div class="contact-grid">
                     <div class="contact-info">
-                        <h2>一起创造 <br />更好的产品</h2>
-                        <p>
+                        <h2 data-lang="contact-title">一起创造 <br />更好的产品</h2>
+                        <p data-lang="contact-desc">
                             无论是一个新概念、产品迭代还是设计咨询，欢迎随时与我沟通。
                         </p>
                         <div class="contact-links">
                             <a href="mailto:yangyi@design.studio"><i class="fas fa-envelope"></i> yangyi@design.studio</a>
                             <a href="tel:+8613800008888"><i class="fas fa-phone-alt"></i> +86 138 0000 8888</a>
-                            <a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i> 中国 · 上海</a>
+                            <a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i> <span data-lang="contact-address">中国 · 上海</span></a>
                         </div>
                     </div>
                     <form class="contact-form" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
-                        <input type="text" name="name" placeholder="你的名字" required />
-                        <input type="email" name="email" placeholder="邮箱地址" required />
-                        <textarea name="message" placeholder="说说你的想法…" required></textarea>
-                        <button type="submit" class="btn">发送消息</button>
+                        <input type="text" name="name" placeholder="你的名字" data-lang="form-name" />
+                        <input type="email" name="email" placeholder="邮箱地址" data-lang="form-email" />
+                        <textarea name="message" placeholder="说说你的想法…" data-lang="form-message"></textarea>
+                        <button type="submit" class="btn" data-lang="form-submit">发送消息</button>
                     </form>
                 </div>
             </div>
@@ -835,7 +862,7 @@
 
     <!-- ===== 页脚 ===== -->
     <footer class="footer container">
-        <span>&copy; 2026 杨一 · 工业设计</span>
+        <span data-lang="footer-copyright">&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
             <a href="javascript:void(0)" id="wechatBtn" aria-label="微信">
                 <i class="fab fa-weixin"></i>
@@ -856,10 +883,10 @@
     <div class="qr-modal" id="wechatModal">
         <div class="qr-modal-content">
             <button class="close-btn" id="qrCloseBtn">&times;</button>
-            <h3>微信</h3>
-            <p class="sub">扫一扫添加好友</p>
+            <h3 data-lang="wechat-title">微信</h3>
+            <p class="sub" data-lang="wechat-sub">扫一扫添加好友</p>
             <img src="https://picsum.photos/200/200?random=99" alt="微信二维码" />
-            <p class="hint">长按或扫码添加微信</p>
+            <p class="hint" data-lang="wechat-hint">长按或扫码添加微信</p>
         </div>
     </div>
 
@@ -868,11 +895,160 @@
             'use strict';
 
             // ============================================================
-            // 修改点1：导航仅悬停变黑加粗 —— 无需任何 JS，纯 CSS 实现
+            // 1. 语言包
             // ============================================================
+            const translations = {
+                'zh': {
+                    'nav-home': '首页',
+                    'nav-work': '作品',
+                    'nav-about': '关于',
+                    'nav-contact': '联系',
+                    'hero-title-line1': '工业设计',
+                    'hero-title-line2': '塑造生活',
+                    'hero-title-line3': '的形态',
+                    'hero-desc': '我是杨一，工业设计师。专注于可持续产品、人机交互与美学表达。让每一件作品都成为功能与艺术的平衡。',
+                    'btn-work': '查看作品',
+                    'btn-contact': '合作洽谈',
+                    'badge-experience': '8年 · 设计经验',
+                    'work-title': '精选作品',
+                    'work-desc': '从概念到落地，每一件作品都承载着对细节的执着。',
+                    'filter-all': '全部',
+                    'filter-furniture': '家具',
+                    'filter-electronics': '消费电子',
+                    'filter-home': '家居',
+                    'filter-concept': '概念',
+                    'view-detail': '查看详情',
+                    'work-chair': '流线椅',
+                    'tag-furniture': '家具',
+                    'work-speaker': '智能音箱 · 极光',
+                    'tag-electronics': '消费电子',
+                    'work-lamp': '模块化灯具 · 棱',
+                    'tag-home': '家居',
+                    'work-concept': '未来出行 · 畅想',
+                    'tag-concept': '概念',
+                    'work-desk': '极简办公桌 · 静',
+                    'work-projector': '便携投影仪 · 光羽',
+                    'about-title': '用设计 \n回应真实需求',
+                    'about-p1': '我毕业于中央美术学院工业设计专业，先后在深圳、上海的设计事务所工作。我相信好的设计不只是好看，更在于它如何与使用者产生共鸣。',
+                    'about-p2': '从概念草图到量产落地，我全程参与每一个环节。擅长将材料、工艺与人机工学融合，创造出既有温度又有质感的作品。',
+                    'about-signature': '— 杨一',
+                    'stat-years': '8+',
+                    'stat-years-label': '年经验',
+                    'stat-projects': '36',
+                    'stat-projects-label': '落地项目',
+                    'stat-awards': '12',
+                    'stat-awards-label': '设计奖项',
+                    'contact-title': '一起创造 \n更好的产品',
+                    'contact-desc': '无论是一个新概念、产品迭代还是设计咨询，欢迎随时与我沟通。',
+                    'contact-address': '中国 · 上海',
+                    'form-name': '你的名字',
+                    'form-email': '邮箱地址',
+                    'form-message': '说说你的想法…',
+                    'form-submit': '发送消息',
+                    'footer-copyright': '© 2026 杨一 · 工业设计',
+                    'wechat-title': '微信',
+                    'wechat-sub': '扫一扫添加好友',
+                    'wechat-hint': '长按或扫码添加微信'
+                },
+                'en': {
+                    'nav-home': 'Home',
+                    'nav-work': 'Work',
+                    'nav-about': 'About',
+                    'nav-contact': 'Contact',
+                    'hero-title-line1': 'Industrial Design',
+                    'hero-title-line2': 'Shaping Life',
+                    'hero-title-line3': '',
+                    'hero-desc': 'I am Yang Yi, an industrial designer focused on sustainable products, human interaction, and aesthetic expression. Let every work become a balance of function and art.',
+                    'btn-work': 'View Work',
+                    'btn-contact': 'Get in Touch',
+                    'badge-experience': '8 Years · Design Experience',
+                    'work-title': 'Selected Works',
+                    'work-desc': 'From concept to production, every work carries a commitment to detail.',
+                    'filter-all': 'All',
+                    'filter-furniture': 'Furniture',
+                    'filter-electronics': 'Electronics',
+                    'filter-home': 'Home',
+                    'filter-concept': 'Concept',
+                    'view-detail': 'View Detail',
+                    'work-chair': 'Flow Chair',
+                    'tag-furniture': 'Furniture',
+                    'work-speaker': 'Smart Speaker · Aurora',
+                    'tag-electronics': 'Electronics',
+                    'work-lamp': 'Modular Lamp · Prism',
+                    'tag-home': 'Home',
+                    'work-concept': 'Future Mobility · Vision',
+                    'tag-concept': 'Concept',
+                    'work-desk': 'Minimal Desk · Serene',
+                    'work-projector': 'Portable Projector · Lightwing',
+                    'about-title': 'Design that\nResponds to Real Needs',
+                    'about-p1': 'I graduated from the Central Academy of Fine Arts in Industrial Design and have worked in design firms in Shenzhen and Shanghai. I believe good design is not just about aesthetics, but about how it resonates with users.',
+                    'about-p2': 'From concept sketches to production, I\'m involved in every stage. I excel at blending materials, craftsmanship, and ergonomics to create works that are both warm and textured.',
+                    'about-signature': '— Yang Yi',
+                    'stat-years': '8+',
+                    'stat-years-label': 'Years Experience',
+                    'stat-projects': '36',
+                    'stat-projects-label': 'Projects',
+                    'stat-awards': '12',
+                    'stat-awards-label': 'Awards',
+                    'contact-title': 'Let\'s Create\nBetter Products Together',
+                    'contact-desc': 'Whether it\'s a new concept, product iteration, or design consultation, feel free to reach out anytime.',
+                    'contact-address': 'Shanghai, China',
+                    'form-name': 'Your Name',
+                    'form-email': 'Email Address',
+                    'form-message': 'Share your thoughts…',
+                    'form-submit': 'Send Message',
+                    'footer-copyright': '© 2026 Yang Yi · Industrial Design',
+                    'wechat-title': 'WeChat',
+                    'wechat-sub': 'Scan to add friend',
+                    'wechat-hint': 'Long press or scan to add WeChat'
+                }
+            };
 
             // ============================================================
-            // 修改点2：两个按钮跳转修正
+            // 2. 语言切换逻辑
+            // ============================================================
+            let currentLang = localStorage.getItem('lang') || 'zh';
+            const langSwitchBtn = document.getElementById('langSwitch');
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('lang', lang);
+                langSwitchBtn.textContent = lang === 'zh' ? 'EN' : '中文';
+
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang] && translations[lang][key] !== undefined) {
+                        // 处理换行符
+                        const text = translations[lang][key];
+                        if (text.includes('\n')) {
+                            el.innerHTML = text.replace(/\n/g, '<br />');
+                        } else {
+                            el.textContent = text;
+                        }
+                    }
+                });
+
+                // 更新表单 placeholder
+                document.querySelectorAll('input[data-lang], textarea[data-lang]').forEach(el => {
+                    const key = el.getAttribute('data-lang');
+                    if (translations[lang] && translations[lang][key] !== undefined) {
+                        el.placeholder = translations[lang][key];
+                    }
+                });
+            }
+
+            langSwitchBtn.addEventListener('click', function() {
+                const nextLang = currentLang === 'zh' ? 'en' : 'zh';
+                applyLanguage(nextLang);
+            });
+
+            // ============================================================
+            // 3. 页面加载后应用语言
+            // ============================================================
+            applyLanguage(currentLang);
+
+            // ============================================================
+            // 4. 按钮跳转
             // ============================================================
             document.getElementById('goToWork').addEventListener('click', function(e) {
                 e.preventDefault();
@@ -885,18 +1061,13 @@
             });
 
             // ============================================================
-            // 修改点3：作品卡片点击不跳转 —— 已移除所有 href，无需额外处理
-            // ============================================================
-
-            // ============================================================
-            // 修改点4：分类筛选 —— 点击后只保留该分类可见，其他隐藏
+            // 5. 分类筛选
             // ============================================================
             const filterBtns = document.querySelectorAll('.filter-tabs button');
             const workItems = document.querySelectorAll('.work-item');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // 切换按钮激活状态
                     filterBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
 
@@ -905,30 +1076,45 @@
                     workItems.forEach(item => {
                         const category = item.dataset.category;
                         if (filter === 'all' || category === filter) {
-                            // 显示匹配项
                             item.style.display = 'block';
                             item.style.opacity = '1';
                             item.style.transform = 'scale(1)';
-                            item.style.pointerEvents = 'auto'; // 可交互
+                            item.style.pointerEvents = 'auto';
                         } else {
-                            // 隐藏不匹配项
                             item.style.display = 'none';
                             item.style.opacity = '0';
                             item.style.transform = 'scale(0.94)';
-                            item.style.pointerEvents = 'none'; // 不可点击
+                            item.style.pointerEvents = 'none';
                         }
                     });
                 });
             });
 
-            // 初始化：全部可见
             workItems.forEach(item => {
                 item.style.display = 'block';
                 item.style.pointerEvents = 'auto';
             });
 
             // ============================================================
-            // 汉堡菜单（移动端）
+            // 6. 导航点击平滑滚动 + 关闭移动端菜单
+            // ============================================================
+            document.querySelectorAll('.nav-links a, .dropdown-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                    document.getElementById('dropdownMenu').classList.remove('open');
+                    document.getElementById('hamburger').classList.remove('active');
+                });
+            });
+
+            // ============================================================
+            // 7. 汉堡菜单
             // ============================================================
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdownMenu');
@@ -946,24 +1132,8 @@
                 }
             });
 
-            // 导航点击：平滑滚动到对应区域 + 关闭移动端菜单
-            document.querySelectorAll('.nav-links a, .dropdown-menu a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('data-target');
-                    const target = document.getElementById(targetId);
-                    if (target) {
-                        const offset = 80;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top: top, behavior: 'smooth' });
-                    }
-                    dropdownMenu.classList.remove('open');
-                    hamburger.classList.remove('active');
-                });
-            });
-
             // ============================================================
-            // 滚动动画（作品卡片入场）
+            // 8. 滚动动画
             // ============================================================
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
@@ -977,7 +1147,7 @@
             revealElements.forEach(el => revealObserver.observe(el));
 
             // ============================================================
-            // 微信二维码弹窗
+            // 9. 微信二维码弹窗
             // ============================================================
             const modal = document.getElementById('wechatModal');
             const wechatBtn = document.getElementById('wechatBtn');
@@ -1003,7 +1173,7 @@
             });
 
             // ============================================================
-            // 表单提交
+            // 10. 表单提交
             // ============================================================
             const contactForm = document.getElementById('contactForm');
             contactForm.addEventListener('submit', function(e) {
@@ -1012,7 +1182,7 @@
                     e.preventDefault();
                     const btn = this.querySelector('.btn');
                     const originalText = btn.textContent;
-                    btn.textContent = '请先配置表单 ✦';
+                    btn.textContent = currentLang === 'zh' ? '请先配置表单 ✦' : 'Please configure form ✦';
                     btn.style.background = '#c0392b';
                     setTimeout(() => {
                         btn.textContent = originalText;
