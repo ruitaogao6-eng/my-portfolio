@@ -1266,12 +1266,15 @@
                     }, 400);
                 }
 
-                // 5. 新的激活项直接显示（不加动画）
-                targetLink.classList.add('active-link');
-                // 清除可能残留的 hover 状态
+                // 5. 【关键修复】强制清除目标链接的所有悬停残留状态
                 targetLink.classList.remove('hover-in', 'hover-out');
+                // 强制浏览器重绘，确保样式立即生效
+                void targetLink.offsetWidth;
 
-                // 6. 清除所有 hover（防止干扰）
+                // 6. 新的激活项直接显示（不加动画）
+                targetLink.classList.add('active-link');
+
+                // 7. 清除所有 hover（防止干扰）
                 clearAllHover();
             }
 
