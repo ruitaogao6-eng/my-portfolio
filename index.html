@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>工业设计师 · 杨一</title>
+    <!-- Font Awesome 6 (免费版) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -28,7 +29,7 @@
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
             --radius: 20px;
-            --transition: 0.3s ease;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
@@ -104,16 +105,21 @@
             font-size: 0.95rem;
         }
 
-        .nav-links a {
+        /* ----- 导航链接样式（核心修改） ----- */
+        .nav-links a,
+        .dropdown-menu a {
             position: relative;
             color: var(--text-secondary);
-            transition: var(--transition);
+            transition: color 0.25s ease;
             padding: 4px 0;
             cursor: pointer;
             text-decoration: none;
+            display: inline-block;
         }
 
-        .nav-links a::after {
+        /* 所有链接的伪元素：默认宽度 0，由 JS 控制状态 */
+        .nav-links a::after,
+        .dropdown-menu a::after {
             content: '';
             position: absolute;
             left: 0;
@@ -121,22 +127,55 @@
             width: 0;
             height: 2.5px;
             background: var(--accent);
-            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border-radius: 2px;
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        /* ----- 状态 1：悬停（hover） ----- */
+        .nav-links a.hover-in::after,
+        .dropdown-menu a.hover-in::after {
+            width: 100% !important;
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .nav-links a.active::after {
-            width: 100%;
+        .nav-links a.hover-out::after,
+        .dropdown-menu a.hover-out::after {
+            width: 0 !important;
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .nav-links a.active {
+        /* ----- 状态 2：激活（active）—— 永久显示 ----- */
+        .nav-links a.active-link::after,
+        .dropdown-menu a.active-link::after {
+            width: 100% !important;
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a.active-link,
+        .dropdown-menu a.active-link {
             color: var(--text-primary);
         }
 
+        /* ----- 状态 3：激活项被替换时，旧的滑出 ----- */
+        .nav-links a.active-out::after,
+        .dropdown-menu a.active-out::after {
+            width: 0 !important;
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-links a.active-out,
+        .dropdown-menu a.active-out {
+            color: var(--text-secondary);
+        }
+
+        /* 禁用 hover 对 active 的影响（active 状态下 hover 不触发动画） */
+        .nav-links a.active-link:hover::after,
+        .dropdown-menu a.active-link:hover::after {
+            width: 100% !important;
+            transition: none;
+        }
+
+        /* ===== 汉堡菜单 ===== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -202,7 +241,28 @@
             color: var(--text-primary);
         }
 
-        /* ===== Hero ===== */
+        /* 下拉菜单里的链接也应用相同的伪元素规则 */
+        .dropdown-menu a::after {
+            left: 28px;
+            bottom: 6px;
+            width: 0;
+            height: 2.5px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .dropdown-menu a.hover-in::after,
+        .dropdown-menu a.active-link::after {
+            width: calc(100% - 56px) !important;
+        }
+
+        .dropdown-menu a.hover-out::after,
+        .dropdown-menu a.active-out::after {
+            width: 0 !important;
+        }
+
+        /* ===== Hero - 第一版宽松间距 ===== */
         .hero {
             padding: 140px 0 80px 0;
             display: flex;
@@ -328,7 +388,7 @@
             color: var(--accent);
         }
 
-        /* ===== 作品集 ===== */
+        /* ===== 作品集 - 第一版宽松间距 ===== */
         .section {
             padding: 80px 0 100px 0;
         }
@@ -906,12 +966,12 @@
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <div class="nav-wrapper">
                 <ul class="nav-links" id="navLinks">
-                    <li><a data-target="work">作品</a></li>
+                    <li><a data-target="work" class="active-link">作品</a></li>
                     <li><a data-target="about">关于</a></li>
                     <li><a data-target="contact">联系</a></li>
                 </ul>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a data-target="work">作品</a>
+                    <a data-target="work" class="active-link">作品</a>
                     <a data-target="about">关于</a>
                     <a data-target="contact">联系</a>
                 </div>
@@ -1154,17 +1214,129 @@
         (function() {
             'use strict';
 
-            // 获取导航链接元素（包含桌面导航和下拉菜单）
-            const navAnchors = document.querySelectorAll('.nav-links a, .dropdown-menu a');
-            // 目标区域 ID 列表
-            const sectionIds = ['work', 'about', 'contact'];
+            // ----- 获取所有导航链接（桌面 + 下拉菜单） -----
+            const allNavLinks = document.querySelectorAll('.nav-links a, .dropdown-menu a');
+            const sections = ['work', 'about', 'contact'];
 
-            // ===== 核心函数：更新高亮 =====
-            function updateActiveLink() {
+            // ----- 工具：清除所有链接的 hover 状态 -----
+            function clearAllHover() {
+                allNavLinks.forEach(link => {
+                    link.classList.remove('hover-in', 'hover-out');
+                });
+            }
+
+            // ----- 工具：清除所有链接的 active 状态（保留 active-link）-----
+            function clearAllActive() {
+                allNavLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                });
+            }
+
+            // ----- 工具：清除所有链接的 active-out 状态 -----
+            function clearAllActiveOut() {
+                allNavLinks.forEach(link => {
+                    link.classList.remove('active-out');
+                });
+            }
+
+            // ----- 核心：切换激活项 -----
+            function setActiveLink(targetId) {
+                // 1. 找到当前激活的链接
+                let currentActive = null;
+                allNavLinks.forEach(link => {
+                    if (link.classList.contains('active-link')) {
+                        currentActive = link;
+                    }
+                });
+
+                // 2. 找到目标链接
+                let targetLink = null;
+                allNavLinks.forEach(link => {
+                    if (link.getAttribute('data-target') === targetId) {
+                        targetLink = link;
+                    }
+                });
+
+                if (!targetLink) return;
+
+                // 3. 如果点击的是同一个，不做任何事
+                if (currentActive === targetLink) return;
+
+                // 4. 让旧的激活项滑出
+                if (currentActive) {
+                    currentActive.classList.remove('active-link');
+                    currentActive.classList.add('active-out');
+                    // 延迟移除 active-out，以便动画完成
+                    setTimeout(() => {
+                        currentActive.classList.remove('active-out');
+                    }, 400);
+                }
+
+                // 5. 新的激活项直接显示（不加动画）
+                targetLink.classList.add('active-link');
+                // 清除可能残留的 hover 状态
+                targetLink.classList.remove('hover-in', 'hover-out');
+
+                // 6. 清除所有 hover（防止干扰）
+                clearAllHover();
+            }
+
+            // ----- 悬停逻辑（独立于 active）-----
+            allNavLinks.forEach(link => {
+                // 鼠标移入：如果该链接不是激活项，才触发 hover-in
+                link.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('active-link')) {
+                        // 如果它之前有 hover-out，先移除
+                        this.classList.remove('hover-out');
+                        // 添加 hover-in
+                        this.classList.add('hover-in');
+                    }
+                });
+
+                // 鼠标移出：如果该链接不是激活项，触发 hover-out
+                link.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('active-link')) {
+                        this.classList.remove('hover-in');
+                        this.classList.add('hover-out');
+                        // 延迟移除 hover-out，以便动画完成
+                        setTimeout(() => {
+                            this.classList.remove('hover-out');
+                        }, 350);
+                    }
+                });
+            });
+
+            // ----- 点击逻辑 -----
+            document.querySelectorAll('[data-target]').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    // 只处理导航链接的点击
+                    if (!this.closest('.nav-links') && !this.closest('.dropdown-menu')) return;
+
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+
+                    // 切换激活项
+                    setActiveLink(targetId);
+
+                    // 关闭移动端菜单
+                    document.getElementById('dropdownMenu').classList.remove('open');
+                    document.getElementById('hamburger').classList.remove('active');
+
+                    // 平滑滚动
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // ----- 滚动时自动更新激活项（仅用于页面刷新或滚动到某个区域）-----
+            function updateActiveOnScroll() {
                 let current = '';
                 const scrollPos = window.scrollY + 120;
-
-                sectionIds.forEach(id => {
+                sections.forEach(id => {
                     const section = document.getElementById(id);
                     if (section) {
                         const top = section.offsetTop;
@@ -1175,54 +1347,47 @@
                     }
                 });
 
-                navAnchors.forEach(anchor => {
-                    anchor.classList.remove('active');
-                    if (anchor.getAttribute('data-target') === current) {
-                        anchor.classList.add('active');
-                    }
-                });
-            }
-
-            // ===== 滚动时自动更新 =====
-            window.addEventListener('scroll', updateActiveLink);
-            window.addEventListener('load', updateActiveLink);
-
-            // ===== 点击导航时强制高亮当前点击项 =====
-            document.querySelectorAll('[data-target]').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('data-target');
-
-                    // 1. 先手动清除所有 active
-                    navAnchors.forEach(link => link.classList.remove('active'));
-
-                    // 2. 给当前点击的链接添加 active
-                    navAnchors.forEach(link => {
-                        if (link.getAttribute('data-target') === targetId) {
-                            link.classList.add('active');
+                if (current) {
+                    // 检查当前激活的是否已经正确
+                    let currentActive = null;
+                    allNavLinks.forEach(link => {
+                        if (link.classList.contains('active-link')) {
+                            currentActive = link;
                         }
                     });
 
-                    // 3. 关闭移动端菜单
-                    document.getElementById('dropdownMenu').classList.remove('open');
-                    document.getElementById('hamburger').classList.remove('active');
-
-                    // 4. 平滑滚动到目标区域
-                    const target = document.getElementById(targetId);
-                    if (target) {
-                        const offset = 80;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    // 如果当前没有激活项，或者激活项不对应，则切换
+                    if (!currentActive || currentActive.getAttribute('data-target') !== current) {
+                        // 清除所有 active
+                        clearAllActive();
+                        // 找到目标链接并激活
+                        allNavLinks.forEach(link => {
+                            if (link.getAttribute('data-target') === current) {
+                                link.classList.add('active-link');
+                                link.classList.remove('hover-in', 'hover-out');
+                            }
+                        });
                     }
+                }
+            }
 
-                    // 5. 滚动结束后再校准一次（防止滚动位置偏差导致高亮被覆盖）
-                    setTimeout(() => {
-                        updateActiveLink();
-                    }, 500);
-                });
+            // 监听滚动事件，用 throttle 优化
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    updateActiveOnScroll();
+                    scrollTimeout = null;
+                }, 100);
             });
 
-            // ===== 汉堡菜单开关 =====
+            // 页面加载时初始化一次
+            window.addEventListener('load', function() {
+                // 默认激活“作品”
+                setActiveLink('work');
+            });
+
+            // ----- 汉堡菜单 -----
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -1239,7 +1404,7 @@
                 }
             });
 
-            // ===== 作品筛选 =====
+            // ----- 作品筛选 -----
             const filterBtns = document.querySelectorAll('.filter-tabs button');
             const workItems = document.querySelectorAll('.work-item');
 
@@ -1272,7 +1437,7 @@
                 item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
             });
 
-            // ===== 滚动动画 =====
+            // ----- 滚动动画 -----
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1284,7 +1449,7 @@
 
             revealElements.forEach(el => revealObserver.observe(el));
 
-            // ===== 微信二维码弹窗 =====
+            // ----- 微信二维码弹窗 -----
             const modal = document.getElementById('wechatModal');
             const wechatBtn = document.getElementById('wechatBtn');
             const closeBtn = document.getElementById('qrCloseBtn');
@@ -1314,7 +1479,7 @@
                 }
             });
 
-            // ===== 表单提交 =====
+            // ----- 表单提交 -----
             const contactForm = document.getElementById('contactForm');
             contactForm.addEventListener('submit', function(e) {
                 const action = this.getAttribute('action');
