@@ -7,262 +7,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-primary: #f8f6f3;
-            --text-primary: #1c1c1c;
-            --text-secondary: #5a5a5a;
-            --text-muted: #8a8a8a;
-            --accent: #c7a17a;
-            --accent-dark: #a88462;
-            --border-light: #e8e4de;
-            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
-            --radius: 20px;
-            --transition: 0.25s ease;
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --bg-primary: #f8f6f3; --bg-card: #ffffff; --text-primary: #1c1c1c;
+            --text-secondary: #5a5a5a; --text-muted: #8a8a8a; --accent: #c7a17a;
+            --accent-dark: #a88462; --border-light: #e8e4de; --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
+            --shadow-md: 0 12px 40px rgba(0,0,0,0.07); --radius: 20px;
+            --transition: 0.25s ease; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        body { font-family: var(--font); background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; height: auto; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 40px; }
 
-        body {
-            font-family: var(--font);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-
-        /* ===== 导航栏（与主页完全一致） ===== */
+        /* ===== 导航 ===== */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 16px 0;
-            background: rgba(248, 246, 243, 0.92);
-            backdrop-filter: blur(16px) saturate(180%);
-            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 12px 0; background: rgba(248,246,243,0.92);
+            backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,228,222,0.4);
         }
-
-        .navbar .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
+        .navbar .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); }
+        .logo span { color: var(--accent); }
         .nav-links {
-            display: flex;
-            gap: 36px;
-            list-style: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            align-items: center;
+            display: flex; gap: 28px; list-style: none; font-weight: 500; font-size: 0.95rem; align-items: center;
         }
+        .nav-links a { color: var(--text-secondary); font-weight: 500; transition: color 0.2s; padding: 4px 0; }
+        .nav-links a:hover { color: var(--text-primary); font-weight: 700; }
+        .nav-links a::after { display: none !important; }
 
-        .nav-links a {
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: color 0.2s, font-weight 0.2s;
-            padding: 4px 0;
-            cursor: pointer;
-            text-decoration: none;
+        .detail-hero { padding: 120px 0 40px 0; }
+        .detail-hero img { width: 100%; max-height: 500px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow-md); }
+        .detail-content { padding: 30px 0 80px 0; }
+        .detail-content h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+        .detail-content .meta { display: flex; gap: 24px; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; flex-wrap: wrap; }
+        .detail-content .meta span { display: flex; align-items: center; gap: 6px; }
+        .detail-content .desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 720px; margin-bottom: 40px; line-height: 1.9; }
+        .detail-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
+        .detail-gallery img { width: 100%; border-radius: 16px; box-shadow: var(--shadow-sm); }
+
+        .detail-nav-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 40px; margin-top: 40px; border-top: 1px solid var(--border-light);
         }
+        .detail-nav-bottom a { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .detail-nav-bottom a:hover { color: var(--text-primary); }
+        .detail-nav-bottom a.disabled { opacity: 0.3; pointer-events: none; cursor: default; }
+        .detail-nav-bottom .back-link { color: var(--text-muted); font-weight: 400; }
+        .detail-nav-bottom .back-link:hover { color: var(--text-secondary); }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-
-        /* 移除所有下划线 */
-        .nav-links a::after {
-            display: none !important;
-        }
-
-        /* ===== 二级导航（面包屑） ===== */
-        .sub-nav {
-            position: fixed;
-            top: 78px;
-            left: 0;
-            width: 100%;
-            z-index: 999;
-            padding: 12px 0;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px) saturate(180%);
-            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
-        }
-
-        .sub-nav .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .breadcrumb a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--text-primary);
-        }
-
-        .breadcrumb .separator {
-            color: var(--border-light);
-        }
-
-        .breadcrumb .current {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .sub-nav-right {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .sub-nav-right a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .sub-nav-right a:hover {
-            color: var(--text-primary);
-        }
-
-        /* ===== 详情页内容 ===== */
-        .detail-hero {
-            padding: 160px 0 40px 0;
-        }
-
-        .detail-hero img {
-            width: 100%;
-            max-height: 500px;
-            object-fit: cover;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-        }
-
-        .detail-content {
-            padding: 30px 0 80px 0;
-        }
-
-        .detail-content h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 12px;
-        }
-
-        .detail-content .meta {
-            display: flex;
-            gap: 24px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-        }
-
-        .detail-content .meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .detail-content .desc {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 720px;
-            margin-bottom: 40px;
-            line-height: 1.9;
-        }
-
-        .detail-gallery {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 40px 0;
-        }
-
-        .detail-gallery img {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* ===== 响应式 ===== */
         @media (max-width: 640px) {
-            .container {
-                padding: 0 20px;
-            }
-            .detail-content h1 {
-                font-size: 2rem;
-            }
-            .detail-gallery {
-                grid-template-columns: 1fr;
-            }
-            .detail-hero {
-                padding: 220px 0 20px 0;
-            }
-            .nav-links {
-                display: none;
-            }
-            .sub-nav .container {
-                flex-direction: column;
-                gap: 4px;
-                align-items: flex-start;
-            }
+            .container { padding: 0 20px; }
+            .detail-content h1 { font-size: 2rem; }
+            .detail-gallery { grid-template-columns: 1fr; }
+            .detail-hero { padding: 100px 0 20px 0; }
+            .nav-links { display: none; }
         }
-
-        @media (max-width: 900px) {
-            .navbar .container,
-            .sub-nav .container {
-                padding: 0 24px;
-            }
-        }
+        @media (max-width: 900px) { .navbar .container { padding: 0 24px; } }
     </style>
 </head>
 <body>
 
-    <!-- ===== 一级导航（与主页完全一致） ===== -->
-    <nav class="navbar" id="navbar">
+    <!-- ===== 导航 ===== -->
+    <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <ul class="nav-links">
@@ -273,22 +80,6 @@
             </ul>
         </div>
     </nav>
-
-    <!-- ===== 二级导航（面包屑） ===== -->
-    <div class="sub-nav" id="subNav">
-        <div class="container">
-            <div class="breadcrumb" id="breadcrumb">
-                <a href="index.html">首页</a>
-                <span class="separator">›</span>
-                <a href="index.html#work">作品</a>
-                <span class="separator">›</span>
-                <span class="current" id="breadcrumbTitle">加载中...</span>
-            </div>
-            <div class="sub-nav-right">
-                <a href="index.html#work"><i class="fas fa-th"></i> 全部作品</a>
-            </div>
-        </div>
-    </div>
 
     <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
@@ -306,13 +97,17 @@
                 <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
             </div>
             <p class="desc" id="detailDesc">
-                流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与
-                再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
+                流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
             </p>
-
             <div class="detail-gallery">
                 <img src="https://picsum.photos/600/400?random=11" alt="细节1" loading="lazy" />
                 <img src="https://picsum.photos/600/400?random=12" alt="细节2" loading="lazy" />
+            </div>
+
+            <div class="detail-nav-bottom">
+                <a href="#" id="bottomPrevLink"><i class="fas fa-chevron-left"></i> 上一篇</a>
+                <a href="index.html#work" class="back-link"><i class="fas fa-th"></i> 全部作品</a>
+                <a href="#" id="bottomNextLink">下一篇 <i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
     </section>
@@ -320,55 +115,60 @@
     <script>
         (function() {
             const projectData = {
-                1: {
-                    title: '流线椅',
-                    category: '家具',
-                    desc: '流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。',
-                    mainImg: 'https://picsum.photos/1200/600?random=20'
-                },
-                2: {
-                    title: '智能音箱 · 极光',
-                    category: '消费电子',
-                    desc: '极光智能音箱融合声学科技与极简美学。织物网罩与金属机身的碰撞，配合氛围灯效，让音乐不仅是听觉体验，更是视觉享受。',
-                    mainImg: 'https://picsum.photos/1200/600?random=21'
-                },
-                3: {
-                    title: '模块化灯具 · 棱',
-                    category: '家居',
-                    desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。',
-                    mainImg: 'https://picsum.photos/1200/600?random=22'
-                },
-                4: {
-                    title: '未来出行 · 畅想',
-                    category: '概念',
-                    desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。',
-                    mainImg: 'https://picsum.photos/1200/600?random=23'
-                },
-                5: {
-                    title: '极简办公桌 · 静',
-                    category: '家具',
-                    desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。',
-                    mainImg: 'https://picsum.photos/1200/600?random=24'
-                },
-                6: {
-                    title: '便携投影仪 · 光羽',
-                    category: '消费电子',
-                    desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。',
-                    mainImg: 'https://picsum.photos/1200/600?random=25'
-                }
+                1: { title: '流线椅', category: '家具', desc: '流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。', mainImg: 'https://picsum.photos/1200/600?random=20' },
+                2: { title: '智能音箱 · 极光', category: '消费电子', desc: '极光智能音箱融合声学科技与极简美学。织物网罩与金属机身的碰撞，配合氛围灯效，让音乐不仅是听觉体验，更是视觉享受。', mainImg: 'https://picsum.photos/1200/600?random=21' },
+                3: { title: '模块化灯具 · 棱', category: '家居', desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。', mainImg: 'https://picsum.photos/1200/600?random=22' },
+                4: { title: '未来出行 · 畅想', category: '概念', desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。', mainImg: 'https://picsum.photos/1200/600?random=23' },
+                5: { title: '极简办公桌 · 静', category: '家具', desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。', mainImg: 'https://picsum.photos/1200/600?random=24' },
+                6: { title: '便携投影仪 · 光羽', category: '消费电子', desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。', mainImg: 'https://picsum.photos/1200/600?random=25' }
             };
 
+            const ids = Object.keys(projectData).map(Number);
+            const total = ids.length;
             const params = new URLSearchParams(window.location.search);
-            const id = params.get('id') || '1';
-            const data = projectData[id] || projectData['1'];
+            let currentId = parseInt(params.get('id')) || 1;
+            if (!projectData[currentId]) currentId = 1;
+            const currentIndex = ids.indexOf(currentId);
+            const prevId = currentIndex > 0 ? ids[currentIndex - 1] : null;
+            const nextId = currentIndex < total - 1 ? ids[currentIndex + 1] : null;
 
-            document.getElementById('detailTitle').textContent = data.title;
-            document.getElementById('detailCategory').textContent = data.category;
-            document.getElementById('detailDesc').textContent = data.desc;
-            document.getElementById('detailMainImg').src = data.mainImg;
+            function renderProject(id) {
+                const data = projectData[id];
+                if (!data) return;
+                document.getElementById('detailTitle').textContent = data.title;
+                document.getElementById('detailCategory').textContent = data.category;
+                document.getElementById('detailDesc').textContent = data.desc;
+                document.getElementById('detailMainImg').src = data.mainImg;
+                const newUrl = window.location.pathname + '?id=' + id;
+                window.history.pushState({ id: id }, '', newUrl);
+                updateNavButtons(id);
+            }
 
-            // 更新面包屑
-            document.getElementById('breadcrumbTitle').textContent = data.title;
+            function updateNavButtons(id) {
+                const idx = ids.indexOf(id);
+                const hasPrev = idx > 0;
+                const hasNext = idx < total - 1;
+                [document.getElementById('bottomPrevLink'), document.getElementById('bottomNextLink')].forEach(el => {
+                    el.classList.remove('disabled');
+                });
+                document.getElementById('bottomPrevLink').classList.toggle('disabled', !hasPrev);
+                document.getElementById('bottomNextLink').classList.toggle('disabled', !hasNext);
+                document.getElementById('bottomPrevLink').onclick = function(e) { e.preventDefault(); if (hasPrev) goToPrev(); };
+                document.getElementById('bottomNextLink').onclick = function(e) { e.preventDefault(); if (hasNext) goToNext(); };
+            }
+
+            function goToPrev() { if (prevId !== null) { currentId = prevId;
+                    renderProject(currentId); } }
+
+            function goToNext() { if (nextId !== null) { currentId = nextId;
+                    renderProject(currentId); } }
+
+            renderProject(currentId);
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') { e.preventDefault();
+                    goToPrev(); } else if (e.key === 'ArrowRight') { e.preventDefault();
+                    goToNext(); }
+            });
         })();
     </script>
 </body>
