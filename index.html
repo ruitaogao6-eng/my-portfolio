@@ -939,18 +939,18 @@
 </head>
 <body>
 
-    <!-- ===== 导航栏（HTML 结构和测试页完全一致） ===== -->
+    <!-- ===== 导航栏 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <div class="nav-wrapper">
                 <ul class="nav-links" id="navLinks">
-                    <li><a data-target="work" class="active-link">作品</a></li>
+                    <li><a data-target="work">作品</a></li>
                     <li><a data-target="about">关于</a></li>
                     <li><a data-target="contact">联系</a></li>
                 </ul>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a data-target="work" class="active-link">作品</a>
+                    <a data-target="work">作品</a>
                     <a data-target="about">关于</a>
                     <a data-target="contact">联系</a>
                 </div>
@@ -1193,8 +1193,9 @@
         (function() {
             'use strict';
 
-            // ===== 导航交互逻辑（完整移植自测试页） =====
+            // ===== 导航交互逻辑 =====
             const links = document.querySelectorAll('.nav-links a, .dropdown-menu a');
+            const sections = ['work', 'about', 'contact'];
 
             // 清除所有悬停状态
             function clearAllHover() {
@@ -1257,12 +1258,64 @@
                 });
             });
 
-            // 初始化：确保“作品”激活
-            const initial = document.querySelector('.nav-links a[data-target="work"], .dropdown-menu a[data-target="work"]');
-            if (initial) {
-                links.forEach(link => link.classList.remove('active-link'));
-                initial.classList.add('active-link');
+            // ===== 根据滚动位置更新导航高亮（核心：修复刷新时高亮错误） =====
+            function updateActiveOnScroll() {
+                let current = '';
+                const scrollPos = window.scrollY + 120;
+
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section) {
+                        const top = section.offsetTop;
+                        const height = section.offsetHeight;
+                        if (scrollPos >= top && scrollPos < top + height) {
+                            current = id;
+                        }
+                    }
+                });
+
+                // 如果没有命中任何区域（比如在顶部），默认高亮“作品”
+                if (!current) {
+                    current = 'work';
+                }
+
+                // 检查当前激活的是否已经正确
+                let currentActive = null;
+                links.forEach(link => {
+                    if (link.classList.contains('active-link')) {
+                        currentActive = link;
+                    }
+                });
+
+                // 如果当前没有激活项，或者激活项不对应，则切换
+                if (!currentActive || currentActive.getAttribute('data-target') !== current) {
+                    // 找到目标链接并激活
+                    links.forEach(link => {
+                        if (link.getAttribute('data-target') === current) {
+                            // 移除所有 active-link
+                            links.forEach(l => l.classList.remove('active-link'));
+                            link.classList.add('active-link');
+                            link.classList.remove('hover-in', 'hover-out');
+                        }
+                    });
+                }
             }
+
+            // 监听滚动事件，用 throttle 优化
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    updateActiveOnScroll();
+                    scrollTimeout = null;
+                }, 100);
+            });
+
+            // 页面加载完成后立即执行一次，确保高亮正确
+            window.addEventListener('load', function() {
+                // 稍等片刻让页面完全渲染
+                setTimeout(updateActiveOnScroll, 100);
+            });
 
             // ===== 汉堡菜单 =====
             const hamburger = document.getElementById('hamburger');
