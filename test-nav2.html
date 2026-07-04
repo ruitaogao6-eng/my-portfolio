@@ -108,17 +108,17 @@
             const activeLog = document.getElementById('currentActive');
             const actionLog = document.getElementById('lastAction');
 
-            // 切换激活项
-            function setActive(targetLink) {
+            // ---------- 核心：切换激活项 ----------
+            function setActive(targetLink, source) {
                 // 移除所有 active-link
                 links.forEach(link => link.classList.remove('active-link'));
                 // 目标设为 active-link
                 targetLink.classList.add('active-link');
                 // 更新日志
-                activeLog.textContent = targetLink.textContent;
+                activeLog.textContent = targetLink.textContent + (source ? ' (' + source + ')' : '');
             }
 
-            // ----- 点击逻辑 -----
+            // ---------- 点击逻辑 ----------
             links.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -126,10 +126,19 @@
                         actionLog.textContent = '点击当前激活项（无变化）';
                         return;
                     }
-                    setActive(this);
+
+                    // 1. 立即切换高亮（不等滚动）
+                    setActive(this, '点击');
                     actionLog.textContent = '点击切换 → ' + this.textContent;
 
-                    // 平滑滚动到对应区域
+                    // 2. 关闭可能存在的滚动更新干扰
+                    // 给滚动检测一个“冷却时间”，避免点击后立即被覆盖
+                    window._scrollCooldown = true;
+                    setTimeout(() => {
+                        window._scrollCooldown = false;
+                    }, 500);
+
+                    // 3. 平滑滚动到对应区域
                     const targetId = this.getAttribute('data-target');
                     if (targetId !== 'home') {
                         const target = document.getElementById(targetId);
@@ -144,42 +153,38 @@
                 });
             });
 
-            // ===== 根据滚动位置更新导航高亮 =====
+            // ---------- 滚动检测 ----------
             function updateActiveOnScroll() {
+                // 如果处于冷却期，不执行滚动更新
+                if (window._scrollCooldown) {
+                    return;
+                }
+
                 let current = '';
                 const scrollPos = window.scrollY + 120;
 
-                sections.forEach(id => {
-                    if (id === 'home') {
-                        // home 区域是页面顶部，当滚动到接近顶部时激活
-                        if (scrollPos < 300) {
-                            current = 'home';
+                // 先检查 home 区域（顶部）
+                if (scrollPos < 300) {
+                    current = 'home';
+                } else {
+                    // 检查其他区域
+                    sections.forEach(id => {
+                        if (id === 'home') return;
+                        const section = document.getElementById(id);
+                        if (section) {
+                            const top = section.offsetTop;
+                            const height = section.offsetHeight;
+                            if (scrollPos >= top && scrollPos < top + height) {
+                                current = id;
+                            }
                         }
-                        return;
-                    }
-                    const section = document.getElementById(id);
-                    if (section) {
-                        const top = section.offsetTop;
-                        const height = section.offsetHeight;
-                        if (scrollPos >= top && scrollPos < top + height) {
-                            current = id;
-                        }
-                    }
-                });
+                    });
+                }
 
                 // 如果没有任何区域匹配，默认选中 "home"
                 if (!current) {
                     current = 'home';
                 }
-
-                // 更新导航高亮
-                let needUpdate = false;
-                let targetLink = null;
-                links.forEach(link => {
-                    if (link.getAttribute('data-target') === current) {
-                        targetLink = link;
-                    }
-                });
 
                 // 检查当前激活的是否已经正确
                 let currentActive = null;
@@ -189,11 +194,17 @@
                     }
                 });
 
+                // 如果当前没有激活项，或者激活项不对应，则切换
                 if (!currentActive || currentActive.getAttribute('data-target') !== current) {
+                    let targetLink = null;
+                    links.forEach(link => {
+                        if (link.getAttribute('data-target') === current) {
+                            targetLink = link;
+                        }
+                    });
                     if (targetLink) {
-                        links.forEach(l => l.classList.remove('active-link'));
-                        targetLink.classList.add('active-link');
-                        activeLog.textContent = targetLink.textContent + ' (滚动)';
+                        setActive(targetLink, '滚动');
+                        actionLog.textContent = '滚动更新 → ' + targetLink.textContent;
                     }
                 }
             }
@@ -205,12 +216,12 @@
                 scrollTimeout = setTimeout(() => {
                     updateActiveOnScroll();
                     scrollTimeout = null;
-                }, 100);
+                }, 80);
             });
 
             // 页面加载完成后执行一次
             window.addEventListener('load', function() {
-                setTimeout(updateActiveOnScroll, 100);
+                setTimeout(updateActiveOnScroll, 150);
                 actionLog.textContent = '页面加载完成';
             });
 
