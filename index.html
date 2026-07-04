@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>工业设计师 · 杨一</title>
-    <!-- Font Awesome 6 (免费版) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -203,7 +202,7 @@
             color: var(--text-primary);
         }
 
-        /* ===== Hero - 修改点1：恢复第一版间距 ===== */
+        /* ===== Hero ===== */
         .hero {
             padding: 140px 0 80px 0;
             display: flex;
@@ -329,7 +328,7 @@
             color: var(--accent);
         }
 
-        /* ===== 作品集 - 修改点1：恢复第一版间距 ===== */
+        /* ===== 作品集 ===== */
         .section {
             padding: 80px 0 100px 0;
         }
@@ -1125,19 +1124,15 @@
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
-            <!-- 1. 微信 → 弹出二维码 -->
             <a href="javascript:void(0)" id="wechatBtn" aria-label="微信">
                 <i class="fab fa-weixin"></i>
             </a>
-            <!-- 2. 小红书 -->
             <a href="https://www.xiaohongshu.com/your-id" target="_blank" aria-label="小红书">
                 <i class="fas fa-pen-fancy"></i>
             </a>
-            <!-- 3. B站 -->
             <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站">
                 <i class="fas fa-tv"></i>
             </a>
-            <!-- 4. 普象网 -->
             <a href="https://www.puxiang.com/your-id" target="_blank" aria-label="普象网">
                 <i class="fas fa-cube"></i>
             </a>
@@ -1159,27 +1154,75 @@
         (function() {
             'use strict';
 
-            // ===== 导航平滑滚动 =====
-            function smoothScrollTo(targetId) {
-                const target = document.getElementById(targetId);
-                if (target) {
-                    const offset = 80;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: top, behavior: 'smooth' });
-                }
+            // 获取导航链接元素（包含桌面导航和下拉菜单）
+            const navAnchors = document.querySelectorAll('.nav-links a, .dropdown-menu a');
+            // 目标区域 ID 列表
+            const sectionIds = ['work', 'about', 'contact'];
+
+            // ===== 核心函数：更新高亮 =====
+            function updateActiveLink() {
+                let current = '';
+                const scrollPos = window.scrollY + 120;
+
+                sectionIds.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section) {
+                        const top = section.offsetTop;
+                        const height = section.offsetHeight;
+                        if (scrollPos >= top && scrollPos < top + height) {
+                            current = id;
+                        }
+                    }
+                });
+
+                navAnchors.forEach(anchor => {
+                    anchor.classList.remove('active');
+                    if (anchor.getAttribute('data-target') === current) {
+                        anchor.classList.add('active');
+                    }
+                });
             }
 
+            // ===== 滚动时自动更新 =====
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('load', updateActiveLink);
+
+            // ===== 点击导航时强制高亮当前点击项 =====
             document.querySelectorAll('[data-target]').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('data-target');
+
+                    // 1. 先手动清除所有 active
+                    navAnchors.forEach(link => link.classList.remove('active'));
+
+                    // 2. 给当前点击的链接添加 active
+                    navAnchors.forEach(link => {
+                        if (link.getAttribute('data-target') === targetId) {
+                            link.classList.add('active');
+                        }
+                    });
+
+                    // 3. 关闭移动端菜单
                     document.getElementById('dropdownMenu').classList.remove('open');
                     document.getElementById('hamburger').classList.remove('active');
-                    smoothScrollTo(targetId);
+
+                    // 4. 平滑滚动到目标区域
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+
+                    // 5. 滚动结束后再校准一次（防止滚动位置偏差导致高亮被覆盖）
+                    setTimeout(() => {
+                        updateActiveLink();
+                    }, 500);
                 });
             });
 
-            // ===== 汉堡菜单 =====
+            // ===== 汉堡菜单开关 =====
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -1195,46 +1238,6 @@
                     hamburger.classList.remove('active');
                 }
             });
-
-            // ===== 修改点2：修复导航高亮（确保所有导航元素都识别正确） =====
-            const sections = ['work', 'about', 'contact'];
-            const navAnchors = document.querySelectorAll('.nav-links a, .dropdown-menu a');
-
-            function updateActiveLink() {
-                let current = '';
-                const scrollPos = window.scrollY + 120;
-                sections.forEach(id => {
-                    const section = document.getElementById(id);
-                    if (section) {
-                        const top = section.offsetTop;
-                        const height = section.offsetHeight;
-                        if (scrollPos >= top && scrollPos < top + height) {
-                            current = id;
-                        }
-                    }
-                });
-                navAnchors.forEach(anchor => {
-                    anchor.classList.remove('active');
-                    // 精确匹配 data-target 属性与当前滚动位置
-                    if (anchor.getAttribute('data-target') === current) {
-                        anchor.classList.add('active');
-                    }
-                });
-            }
-
-            // 增加对点击导航链接后强制高亮的处理
-            document.querySelectorAll('[data-target]').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    // 点击后立即更新高亮
-                    const targetId = this.getAttribute('data-target');
-                    setTimeout(() => {
-                        updateActiveLink();
-                    }, 100);
-                });
-            });
-
-            window.addEventListener('scroll', updateActiveLink);
-            window.addEventListener('load', updateActiveLink);
 
             // ===== 作品筛选 =====
             const filterBtns = document.querySelectorAll('.filter-tabs button');
