@@ -207,7 +207,7 @@
             font-weight: 700;
         }
 
-        /* ===== Hero - 第一版宽松间距 ===== */
+        /* ===== Hero ===== */
         .hero {
             padding: 140px 0 80px 0;
             display: flex;
@@ -333,7 +333,7 @@
             color: var(--accent);
         }
 
-        /* ===== 作品集 - 第一版宽松间距 ===== */
+        /* ===== 作品集 ===== */
         .section {
             padding: 80px 0 100px 0;
         }
@@ -905,18 +905,20 @@
 </head>
 <body>
 
-    <!-- ===== 导航栏 ===== -->
+    <!-- ===== 导航栏（新增首页） ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
             <div class="nav-wrapper">
                 <ul class="nav-links" id="navLinks">
-                    <li><a data-target="work" class="active-link">作品</a></li>
+                    <li><a data-target="home" class="active-link">首页</a></li>
+                    <li><a data-target="work">作品</a></li>
                     <li><a data-target="about">关于</a></li>
                     <li><a data-target="contact">联系</a></li>
                 </ul>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a data-target="work" class="active-link">作品</a>
+                    <a data-target="home" class="active-link">首页</a>
+                    <a data-target="work">作品</a>
                     <a data-target="about">关于</a>
                     <a data-target="contact">联系</a>
                 </div>
@@ -1159,9 +1161,9 @@
         (function() {
             'use strict';
 
-            // ===== 导航交互逻辑（无下划线版） =====
+            // ===== 导航交互逻辑（无下划线版 + 新增首页） =====
             const links = document.querySelectorAll('.nav-links a, .dropdown-menu a');
-            const sections = ['work', 'about', 'contact'];
+            const sections = ['home', 'work', 'about', 'contact'];
 
             // 切换激活项
             function setActive(targetLink) {
@@ -1213,9 +1215,9 @@
                     }
                 });
 
-                // 如果没有命中任何区域（比如在顶部），默认高亮"作品"
+                // 如果没有任何区域匹配（比如滚动到顶部），默认选中 "home"
                 if (!current) {
-                    current = 'work';
+                    current = 'home';
                 }
 
                 // 检查当前激活的是否已经正确
