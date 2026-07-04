@@ -105,7 +105,7 @@
             font-size: 0.95rem;
         }
 
-        /* ----- 导航链接样式（核心修改） ----- */
+        /* ----- 导航链接样式（核心） ----- */
         .nav-links a,
         .dropdown-menu a {
             position: relative;
@@ -117,7 +117,7 @@
             display: inline-block;
         }
 
-        /* 所有链接的伪元素：默认宽度 0，由 JS 控制状态 */
+        /* 所有链接的伪元素：默认宽度 0 */
         .nav-links a::after,
         .dropdown-menu a::after {
             content: '';
@@ -131,24 +131,25 @@
             transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ----- 状态 1：悬停（hover） ----- */
+        /* ----- 状态 1：悬停滑入（hover-in） ----- */
         .nav-links a.hover-in::after,
         .dropdown-menu a.hover-in::after {
             width: 100% !important;
             transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        /* ----- 状态 2：悬停滑出（hover-out） ----- */
         .nav-links a.hover-out::after,
         .dropdown-menu a.hover-out::after {
             width: 0 !important;
             transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ----- 状态 2：激活（active）—— 永久显示 ----- */
+        /* ----- 状态 3：激活（active）—— 永久显示，不响应悬停 ----- */
         .nav-links a.active-link::after,
         .dropdown-menu a.active-link::after {
             width: 100% !important;
-            transition: width 0.25s ease;
+            transition: none;
         }
 
         .nav-links a.active-link,
@@ -156,7 +157,14 @@
             color: var(--text-primary);
         }
 
-        /* ----- 状态 3：激活项被替换时，旧的滑出 ----- */
+        /* 激活项不响应悬停动画 */
+        .nav-links a.active-link:hover::after,
+        .dropdown-menu a.active-link:hover::after {
+            width: 100% !important;
+            transition: none;
+        }
+
+        /* ----- 状态 4：旧激活项被替换时滑出（active-out） ----- */
         .nav-links a.active-out::after,
         .dropdown-menu a.active-out::after {
             width: 0 !important;
@@ -168,11 +176,25 @@
             color: var(--text-secondary);
         }
 
-        /* 禁用 hover 对 active 的影响（active 状态下 hover 不触发动画） */
-        .nav-links a.active-link:hover::after,
-        .dropdown-menu a.active-link:hover::after {
-            width: 100% !important;
-            transition: none;
+        /* ===== 下拉菜单（移动端） ===== */
+        .dropdown-menu a::after {
+            left: 28px;
+            bottom: 6px;
+            width: 0;
+            height: 2.5px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .dropdown-menu a.hover-in::after,
+        .dropdown-menu a.active-link::after {
+            width: calc(100% - 56px) !important;
+        }
+
+        .dropdown-menu a.hover-out::after,
+        .dropdown-menu a.active-out::after {
+            width: 0 !important;
         }
 
         /* ===== 汉堡菜单 ===== */
@@ -239,27 +261,6 @@
         .dropdown-menu a:hover {
             background: var(--border-light);
             color: var(--text-primary);
-        }
-
-        /* 下拉菜单里的链接也应用相同的伪元素规则 */
-        .dropdown-menu a::after {
-            left: 28px;
-            bottom: 6px;
-            width: 0;
-            height: 2.5px;
-            background: var(--accent);
-            border-radius: 2px;
-            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .dropdown-menu a.hover-in::after,
-        .dropdown-menu a.active-link::after {
-            width: calc(100% - 56px) !important;
-        }
-
-        .dropdown-menu a.hover-out::after,
-        .dropdown-menu a.active-out::after {
-            width: 0 !important;
         }
 
         /* ===== Hero - 第一版宽松间距 ===== */
@@ -1225,13 +1226,6 @@
                 });
             }
 
-            // ----- 工具：清除所有链接的 active 状态（保留 active-link）-----
-            function clearAllActive() {
-                allNavLinks.forEach(link => {
-                    link.classList.remove('active-link');
-                });
-            }
-
             // ----- 工具：清除所有链接的 active-out 状态 -----
             function clearAllActiveOut() {
                 allNavLinks.forEach(link => {
@@ -1240,7 +1234,7 @@
             }
 
             // ----- 核心：切换激活项 -----
-            function setActiveLink(targetId) {
+            function setActiveLink(targetId, skipScroll) {
                 // 1. 找到当前激活的链接
                 let currentActive = null;
                 allNavLinks.forEach(link => {
@@ -1359,7 +1353,9 @@
                     // 如果当前没有激活项，或者激活项不对应，则切换
                     if (!currentActive || currentActive.getAttribute('data-target') !== current) {
                         // 清除所有 active
-                        clearAllActive();
+                        allNavLinks.forEach(link => {
+                            link.classList.remove('active-link');
+                        });
                         // 找到目标链接并激活
                         allNavLinks.forEach(link => {
                             if (link.getAttribute('data-target') === current) {
@@ -1381,10 +1377,15 @@
                 }, 100);
             });
 
-            // 页面加载时初始化一次
+            // 页面加载时初始化一次：确保“作品”是激活的
             window.addEventListener('load', function() {
                 // 默认激活“作品”
                 setActiveLink('work');
+            });
+
+            // 如果页面加载时已经滚动到某个区域，也更新一下
+            window.addEventListener('load', function() {
+                setTimeout(updateActiveOnScroll, 200);
             });
 
             // ----- 汉堡菜单 -----
