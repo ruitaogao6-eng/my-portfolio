@@ -77,6 +77,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .back-link:hover {
@@ -142,8 +143,6 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* 修改点5：去掉了一处返回按钮，只保留导航栏的 */
-
         @media (max-width: 640px) {
             .container {
                 padding: 0 20px;
@@ -165,7 +164,6 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
-            <!-- 修改点5：只保留导航栏的返回按钮 -->
             <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回作品集</a>
         </div>
     </nav>
@@ -193,8 +191,6 @@
                 <img src="https://picsum.photos/600/400?random=11" alt="细节1" loading="lazy" />
                 <img src="https://picsum.photos/600/400?random=12" alt="细节2" loading="lazy" />
             </div>
-
-            <!-- 修改点5：此处返回按钮已删除，只保留导航栏一个 -->
         </div>
     </section>
 
