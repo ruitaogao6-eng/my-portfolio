@@ -3,21 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>导航测试 - 无下划线版</title>
+    <title>导航测试 - 固定版</title>
     <style>
+        /* 重置基础边距 */
         body {
-            padding: 100px 40px;
+            margin: 0;
+            padding: 0;
             font-family: system-ui, sans-serif;
             background: #f8f6f3;
         }
 
+        /* ===== 1. 导航固定在顶部 ===== */
+        .nav-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(248, 246, 243, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid #e8e4de;
+            padding: 16px 40px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1c1c1c;
+        }
+        .logo span { color: #c7a17a; }
+
         .test-nav {
             display: flex;
-            gap: 40px;
+            gap: 36px;
             list-style: none;
+            margin: 0;
             padding: 0;
             font-weight: 500;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
         }
 
         .test-nav a {
@@ -29,13 +56,12 @@
             transition: color 0.2s, font-weight 0.2s;
         }
 
-        /* 激活状态：颜色加深 + 加粗 */
+        /* ===== 2. 所有导航项统一激活样式 ===== */
         .test-nav a.active-link {
             color: #1c1c1c;
             font-weight: 700;
         }
 
-        /* 悬停效果（非激活状态） */
         .test-nav a:hover {
             color: #1c1c1c;
         }
@@ -45,20 +71,25 @@
             display: none !important;
         }
 
+        /* 内容区域占位，让滚动效果可见 */
+        .content-placeholder {
+            margin-top: 120px; /* 避开固定导航 */
+            padding: 20px 40px;
+        }
+
         .info {
-            margin-top: 50px;
             padding: 20px;
             background: #fff;
             border-radius: 8px;
             font-size: 0.9rem;
             border: 1px solid #e8e4de;
+            margin-bottom: 40px;
         }
-        .info p { margin: 4px 0; }
         .info .active-log { font-weight: bold; color: #1c1c1c; }
 
         .section-block {
-            margin-top: 80px;
             padding: 60px 20px;
+            margin-bottom: 80px;
             background: #fff;
             border-radius: 12px;
             border: 1px solid #e8e4de;
@@ -68,35 +99,43 @@
 </head>
 <body>
 
-    <h2>🧪 导航测试（无下划线，纯文字加粗）</h2>
-    <p style="color: #666; margin-bottom: 24px;">点击导航项 → 文字变黑加粗，且不会随鼠标移走而恢复。</p>
-
-    <ul class="test-nav" id="testNav">
-        <li><a data-target="home" class="active-link">首页</a></li>
-        <li><a data-target="work">作品</a></li>
-        <li><a data-target="about">关于</a></li>
-        <li><a data-target="contact">联系</a></li>
-    </ul>
-
-    <div class="info" id="statusLog">
-        <p>📌 当前激活：<span class="active-log" id="currentActive">首页</span></p>
-        <p>🖱️ 上次操作：<span id="lastAction">页面加载</span></p>
+    <!-- ===== 固定导航 ===== -->
+    <div class="nav-wrapper">
+        <div class="logo">Studio<span>·</span>Y</div>
+        <ul class="test-nav" id="testNav">
+            <li><a data-target="home" class="active-link">首页</a></li>
+            <li><a data-target="work">作品</a></li>
+            <li><a data-target="about">关于</a></li>
+            <li><a data-target="contact">联系</a></li>
+        </ul>
     </div>
 
-    <!-- 模拟内容区域，用于滚动测试 -->
-    <div class="section-block" id="work" style="margin-top: 100px;">
-        <h2>📁 作品区域</h2>
-        <p>滚动到这里时，导航应自动切到「作品」</p>
-    </div>
+    <!-- ===== 页面内容 ===== -->
+    <div class="content-placeholder">
+        <h2>🧪 导航测试（固定 + 统一高亮）</h2>
+        <p style="color: #666; margin-bottom: 24px;">点击导航项或滚动页面，所有项外观一致（变黑加粗）。</p>
 
-    <div class="section-block" id="about" style="margin-top: 80px;">
-        <h2>👤 关于区域</h2>
-        <p>滚动到这里时，导航应自动切到「关于」</p>
-    </div>
+        <div class="info" id="statusLog">
+            <p>📌 当前激活：<span class="active-log" id="currentActive">首页</span></p>
+            <p>🖱️ 上次操作：<span id="lastAction">页面加载</span></p>
+        </div>
 
-    <div class="section-block" id="contact" style="margin-top: 80px; margin-bottom: 200px;">
-        <h2>📬 联系区域</h2>
-        <p>滚动到这里时，导航应自动切到「联系」</p>
+        <!-- 模拟内容区域 -->
+        <div class="section-block" id="work">
+            <h2>📁 作品区域</h2>
+            <p>滚动到这里时，导航应自动切到「作品」</p>
+            <p style="color: #999; margin-top: 12px;">（继续往下滚动测试「关于」和「联系」区域）</p>
+        </div>
+
+        <div class="section-block" id="about">
+            <h2>👤 关于区域</h2>
+            <p>滚动到这里时，导航应自动切到「关于」</p>
+        </div>
+
+        <div class="section-block" id="contact" style="margin-bottom: 200px;">
+            <h2>📬 联系区域</h2>
+            <p>滚动到这里时，导航应自动切到「联系」</p>
+        </div>
     </div>
 
     <script>
@@ -108,108 +147,90 @@
             const activeLog = document.getElementById('currentActive');
             const actionLog = document.getElementById('lastAction');
 
-            // ---------- 核心：切换激活项 ----------
+            // ----- 核心切换函数 -----
             function setActive(targetLink, source) {
                 // 移除所有 active-link
                 links.forEach(link => link.classList.remove('active-link'));
-                // 目标设为 active-link
+                // 目标添加 active-link
                 targetLink.classList.add('active-link');
                 // 更新日志
-                activeLog.textContent = targetLink.textContent + (source ? ' (' + source + ')' : '');
+                activeLog.textContent = targetLink.textContent;
+                if (source) {
+                    actionLog.textContent = source + ' → ' + targetLink.textContent;
+                }
             }
 
-            // ---------- 点击逻辑 ----------
+            // ----- 点击逻辑 -----
             links.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (this.classList.contains('active-link')) {
-                        actionLog.textContent = '点击当前激活项（无变化）';
+                        actionLog.textContent = '点击当前项（无变化）';
                         return;
                     }
 
-                    // 1. 立即切换高亮（不等滚动）
+                    // 1. 立即切换高亮
                     setActive(this, '点击');
-                    actionLog.textContent = '点击切换 → ' + this.textContent;
 
-                    // 2. 关闭可能存在的滚动更新干扰
-                    // 给滚动检测一个“冷却时间”，避免点击后立即被覆盖
+                    // 2. 关闭滚动检测的干扰（500ms 冷却）
                     window._scrollCooldown = true;
                     setTimeout(() => {
                         window._scrollCooldown = false;
                     }, 500);
 
-                    // 3. 平滑滚动到对应区域
+                    // 3. 平滑滚动到目标区域
                     const targetId = this.getAttribute('data-target');
-                    if (targetId !== 'home') {
+                    if (targetId === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
                         const target = document.getElementById(targetId);
                         if (target) {
                             const offset = 80;
                             const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
                             window.scrollTo({ top: top, behavior: 'smooth' });
                         }
-                    } else {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 });
             });
 
-            // ---------- 滚动检测 ----------
+            // ----- 滚动检测（更新高亮）-----
             function updateActiveOnScroll() {
-                // 如果处于冷却期，不执行滚动更新
-                if (window._scrollCooldown) {
-                    return;
-                }
+                if (window._scrollCooldown) return;
 
                 let current = '';
                 const scrollPos = window.scrollY + 120;
 
-                // 先检查 home 区域（顶部）
+                // 检测 home（页面顶部）
                 if (scrollPos < 300) {
                     current = 'home';
                 } else {
-                    // 检查其他区域
-                    sections.forEach(id => {
-                        if (id === 'home') return;
+                    for (let id of sections) {
+                        if (id === 'home') continue;
                         const section = document.getElementById(id);
                         if (section) {
                             const top = section.offsetTop;
                             const height = section.offsetHeight;
                             if (scrollPos >= top && scrollPos < top + height) {
                                 current = id;
+                                break;
                             }
                         }
-                    });
-                }
-
-                // 如果没有任何区域匹配，默认选中 "home"
-                if (!current) {
-                    current = 'home';
-                }
-
-                // 检查当前激活的是否已经正确
-                let currentActive = null;
-                links.forEach(link => {
-                    if (link.classList.contains('active-link')) {
-                        currentActive = link;
                     }
-                });
+                }
 
-                // 如果当前没有激活项，或者激活项不对应，则切换
+                if (!current) current = 'home';
+
+                // 如果当前高亮项与检测结果不符，则切换
+                let currentActive = document.querySelector('.test-nav a.active-link');
                 if (!currentActive || currentActive.getAttribute('data-target') !== current) {
-                    let targetLink = null;
-                    links.forEach(link => {
-                        if (link.getAttribute('data-target') === current) {
-                            targetLink = link;
-                        }
-                    });
+                    let targetLink = document.querySelector(`.test-nav a[data-target="${current}"]`);
                     if (targetLink) {
                         setActive(targetLink, '滚动');
-                        actionLog.textContent = '滚动更新 → ' + targetLink.textContent;
                     }
                 }
             }
 
-            // 监听滚动事件，用 throttle 优化
+            // 滚动事件节流
             let scrollTimeout;
             window.addEventListener('scroll', function() {
                 if (scrollTimeout) return;
@@ -219,7 +240,7 @@
                 }, 80);
             });
 
-            // 页面加载完成后执行一次
+            // 页面加载完成后初始化
             window.addEventListener('load', function() {
                 setTimeout(updateActiveOnScroll, 150);
                 actionLog.textContent = '页面加载完成';
