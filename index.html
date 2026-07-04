@@ -62,7 +62,7 @@
             padding: 0 40px;
         }
 
-        /* ===== 导航栏（无下划线，纯文字加粗） ===== */
+        /* ===== 导航栏（无下划线，纯文字加粗 + 固定顶部） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -1183,39 +1183,62 @@
                     if (this.classList.contains('active-link')) return;
 
                     const targetId = this.getAttribute('data-target');
+
+                    // 1. 立即切换高亮
                     setActive(this);
 
-                    // 关闭移动端菜单
+                    // 2. 关闭滚动检测干扰（500ms 冷却期）
+                    window._scrollCooldown = true;
+                    setTimeout(() => {
+                        window._scrollCooldown = false;
+                    }, 500);
+
+                    // 3. 关闭移动端菜单
                     document.getElementById('dropdownMenu').classList.remove('open');
                     document.getElementById('hamburger').classList.remove('active');
 
-                    // 平滑滚动
-                    const target = document.getElementById(targetId);
-                    if (target) {
-                        const offset = 80;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    // 4. 平滑滚动到目标区域
+                    if (targetId === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            const offset = 80;
+                            const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                            window.scrollTo({ top: top, behavior: 'smooth' });
+                        }
                     }
                 });
             });
 
-            // ===== 根据滚动位置更新导航高亮 =====
+            // ===== 滚动检测（更新高亮）=====
             function updateActiveOnScroll() {
+                // 如果处于冷却期，不执行滚动更新
+                if (window._scrollCooldown) return;
+
                 let current = '';
                 const scrollPos = window.scrollY + 120;
 
-                sections.forEach(id => {
-                    const section = document.getElementById(id);
-                    if (section) {
-                        const top = section.offsetTop;
-                        const height = section.offsetHeight;
-                        if (scrollPos >= top && scrollPos < top + height) {
-                            current = id;
+                // 检查 home 区域（页面顶部）
+                if (scrollPos < 300) {
+                    current = 'home';
+                } else {
+                    // 检查其他区域
+                    for (let id of sections) {
+                        if (id === 'home') continue;
+                        const section = document.getElementById(id);
+                        if (section) {
+                            const top = section.offsetTop;
+                            const height = section.offsetHeight;
+                            if (scrollPos >= top && scrollPos < top + height) {
+                                current = id;
+                                break;
+                            }
                         }
                     }
-                });
+                }
 
-                // 如果没有任何区域匹配（比如滚动到顶部），默认选中 "home"
+                // 如果没有任何区域匹配，默认选中 "home"
                 if (!current) {
                     current = 'home';
                 }
@@ -1230,12 +1253,15 @@
 
                 // 如果当前没有激活项，或者激活项不对应，则切换
                 if (!currentActive || currentActive.getAttribute('data-target') !== current) {
+                    let targetLink = null;
                     links.forEach(link => {
                         if (link.getAttribute('data-target') === current) {
-                            links.forEach(l => l.classList.remove('active-link'));
-                            link.classList.add('active-link');
+                            targetLink = link;
                         }
                     });
+                    if (targetLink) {
+                        setActive(targetLink);
+                    }
                 }
             }
 
@@ -1246,12 +1272,12 @@
                 scrollTimeout = setTimeout(() => {
                     updateActiveOnScroll();
                     scrollTimeout = null;
-                }, 100);
+                }, 80);
             });
 
             // 页面加载完成后执行一次
             window.addEventListener('load', function() {
-                setTimeout(updateActiveOnScroll, 100);
+                setTimeout(updateActiveOnScroll, 150);
             });
 
             // ===== 汉堡菜单 =====
