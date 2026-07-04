@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>作品详情 · 杨一</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
             --radius: 20px;
-            --transition: 0.3s ease;
+            --transition: 0.25s ease;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
@@ -41,6 +41,7 @@
             padding: 0 40px;
         }
 
+        /* ===== 导航栏（与主页完全一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -54,6 +55,9 @@
         }
 
         .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -64,28 +68,108 @@
             font-weight: 800;
             letter-spacing: -0.03em;
             color: var(--text-primary);
+            text-decoration: none;
         }
 
         .logo span {
             color: var(--accent);
         }
 
-        .back-link {
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            align-items: center;
+        }
+
+        .nav-links a {
             color: var(--text-secondary);
             font-weight: 500;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: color 0.2s, font-weight 0.2s;
+            padding: 4px 0;
+            cursor: pointer;
             text-decoration: none;
         }
 
-        .back-link:hover {
+        .nav-links a:hover {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* 移除所有下划线 */
+        .nav-links a::after {
+            display: none !important;
+        }
+
+        /* ===== 二级导航（面包屑） ===== */
+        .sub-nav {
+            position: fixed;
+            top: 78px;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            padding: 12px 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px) saturate(180%);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
+        }
+
+        .sub-nav .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
             color: var(--text-primary);
         }
 
+        .breadcrumb .separator {
+            color: var(--border-light);
+        }
+
+        .breadcrumb .current {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .sub-nav-right {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .sub-nav-right a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .sub-nav-right a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ===== 详情页内容 ===== */
         .detail-hero {
-            padding: 120px 0 40px 0;
+            padding: 160px 0 40px 0;
         }
 
         .detail-hero img {
@@ -143,6 +227,7 @@
             box-shadow: var(--shadow-sm);
         }
 
+        /* ===== 响应式 ===== */
         @media (max-width: 640px) {
             .container {
                 padding: 0 20px;
@@ -154,20 +239,58 @@
                 grid-template-columns: 1fr;
             }
             .detail-hero {
-                padding: 100px 0 20px 0;
+                padding: 220px 0 20px 0;
+            }
+            .nav-links {
+                display: none;
+            }
+            .sub-nav .container {
+                flex-direction: column;
+                gap: 4px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .navbar .container,
+            .sub-nav .container {
+                padding: 0 24px;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <!-- ===== 一级导航（与主页完全一致） ===== -->
+    <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回作品集</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#work">作品</a></li>
+                <li><a href="index.html#about">关于</a></li>
+                <li><a href="index.html#contact">联系</a></li>
+            </ul>
         </div>
     </nav>
 
+    <!-- ===== 二级导航（面包屑） ===== -->
+    <div class="sub-nav" id="subNav">
+        <div class="container">
+            <div class="breadcrumb" id="breadcrumb">
+                <a href="index.html">首页</a>
+                <span class="separator">›</span>
+                <a href="index.html#work">作品</a>
+                <span class="separator">›</span>
+                <span class="current" id="breadcrumbTitle">加载中...</span>
+            </div>
+            <div class="sub-nav-right">
+                <a href="index.html#work"><i class="fas fa-th"></i> 全部作品</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
         <div class="container">
             <img id="detailMainImg" src="https://picsum.photos/1200/600?random=10" alt="作品主图" loading="lazy" />
@@ -243,6 +366,9 @@
             document.getElementById('detailCategory').textContent = data.category;
             document.getElementById('detailDesc').textContent = data.desc;
             document.getElementById('detailMainImg').src = data.mainImg;
+
+            // 更新面包屑
+            document.getElementById('breadcrumbTitle').textContent = data.title;
         })();
     </script>
 </body>
