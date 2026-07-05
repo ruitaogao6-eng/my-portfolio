@@ -101,6 +101,8 @@
             cursor: pointer;
             text-decoration: none;
             white-space: nowrap;
+            min-width: 36px;
+            text-align: center;
         }
         .nav-links a:hover {
             color: var(--text-primary);
@@ -163,6 +165,7 @@
             font-weight: 500;
             text-decoration: none;
             font-size: 0.95rem;
+            min-width: 36px;
         }
         .dropdown-menu a:hover {
             background: var(--border-light);
@@ -283,10 +286,16 @@
             font-family: var(--font);
             background: transparent;
             white-space: nowrap;
+            min-width: 36px;
+            text-align: center;
         }
         .lang-switch:hover {
             border-color: var(--text-primary);
             color: var(--text-primary);
+        }
+
+        .hero-content {
+            min-height: 320px;
         }
 
         .hero {
@@ -959,15 +968,15 @@
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
 
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">首页</a></li>
+                <li><a href="#home" data-i18n="nav-home">首页</a></li>
                 <li class="nav-works-dropdown" id="worksDropdown">
-                    <a href="#work" id="worksNavLink">作品</a>
+                    <a href="#work" id="worksNavLink" data-i18n="nav-work">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
                         <div class="drop-inner" id="dropInner"></div>
                     </div>
                 </li>
-                <li><a href="#about">关于</a></li>
-                <li><a href="#contact">联系</a></li>
+                <li><a href="#about" data-i18n="nav-about">关于</a></li>
+                <li><a href="#contact" data-i18n="nav-contact">联系</a></li>
                 <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
                 <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
@@ -979,10 +988,10 @@
             </button>
 
             <div class="dropdown-menu" id="dropdownMenu">
-                <a href="#home">首页</a>
-                <a href="#work">作品</a>
-                <a href="#about">关于</a>
-                <a href="#contact">联系</a>
+                <a href="#home" data-i18n="nav-home">首页</a>
+                <a href="#work" data-i18n="nav-work">作品</a>
+                <a href="#about" data-i18n="nav-about">关于</a>
+                <a href="#contact" data-i18n="nav-contact">联系</a>
             </div>
         </div>
     </nav>
@@ -1095,7 +1104,6 @@
         </div>
     </div>
 
-    <!-- 回到顶部按钮 -->
     <button class="back-to-top" id="backToTop" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1105,7 +1113,7 @@
             'use strict';
 
             // ===== 作品数据 =====
-            const projects = [
+            var projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
                 { id: 3, title: '模块化灯具 · 棱', category: '家居', img: 'https://picsum.photos/600/450?random=4' },
@@ -1116,28 +1124,93 @@
                 { id: 8, title: '模块化置物架 · 叠', category: '概念', img: 'https://picsum.photos/600/450?random=14' }
             ];
 
-            const categories = ['全部', '家具', '消费电子', '家居', '概念'];
-            let currentFilter = '全部';
-            let currentLang = 'zh';
+            var categories = ['全部', '家具', '消费电子', '家居', '概念'];
+            var currentFilter = '全部';
+            var currentLang = 'zh';
 
-            const translations = {
+            // ===== 语言包 =====
+            var translations = {
                 zh: {
+                    'nav-home': '首页',
+                    'nav-work': '作品',
+                    'nav-about': '关于',
+                    'nav-contact': '联系',
                     'filter-all': '全部',
                     'filter-furniture': '家具',
                     'filter-electronics': '消费电子',
                     'filter-home': '家居',
                     'filter-concept': '概念',
                     'view-detail': '查看详情',
-                    'more': '查看更多'
+                    'more': '查看更多',
+                    'hero-title1': '工业设计',
+                    'hero-title2': '塑造生活',
+                    'hero-title3': '的形态',
+                    'hero-desc': '我是杨一，工业设计师。专注于可持续产品、人机交互与美学表达。让每一件作品都成为功能与艺术的平衡。',
+                    'btn-work': '查看作品',
+                    'btn-contact': '合作洽谈',
+                    'badge': '8年 · 设计经验',
+                    'about-title': '用设计 \n回应真实需求',
+                    'about-p1': '我毕业于中央美术学院工业设计专业，先后在深圳、上海的设计事务所工作。我相信好的设计不只是好看，更在于它如何与使用者产生共鸣。',
+                    'about-p2': '从概念草图到量产落地，我全程参与每一个环节。擅长将材料、工艺与人机工学融合，创造出既有温度又有质感的作品。',
+                    'about-signature': '— 杨一',
+                    'stat-years': '8+',
+                    'stat-years-label': '年经验',
+                    'stat-projects': '36',
+                    'stat-projects-label': '落地项目',
+                    'stat-awards': '12',
+                    'stat-awards-label': '设计奖项',
+                    'contact-title': '一起创造 \n更好的产品',
+                    'contact-desc': '无论是一个新概念、产品迭代还是设计咨询，欢迎随时与我沟通。',
+                    'contact-address': '中国 · 上海',
+                    'form-name': '你的名字',
+                    'form-email': '邮箱地址',
+                    'form-message': '说说你的想法…',
+                    'form-submit': '发送消息',
+                    'footer': '© 2026 杨一 · 工业设计',
+                    'wechat-title': '微信',
+                    'wechat-sub': '扫一扫添加好友',
+                    'wechat-hint': '长按或扫码添加微信'
                 },
                 en: {
+                    'nav-home': 'Home',
+                    'nav-work': 'Work',
+                    'nav-about': 'About',
+                    'nav-contact': 'Contact',
                     'filter-all': 'All',
                     'filter-furniture': 'Furniture',
                     'filter-electronics': 'Electronics',
                     'filter-home': 'Home',
                     'filter-concept': 'Concept',
                     'view-detail': 'View Detail',
-                    'more': 'View More'
+                    'more': 'View More',
+                    'hero-title1': 'Industrial Design',
+                    'hero-title2': 'Shaping Life',
+                    'hero-title3': '',
+                    'hero-desc': 'I am Yang Yi, an industrial designer focused on sustainable products, human interaction, and aesthetic expression. Let every work become a balance of function and art.',
+                    'btn-work': 'View Work',
+                    'btn-contact': 'Get in Touch',
+                    'badge': '8 Years · Design Experience',
+                    'about-title': 'Design that\nResponds to Real Needs',
+                    'about-p1': 'I graduated from the Central Academy of Fine Arts in Industrial Design and have worked in design firms in Shenzhen and Shanghai. I believe good design is not just about aesthetics, but about how it resonates with users.',
+                    'about-p2': 'From concept sketches to production, I\'m involved in every stage. I excel at blending materials, craftsmanship, and ergonomics to create works that are both warm and textured.',
+                    'about-signature': '— Yang Yi',
+                    'stat-years': '8+',
+                    'stat-years-label': 'Years',
+                    'stat-projects': '36',
+                    'stat-projects-label': 'Projects',
+                    'stat-awards': '12',
+                    'stat-awards-label': 'Awards',
+                    'contact-title': 'Let\'s Create\nBetter Products Together',
+                    'contact-desc': 'Whether it\'s a new concept, product iteration, or design consultation, feel free to reach out anytime.',
+                    'contact-address': 'Shanghai, China',
+                    'form-name': 'Your Name',
+                    'form-email': 'Email',
+                    'form-message': 'Share your thoughts…',
+                    'form-submit': 'Send Message',
+                    'footer': '© 2026 Yang Yi · Industrial Design',
+                    'wechat-title': 'WeChat',
+                    'wechat-sub': 'Scan to add friend',
+                    'wechat-hint': 'Long press or scan to add WeChat'
                 }
             };
 
@@ -1147,22 +1220,101 @@
                 ] : key;
             }
 
+            // ===== 更新所有文本 =====
+            function updateAllText() {
+                // 导航
+                document.querySelectorAll('.nav-links a[data-i18n], .dropdown-menu a[data-i18n]').forEach(function(el) {
+                    el.textContent = t(el.getAttribute('data-i18n'));
+                });
+
+                // Hero
+                var heroTitle = document.querySelector('.hero-content h1');
+                if (heroTitle) {
+                    heroTitle.innerHTML = t('hero-title1') + '<br /><span class="highlight">' + t('hero-title2') +
+                        '</span> ' + t('hero-title3');
+                }
+                var heroDesc = document.querySelector('.hero-content p');
+                if (heroDesc) heroDesc.textContent = t('hero-desc');
+                var btnWork = document.querySelector('.hero-actions .btn-primary');
+                if (btnWork) btnWork.textContent = t('btn-work');
+                var btnContact = document.querySelector('.hero-actions .btn-outline');
+                if (btnContact) btnContact.textContent = t('btn-contact');
+                var badge = document.querySelector('.floating-badge span');
+                if (badge) badge.textContent = t('badge');
+
+                // 分类 & 作品
+                renderFilters();
+                renderProjects();
+
+                // 查看更多
+                var moreBtn = document.querySelector('.btn-more');
+                if (moreBtn) moreBtn.innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
+
+                // About
+                var aboutTitle = document.querySelector('.about-text h2');
+                if (aboutTitle) aboutTitle.innerHTML = t('about-title').replace(/\n/g, '<br />');
+                var aboutP1 = document.querySelectorAll('.about-text p')[0];
+                if (aboutP1) aboutP1.textContent = t('about-p1');
+                var aboutP2 = document.querySelectorAll('.about-text p')[1];
+                if (aboutP2) aboutP2.textContent = t('about-p2');
+                var aboutSig = document.querySelector('.about-text .signature');
+                if (aboutSig) aboutSig.textContent = t('about-signature');
+
+                var statNumbers = document.querySelectorAll('.stat-item .number');
+                var statLabels = document.querySelectorAll('.stat-item .label');
+                if (statNumbers.length >= 3) {
+                    statNumbers[0].textContent = t('stat-years');
+                    statLabels[0].textContent = t('stat-years-label');
+                    statNumbers[1].textContent = t('stat-projects');
+                    statLabels[1].textContent = t('stat-projects-label');
+                    statNumbers[2].textContent = t('stat-awards');
+                    statLabels[2].textContent = t('stat-awards-label');
+                }
+
+                var contactTitle = document.querySelector('.contact-info h2');
+                if (contactTitle) contactTitle.innerHTML = t('contact-title').replace(/\n/g, '<br />');
+                var contactDesc = document.querySelector('.contact-info p');
+                if (contactDesc) contactDesc.textContent = t('contact-desc');
+                var contactAddr = document.querySelector('.contact-links a:last-child span');
+                if (contactAddr) contactAddr.textContent = t('contact-address');
+
+                var formName = document.querySelector('.contact-form input[name="name"]');
+                if (formName) formName.placeholder = t('form-name');
+                var formEmail = document.querySelector('.contact-form input[name="email"]');
+                if (formEmail) formEmail.placeholder = t('form-email');
+                var formMsg = document.querySelector('.contact-form textarea');
+                if (formMsg) formMsg.placeholder = t('form-message');
+                var formBtn = document.querySelector('.contact-form .btn');
+                if (formBtn) formBtn.textContent = t('form-submit');
+
+                var footerSpan = document.querySelector('.footer span');
+                if (footerSpan) footerSpan.textContent = t('footer');
+
+                var wechatTitle = document.querySelector('.qr-modal-content h3');
+                if (wechatTitle) wechatTitle.textContent = t('wechat-title');
+                var wechatSub = document.querySelector('.qr-modal-content .sub');
+                if (wechatSub) wechatSub.textContent = t('wechat-sub');
+                var wechatHint = document.querySelector('.qr-modal-content .hint');
+                if (wechatHint) wechatHint.textContent = t('wechat-hint');
+            }
+
+            // ===== 渲染分类 =====
             function renderFilters() {
-                const container = document.getElementById('filterTabs');
+                var container = document.getElementById('filterTabs');
                 if (!container) return;
                 container.innerHTML = '';
-                const labels = [
+                var labels = [
                     t('filter-all'), t('filter-furniture'), t('filter-electronics'),
                     t('filter-home'), t('filter-concept')
                 ];
-                const keys = ['全部', '家具', '消费电子', '家居', '概念'];
-                const nums = ['', '01', '02', '03', '04'];
+                var keys = ['全部', '家具', '消费电子', '家居', '概念'];
+                var nums = ['', '01', '02', '03', '04'];
 
-                keys.forEach((key, idx) => {
-                    const btn = document.createElement('button');
+                keys.forEach(function(key, idx) {
+                    var btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
+                    btn.innerHTML = '<span class="num">' + nums[idx] + '</span> ' + labels[idx];
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
@@ -1172,67 +1324,66 @@
                 });
             }
 
+            // ===== 渲染作品 =====
             function renderProjects() {
-                const grid = document.getElementById('workGrid');
+                var grid = document.getElementById('workGrid');
                 if (!grid) return;
                 grid.innerHTML = '';
-                let filtered = projects;
+                var filtered = projects;
                 if (currentFilter !== '全部') {
-                    filtered = projects.filter(p => p.category === currentFilter);
+                    filtered = projects.filter(function(p) { return p.category === currentFilter; });
                 }
                 if (filtered.length === 0) {
                     grid.innerHTML =
                         '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px 0;">没有匹配的作品</p>';
                     return;
                 }
-                filtered.forEach(p => {
-                    const item = document.createElement('div');
+                filtered.forEach(function(p) {
+                    var item = document.createElement('div');
                     item.className = 'work-item reveal';
-                    item.innerHTML = `
-                        <a href="detail.html?id=${p.id}">
-                            <div class="work-thumb">
-                                <img src="${p.img}" alt="${p.title}" loading="lazy" />
-                                <div class="work-overlay">${t('view-detail')}</div>
-                            </div>
-                            <div class="work-info">
-                                <h3>${p.title}</h3>
-                                <span class="tag">${p.category}</span>
-                            </div>
-                        </a>
-                    `;
+                    item.innerHTML =
+                        '<a href="detail.html?id=' + p.id + '">' +
+                        '<div class="work-thumb">' +
+                        '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
+                        '<div class="work-overlay">' + t('view-detail') + '</div>' +
+                        '</div>' +
+                        '<div class="work-info">' +
+                        '<h3>' + p.title + '</h3>' +
+                        '<span class="tag">' + p.category + '</span>' +
+                        '</div>' +
+                        '</a>';
                     grid.appendChild(item);
                 });
-                // 触发滚动动画
-                const reveals = document.querySelectorAll('.reveal');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                setTimeout(function() {
+                    document.querySelectorAll('.reveal').forEach(function(el) {
+                        if (el.getBoundingClientRect().top < window.innerHeight) {
+                            el.classList.add('visible');
+                        }
                     });
-                }, { threshold: 0.15 });
-                reveals.forEach(el => observer.observe(el));
+                }, 100);
             }
 
+            // ===== 渲染下拉菜单 =====
             function renderDropdown() {
-                const inner = document.getElementById('dropInner');
+                var inner = document.getElementById('dropInner');
                 if (!inner) return;
                 inner.innerHTML = '';
-                projects.forEach(p => {
-                    const div = document.createElement('div');
+                projects.forEach(function(p) {
+                    var div = document.createElement('div');
                     div.className = 'drop-item';
-                    div.innerHTML = `
-                        <a href="detail.html?id=${p.id}">
-                            <img src="${p.img}" alt="${p.title}" loading="lazy" />
-                            <p>${p.title}</p>
-                        </a>
-                    `;
+                    div.innerHTML =
+                        '<a href="detail.html?id=' + p.id + '">' +
+                        '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
+                        '<p>' + p.title + '</p>' +
+                        '</a>';
                     inner.appendChild(div);
                 });
             }
 
             // ===== 导航悬停弹窗 =====
-            const dropdownTrigger = document.querySelector('.nav-works-dropdown');
-            const dropdownMenuWorks = document.getElementById('worksDropdownMenu');
-            let hoverTimeout;
+            var dropdownTrigger = document.querySelector('.nav-works-dropdown');
+            var dropdownMenuWorks = document.getElementById('worksDropdownMenu');
+            var hoverTimeout;
 
             if (dropdownTrigger && dropdownMenuWorks) {
                 dropdownTrigger.addEventListener('mouseenter', function() {
@@ -1241,7 +1392,7 @@
                 });
                 dropdownTrigger.addEventListener('mouseleave', function(e) {
                     if (!dropdownMenuWorks.contains(e.relatedTarget)) {
-                        hoverTimeout = setTimeout(() => {
+                        hoverTimeout = setTimeout(function() {
                             dropdownMenuWorks.classList.remove('open');
                         }, 150);
                     }
@@ -1250,28 +1401,25 @@
                     clearTimeout(hoverTimeout);
                 });
                 dropdownMenuWorks.addEventListener('mouseleave', function() {
-                    hoverTimeout = setTimeout(() => {
+                    hoverTimeout = setTimeout(function() {
                         dropdownMenuWorks.classList.remove('open');
                     }, 150);
                 });
             }
 
             // ===== 语言切换 =====
-            const langSwitch = document.getElementById('langSwitch');
+            var langSwitch = document.getElementById('langSwitch');
             if (langSwitch) {
                 langSwitch.addEventListener('click', function() {
                     currentLang = currentLang === 'zh' ? 'en' : 'zh';
                     this.textContent = currentLang === 'zh' ? 'EN' : '中文';
-                    renderFilters();
-                    renderProjects();
-                    const moreBtn = document.querySelector('.btn-more');
-                    if (moreBtn) moreBtn.innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
+                    updateAllText();
                 });
             }
 
-            // ===== 汉堡菜单（手机端） =====
-            const hamburger = document.getElementById('hamburger');
-            const dropdownMenu = document.getElementById('dropdownMenu');
+            // ===== 汉堡菜单 =====
+            var hamburger = document.getElementById('hamburger');
+            var dropdownMenu = document.getElementById('dropdownMenu');
 
             if (hamburger && dropdownMenu) {
                 hamburger.addEventListener('click', function(e) {
@@ -1280,7 +1428,6 @@
                     dropdownMenu.classList.toggle('open');
                 });
 
-                // 点击下拉菜单项后关闭
                 dropdownMenu.querySelectorAll('a').forEach(function(link) {
                     link.addEventListener('click', function() {
                         dropdownMenu.classList.remove('open');
@@ -1288,7 +1435,6 @@
                     });
                 });
 
-                // 点击页面其他地方关闭菜单
                 document.addEventListener('click', function(e) {
                     if (!e.target.closest('.navbar')) {
                         dropdownMenu.classList.remove('open');
@@ -1297,9 +1443,8 @@
                 });
             }
 
-            // ===== 回到顶部按钮 =====
-            const backToTopBtn = document.getElementById('backToTop');
-
+            // ===== 回到顶部 =====
+            var backToTopBtn = document.getElementById('backToTop');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function() {
                     if (window.scrollY > 300) {
@@ -1308,49 +1453,40 @@
                         backToTopBtn.classList.remove('visible');
                     }
                 });
-
                 backToTopBtn.addEventListener('click', function() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
 
             // ===== 微信弹窗 =====
-            const modal = document.getElementById('wechatModal');
-            const wechatBtn = document.getElementById('wechatBtn');
-            const closeBtn = document.getElementById('qrCloseBtn');
+            var modal = document.getElementById('wechatModal');
+            var wechatBtn = document.getElementById('wechatBtn');
+            var closeBtn = document.getElementById('qrCloseBtn');
 
-            function openModal() {
-                if (modal) { modal.classList.add('open');
-                    document.body.style.overflow = 'hidden'; }
-            }
+            function openModal() { if (modal) { modal.classList.add('open');
+                    document.body.style.overflow = 'hidden'; } }
 
-            function closeModal() {
-                if (modal) { modal.classList.remove('open');
-                    document.body.style.overflow = ''; }
-            }
+            function closeModal() { if (modal) { modal.classList.remove('open');
+                    document.body.style.overflow = ''; } }
             if (wechatBtn) wechatBtn.addEventListener('click', openModal);
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
             if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) closeModal();
-                });
+                modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
             }
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeModal();
-            });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
             // ===== 表单 =====
-            const contactForm = document.getElementById('contactForm');
+            var contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
-                    const action = this.getAttribute('action');
+                    var action = this.getAttribute('action');
                     if (!action || action === 'https://formspree.io/f/your-form-id') {
                         e.preventDefault();
-                        const btn = this.querySelector('.btn');
-                        const original = btn.textContent;
+                        var btn = this.querySelector('.btn');
+                        var original = btn.textContent;
                         btn.textContent = '请先配置表单 ✦';
                         btn.style.background = '#c0392b';
-                        setTimeout(() => {
+                        setTimeout(function() {
                             btn.textContent = original;
                             btn.style.background = '';
                         }, 3000);
@@ -1363,7 +1499,10 @@
             renderProjects();
             renderDropdown();
 
-            setTimeout(() => {
+            // 设置初始语言
+            updateAllText();
+
+            setTimeout(function() {
                 document.querySelectorAll('.reveal').forEach(function(el) {
                     if (el.getBoundingClientRect().top < window.innerHeight) {
                         el.classList.add('visible');
