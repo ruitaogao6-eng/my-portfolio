@@ -48,7 +48,6 @@
             padding: 0 40px;
         }
 
-        /* ===== 导航（与首页完全一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -64,19 +63,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .logo span {
             color: var(--accent);
         }
         .nav-links {
             display: flex;
-            gap: 48px;
+            gap: 40px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -138,7 +141,6 @@
             color: var(--text-primary);
         }
 
-        /* ===== 二级导航条（返回全部作品 + 上一步） ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -174,7 +176,6 @@
             font-size: 0.8rem;
         }
 
-        /* ===== 内容 ===== */
         .section {
             padding: 140px 0 60px 0;
         }
@@ -193,7 +194,6 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类标签（全部改成"分类"，圆底仅第一个显示） ===== */
         .filter-tabs {
             display: flex;
             justify-content: center;
@@ -236,7 +236,6 @@
             background: var(--accent);
             color: #fff;
         }
-        /* 第一个（分类）始终保持圆底深色 */
         .filter-tabs button:first-child .num {
             background: var(--accent);
             color: #fff;
@@ -325,7 +324,6 @@
             margin-top: 4px;
         }
 
-        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -462,8 +460,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== 导航（与首页一致） ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -481,7 +477,6 @@
         </div>
     </nav>
 
-    <!-- ===== 二级导航条 ===== -->
     <div class="sub-navbar" id="subNavbar">
         <div class="container">
             <a href="index.html#work" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
@@ -489,25 +484,17 @@
         </div>
     </div>
 
-    <!-- ===== 全部作品 ===== -->
     <section class="section">
         <div class="container">
             <div class="section-header">
                 <h2>全部作品</h2>
                 <p>所有设计项目一览</p>
             </div>
-
-            <div class="filter-tabs" id="filterTabs">
-                <!-- 由 JS 生成 -->
-            </div>
-
-            <div class="work-grid" id="workGrid">
-                <!-- 由 JS 生成 -->
-            </div>
+            <div class="filter-tabs" id="filterTabs"></div>
+            <div class="work-grid" id="workGrid"></div>
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -520,7 +507,6 @@
 
     <script>
         (function() {
-            // ===== 作品数据（20个） =====
             const projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
@@ -548,7 +534,6 @@
             const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '分类';
 
-            // ===== 渲染分类 =====
             function renderFilters() {
                 const container = document.getElementById('filterTabs');
                 container.innerHTML = '';
@@ -570,7 +555,6 @@
                 });
             }
 
-            // ===== 渲染作品 =====
             function renderProjects() {
                 const grid = document.getElementById('workGrid');
                 grid.innerHTML = '';
@@ -602,7 +586,6 @@
                 });
             }
 
-            // ===== 上一步功能（返回三级界面） =====
             const backToDetailBtn = document.getElementById('backToDetailBtn');
             const lastDetailId = localStorage.getItem('lastDetailId');
 
@@ -614,7 +597,6 @@
                 backToDetailBtn.style.display = 'none';
             }
 
-            // 点击作品链接时，记录id到localStorage
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('.work-link');
                 if (link) {
