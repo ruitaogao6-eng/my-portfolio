@@ -52,6 +52,7 @@
             padding: 0 20px;
         }
 
+        /* ===== 导航栏（保持不变） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -109,22 +110,20 @@
             display: none !important;
         }
 
-        /* ===== 作品悬停下拉弹窗（背景与导航一致） ===== */
+        /* ===== 作品下拉弹窗 ===== */
         .nav-works-dropdown {
             position: relative;
         }
+
+        /* ---- 下拉菜单内容（最上层） ---- */
         .works-dropdown-menu {
             display: none;
             position: fixed;
             top: 68px;
             left: 0;
             width: 100%;
-            background: rgba(248, 246, 243, 0.95);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
-            box-shadow: var(--shadow-md);
+            z-index: 1002;
             padding: 28px 20px;
-            z-index: 998;
             overflow-x: auto;
         }
         .works-dropdown-menu.open {
@@ -159,6 +158,22 @@
             font-weight: 500;
             color: var(--text-primary);
             white-space: normal;
+        }
+
+        /* ---- 遮罩层（中间层） ---- */
+        .dropdown-overlay {
+            display: none;
+            position: fixed;
+            top: 68px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(4px);
+            z-index: 1001;
+        }
+        .dropdown-overlay.open {
+            display: block;
         }
 
         .phone-number {
@@ -200,6 +215,7 @@
             color: var(--text-primary);
         }
 
+        /* ===== Hero ===== */
         .hero {
             padding: 100px 0 50px 0;
             min-height: 90vh;
@@ -941,6 +957,7 @@
                 <li><a href="#home">首页</a></li>
                 <li class="nav-works-dropdown" id="worksDropdown">
                     <a href="#work" id="worksNavLink">作品</a>
+                    <!-- 下拉菜单内容 -->
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
                         <div class="drop-inner" id="dropInner"></div>
                     </div>
@@ -955,6 +972,9 @@
             </button>
         </div>
     </nav>
+
+    <!-- ===== 遮罩层（独立于导航） ===== -->
+    <div class="dropdown-overlay" id="dropdownOverlay"></div>
 
     <section class="hero" id="home">
         <div class="container">
@@ -1171,29 +1191,7 @@
         (function() {
             'use strict';
 
-            // ===== 分类筛选 =====
-            var filterButtons = document.querySelectorAll('.filter-tabs button');
-            var workItems = document.querySelectorAll('.work-item');
-
-            filterButtons.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    filterButtons.forEach(function(b) { b.classList.remove('active'); });
-                    this.classList.add('active');
-
-                    var filter = this.getAttribute('data-filter');
-
-                    workItems.forEach(function(item) {
-                        var category = item.getAttribute('data-category');
-                        if (filter === '全部' || category === filter) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // ===== 下拉菜单 =====
+            // ===== 1. 下拉菜单内容生成 =====
             var projects = [
                 { id: 1, title: '流线椅', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', img: 'https://picsum.photos/600/450?random=3' },
@@ -1219,33 +1217,73 @@
                 });
             }
 
+            // ===== 2. 下拉菜单 + 遮罩层控制 =====
             var dropdownTrigger = document.querySelector('.nav-works-dropdown');
             var dropdownMenu = document.getElementById('worksDropdownMenu');
+            var overlay = document.getElementById('dropdownOverlay');
             var hoverTimeout;
 
-            if (dropdownTrigger && dropdownMenu) {
+            function openDropdown() {
+                if (dropdownMenu) dropdownMenu.classList.add('open');
+                if (overlay) overlay.classList.add('open');
+            }
+
+            function closeDropdown() {
+                if (dropdownMenu) dropdownMenu.classList.remove('open');
+                if (overlay) overlay.classList.remove('open');
+            }
+
+            if (dropdownTrigger && dropdownMenu && overlay) {
                 dropdownTrigger.addEventListener('mouseenter', function() {
                     clearTimeout(hoverTimeout);
-                    dropdownMenu.classList.add('open');
+                    openDropdown();
                 });
                 dropdownTrigger.addEventListener('mouseleave', function(e) {
-                    if (!dropdownMenu.contains(e.relatedTarget)) {
+                    if (!dropdownMenu.contains(e.relatedTarget) && !overlay.contains(e.relatedTarget)) {
                         hoverTimeout = setTimeout(function() {
-                            dropdownMenu.classList.remove('open');
+                            closeDropdown();
                         }, 150);
                     }
                 });
                 dropdownMenu.addEventListener('mouseenter', function() {
                     clearTimeout(hoverTimeout);
                 });
-                dropdownMenu.addEventListener('mouseleave', function() {
-                    hoverTimeout = setTimeout(function() {
-                        dropdownMenu.classList.remove('open');
-                    }, 150);
+                dropdownMenu.addEventListener('mouseleave', function(e) {
+                    if (!dropdownTrigger.contains(e.relatedTarget) && !overlay.contains(e.relatedTarget)) {
+                        hoverTimeout = setTimeout(function() {
+                            closeDropdown();
+                        }, 150);
+                    }
+                });
+                // 点击遮罩层关闭（备选方案）
+                overlay.addEventListener('click', function() {
+                    closeDropdown();
                 });
             }
 
-            // ===== 语言切换 =====
+            // ===== 3. 分类筛选 =====
+            var filterButtons = document.querySelectorAll('.filter-tabs button');
+            var workItems = document.querySelectorAll('.work-item');
+
+            filterButtons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+
+                    var filter = this.getAttribute('data-filter');
+
+                    workItems.forEach(function(item) {
+                        var category = item.getAttribute('data-category');
+                        if (filter === '全部' || category === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // ===== 4. 语言切换 =====
             var langSwitch = document.getElementById('langSwitch');
             if (langSwitch) {
                 langSwitch.addEventListener('click', function() {
@@ -1277,7 +1315,7 @@
                 });
             }
 
-            // ===== 汉堡菜单 =====
+            // ===== 5. 汉堡菜单 =====
             var hamburger = document.getElementById('hamburger');
             var navLinks = document.getElementById('navLinks');
             if (hamburger && navLinks) {
@@ -1287,7 +1325,7 @@
                 });
             }
 
-            // ===== 微信弹窗 =====
+            // ===== 6. 微信弹窗 =====
             var modal = document.getElementById('wechatModal');
             var wechatBtn = document.getElementById('wechatBtn');
             var closeBtn = document.getElementById('qrCloseBtn');
@@ -1312,7 +1350,7 @@
                 if (e.key === 'Escape') closeModal();
             });
 
-            // ===== 表单 =====
+            // ===== 7. 表单 =====
             var contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
@@ -1331,7 +1369,7 @@
                 });
             }
 
-            // ===== 滚动动画 =====
+            // ===== 8. 滚动动画 =====
             setTimeout(function() {
                 document.querySelectorAll('.reveal').forEach(function(el) {
                     if (el.getBoundingClientRect().top < window.innerHeight) {
