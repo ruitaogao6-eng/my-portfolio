@@ -46,7 +46,6 @@
             max-width: 100%;
             height: auto;
         }
-        /* ===== 修改点①：宽幅加大 ===== */
         .container {
             max-width: 1600px;
             margin: 0 auto;
@@ -370,6 +369,7 @@
             background: var(--border-light);
         }
 
+        /* ===== 作品网格（直接写在 HTML 里，不依赖 JS） ===== */
         .work-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -921,7 +921,9 @@
                 <li class="nav-works-dropdown" id="worksDropdown">
                     <a href="#work" id="worksNavLink">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
-                        <div class="drop-inner" id="dropInner"></div>
+                        <div class="drop-inner" id="dropInner">
+                            <!-- 下拉菜单由 JS 生成 -->
+                        </div>
                     </div>
                 </li>
                 <li><a href="#about">关于</a></li>
@@ -974,6 +976,7 @@
                 <button data-filter="概念"><span class="num">04</span> 概念</button>
             </div>
 
+            <!-- ===== 作品列表直接写在 HTML 里 ===== -->
             <div class="work-grid" id="workGrid">
                 <div class="work-item" data-category="家具">
                     <a href="detail.html?id=1">
@@ -1150,6 +1153,7 @@
         (function() {
             'use strict';
 
+            // ===== 下拉菜单（由 JS 生成） =====
             var projects = [
                 { id: 1, title: '流线椅', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', img: 'https://picsum.photos/600/450?random=3' },
@@ -1201,6 +1205,7 @@
                 });
             }
 
+            // ===== 分类筛选（控制显示/隐藏，不改变内容） =====
             var filterButtons = document.querySelectorAll('.filter-tabs button');
             var workItems = document.querySelectorAll('.work-item');
 
@@ -1222,6 +1227,7 @@
                 });
             });
 
+            // ===== 语言切换（只切换分类按钮文字） =====
             var langSwitch = document.getElementById('langSwitch');
             if (langSwitch) {
                 langSwitch.addEventListener('click', function() {
