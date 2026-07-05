@@ -69,9 +69,8 @@
             height: 28px;
             border-radius: 50%;
             background: transparent;
-            transition: color 0.25s ease, background 0.25s ease, opacity 0.2s ease;
+            transition: color 0.25s ease, background 0.25s ease;
             padding: 0 6px;
-            opacity: 1;
         }
 
         /* ===== “全部” ===== */
@@ -79,12 +78,13 @@
             color: #6b6b6b;
             background: transparent;
             padding: 6px 20px;
+            transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
+            border-radius: 40px;
         }
         .filter-tabs button[data-filter="全部"].active {
             background: #c7a17a;
             color: #1c1c1c;
             font-weight: 700;
-            border-radius: 40px;
         }
 
         /* ===== 其他分类 ===== */
@@ -102,14 +102,11 @@
         .filter-tabs button:not([data-filter="全部"]).active .num {
             color: #1c1c1c;
             background: #c7a17a;
-            opacity: 1;
         }
 
-        /* ----- 关键：非激活时，背景透明，但保留空间（不压扁） ----- */
+        /* 非激活时：背景透明，和“全部”的退出逻辑一致 */
         .filter-tabs button:not([data-filter="全部"]):not(.active) .num {
             background: transparent;
-            opacity: 1;
-            /* 保持尺寸不变，仅背景消失 */
         }
 
         /* ===== 状态提示 ===== */
@@ -163,7 +160,7 @@
             <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
             <p style="margin-top: 8px; color: #8a8a8a; font-size: 0.9rem;">
                 “全部”激活 → <span class="badge">金色跑道圆</span> + 黑色加粗文字<br />
-                其他分类激活 → 文字和数字黑色加粗 + 数字带 <span class="badge-dot">金色圆底</span>（快速淡出）
+                其他分类激活 → 文字和数字黑色加粗 + 数字带 <span class="badge-dot">金色圆底</span>
             </p>
         </div>
 
