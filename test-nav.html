@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>分类导航 · 最终测试</title>
+    <title>分类导航测试</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         * {
@@ -20,6 +20,7 @@
             max-width: 900px;
             margin: 0 auto;
         }
+
         h2 {
             font-weight: 700;
             font-size: 1.8rem;
@@ -30,20 +31,21 @@
             margin-bottom: 40px;
         }
 
-        /* ----- 导航容器 ----- */
+        /* ===== 分类标签 ===== */
         .filter-tabs {
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 0;
+            gap: 12px;
             flex-wrap: wrap;
+            margin-bottom: 40px;
             background: #ffffff;
-            padding: 8px 20px;
+            padding: 12px 24px;
             border-radius: 60px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid #e8e4de;
         }
 
-        /* ----- 所有按钮基础样式 ----- */
         .filter-tabs button {
             background: transparent;
             border: none;
@@ -52,64 +54,64 @@
             font-weight: 500;
             color: #5a5a5a;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
+            gap: 6px;
             padding: 6px 16px;
             border-radius: 40px;
-            gap: 4px;
         }
 
-        /* ----- 分类的数字样式 ----- */
-        .filter-tabs button .num {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #5a5a5a;
-            transition: color 0.2s ease;
-            min-width: 24px;
-            text-align: center;
-        }
-
-        /* ----- “全部”按钮的专属样式 ----- */
+        /* ---- “全部”特殊样式 ---- */
         .filter-tabs button[data-filter="全部"] {
             color: #5a5a5a;
+            font-weight: 500;
             background: transparent;
-            padding: 6px 20px;
         }
-        /* “全部”被激活时：深灰色背景 + 白色文字 */
+        /* “全部”激活时：深色跑道圆背景 + 文字白色加粗 */
         .filter-tabs button[data-filter="全部"].active {
-            background: #2c2c2c;
+            background: #1c1c1c;
             color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* ---- 其他分类（01家具、02消费电子...） ---- */
+        .filter-tabs button:not([data-filter="全部"]) .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: transparent;
+            color: #5a5a5a;
+            font-size: 0.7rem;
             font-weight: 600;
+            transition: all 0.25s ease;
         }
-
-        /* ----- 其他按钮的交互样式 ----- */
-        /* 悬停时：文字和数字都变深色 */
-        .filter-tabs button:not([data-filter="全部"]):hover {
-            color: #1c1c1c;
-        }
-        .filter-tabs button:not([data-filter="全部"]):hover .num {
-            color: #1c1c1c;
-        }
-
-        /* 激活时：文字加粗变黑，数字变黑（无背景） */
+        /* 其他分类激活时：文字加粗变黑，数字带深色圆底 */
         .filter-tabs button:not([data-filter="全部"]).active {
             color: #1c1c1c;
             font-weight: 700;
         }
         .filter-tabs button:not([data-filter="全部"]).active .num {
+            background: #c7a17a;
+            color: #ffffff;
+        }
+        /* 其他分类悬停时：数字浅色圆底预览 */
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
+            background: #e8e4de;
+        }
+        .filter-tabs button:not([data-filter="全部"]):hover {
             color: #1c1c1c;
-            background: transparent;
         }
 
-        /* ----- 分隔线 ----- */
+        /* ---- 分隔符（竖线） ---- */
         .filter-tabs .divider {
             width: 1px;
-            height: 28px;
-            background: #e0dcd6;
+            height: 24px;
+            background: #e8e4de;
             margin: 0 8px;
-            flex-shrink: 0;
         }
 
         /* ===== 状态提示 ===== */
@@ -124,13 +126,8 @@
         .status-box strong {
             color: #1c1c1c;
         }
-        .status-box .badge {
-            display: inline-block;
-            background: #2c2c2c;
-            color: #fff;
-            padding: 2px 14px;
-            border-radius: 40px;
-            font-size: 0.75rem;
+        .status-box .highlight {
+            color: #c7a17a;
             font-weight: 600;
         }
     </style>
@@ -139,10 +136,10 @@
 
     <div class="container">
 
-        <h2>🧪 分类导航 · 最终测试</h2>
-        <p class="sub">点击不同分类查看样式变化，确认无误后告诉我“可以合并”</p>
+        <h2>🧪 分类导航样式测试</h2>
+        <p class="sub">点击不同分类查看样式变化</p>
 
-        <!-- ===== 分类导航 ===== -->
+        <!-- ===== 分类标签 ===== -->
         <div class="filter-tabs" id="filterTabs">
             <button data-filter="全部" class="active">全部</button>
             <span class="divider"></span>
@@ -155,11 +152,15 @@
         <!-- ===== 状态提示 ===== -->
         <div class="status-box" id="statusBox">
             <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
-            <p style="margin-top: 8px; color: #8a8a8a; font-size: 0.9rem;">
-                “全部”激活 → <span class="badge">深灰色背景</span> + 白色文字<br />
-                其他分类激活 → 文字加粗变黑 + 数字变黑（无背景圆）
+            <p style="margin-top:6px;color:#8a8a8a;font-size:0.85rem;">
+                “全部” → 深色跑道圆背景 + 白色文字<br />
+                其他分类 → 文字加粗变黑 + 数字深色圆底
             </p>
         </div>
+
+        <p style="margin-top:24px;color:#8a8a8a;font-size:0.85rem;">
+            ✅ 确认样式无误后，告诉我“可以合并”，我将把此样式应用到完整网站。
+        </p>
 
     </div>
 
@@ -170,12 +171,16 @@
 
             buttons.forEach(btn => {
                 btn.addEventListener('click', function() {
+                    // 移除所有 active
                     buttons.forEach(b => b.classList.remove('active'));
+                    // 当前添加 active
                     this.classList.add('active');
+                    // 更新提示
                     activeDisplay.textContent = this.getAttribute('data-filter');
                 });
             });
         })();
     </script>
+
 </body>
 </html>
