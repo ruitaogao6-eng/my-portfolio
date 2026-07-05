@@ -1,160 +1,186 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>导航交互测试</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>分类导航测试</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        body {
-            padding: 100px 40px;
-            font-family: system-ui, sans-serif;
-        }
-        .test-nav {
-            display: flex;
-            gap: 40px;
-            list-style: none;
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f6f3;
+            padding: 120px 40px 60px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #8a8a8a;
+            margin-bottom: 40px;
+        }
+
+        /* ===== 分类标签 ===== */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            background: #ffffff;
+            padding: 12px 24px;
+            border-radius: 60px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e8e4de;
+        }
+
+        .filter-tabs button {
+            background: transparent;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
             font-weight: 500;
-            font-size: 1.2rem;
-        }
-        .test-nav a {
-            position: relative;
-            text-decoration: none;
-            color: #555;
-            padding: 4px 0;
+            color: #5a5a5a;
             cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 40px;
         }
-        .test-nav a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -4px;
-            width: 0;
-            height: 3px;
+
+        /* ---- “全部”特殊样式 ---- */
+        .filter-tabs button[data-filter="全部"] {
+            color: #5a5a5a;
+            font-weight: 500;
+            background: transparent;
+        }
+        /* “全部”激活时：深色跑道圆背景 + 文字白色加粗 */
+        .filter-tabs button[data-filter="全部"].active {
+            background: #1c1c1c;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* ---- 其他分类（01家具、02消费电子...） ---- */
+        .filter-tabs button:not([data-filter="全部"]) .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: transparent;
+            color: #5a5a5a;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        /* 其他分类激活时：文字加粗变黑，数字带深色圆底 */
+        .filter-tabs button:not([data-filter="全部"]).active {
+            color: #1c1c1c;
+            font-weight: 700;
+        }
+        .filter-tabs button:not([data-filter="全部"]).active .num {
             background: #c7a17a;
-            transition: width 0.3s ease;
+            color: #ffffff;
         }
-        /* 悬停滑入 */
-        .test-nav a.hover-in::after {
-            width: 100% !important;
+        /* 其他分类悬停时：数字浅色圆底预览 */
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
+            background: #e8e4de;
         }
-        /* 悬停滑出 */
-        .test-nav a.hover-out::after {
-            width: 0 !important;
-            transition: width 0.3s ease;
+        .filter-tabs button:not([data-filter="全部"]):hover {
+            color: #1c1c1c;
         }
-        /* 激活固定 */
-        .test-nav a.active-link::after {
-            width: 100% !important;
-            transition: none !important;
+
+        /* ---- 分隔符（竖线） ---- */
+        .filter-tabs .divider {
+            width: 1px;
+            height: 24px;
+            background: #e8e4de;
+            margin: 0 8px;
         }
-        .test-nav a.active-link {
-            color: #000;
+
+        /* ===== 状态提示 ===== */
+        .status-box {
+            margin-top: 40px;
+            padding: 20px 24px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8e4de;
+            font-size: 0.95rem;
         }
-        .info {
-            margin-top: 50px;
-            padding: 20px;
-            background: #f0f0f0;
-            border-radius: 8px;
-            font-size: 0.9rem;
+        .status-box strong {
+            color: #1c1c1c;
         }
-        .info p { margin: 4px 0; }
-        .info .active-log { font-weight: bold; }
+        .status-box .highlight {
+            color: #c7a17a;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-    <h2>🧪 导航交互测试</h2>
-    <p style="color: #666; margin-bottom: 24px;">请测试悬停和点击行为，观察下方的状态日志。</p>
+    <div class="container">
 
-    <ul class="test-nav" id="testNav">
-        <li><a data-target="work" class="active-link">作品</a></li>
-        <li><a data-target="about">关于</a></li>
-        <li><a data-target="contact">联系</a></li>
-    </ul>
+        <h2>🧪 分类导航样式测试</h2>
+        <p class="sub">点击不同分类查看样式变化</p>
 
-    <div class="info" id="statusLog">
-        <p>📌 当前激活：<span class="active-log" id="currentActive">作品</span></p>
-        <p>🖱️ 上次操作：<span id="lastAction">无</span></p>
+        <!-- ===== 分类标签 ===== -->
+        <div class="filter-tabs" id="filterTabs">
+            <button data-filter="全部" class="active">全部</button>
+            <span class="divider"></span>
+            <button data-filter="家具"><span class="num">01</span> 家具</button>
+            <button data-filter="消费电子"><span class="num">02</span> 消费电子</button>
+            <button data-filter="家居"><span class="num">03</span> 家居</button>
+            <button data-filter="概念"><span class="num">04</span> 概念</button>
+        </div>
+
+        <!-- ===== 状态提示 ===== -->
+        <div class="status-box" id="statusBox">
+            <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
+            <p style="margin-top:6px;color:#8a8a8a;font-size:0.85rem;">
+                “全部” → 深色跑道圆背景 + 白色文字<br />
+                其他分类 → 文字加粗变黑 + 数字深色圆底
+            </p>
+        </div>
+
+        <p style="margin-top:24px;color:#8a8a8a;font-size:0.85rem;">
+            ✅ 确认样式无误后，告诉我“可以合并”，我将把此样式应用到完整网站。
+        </p>
+
     </div>
 
     <script>
         (function() {
-            const links = document.querySelectorAll('.test-nav a');
-            const activeLog = document.getElementById('currentActive');
-            const actionLog = document.getElementById('lastAction');
+            const buttons = document.querySelectorAll('.filter-tabs button');
+            const activeDisplay = document.getElementById('currentActive');
 
-            // 更新日志
-            function updateLog(activeText, action) {
-                activeLog.textContent = activeText;
-                if (action) actionLog.textContent = action;
-            }
-
-            // 清除所有状态（保留 active-link）
-            function clearAllStates() {
-                links.forEach(link => {
-                    link.classList.remove('hover-in', 'hover-out');
-                });
-            }
-
-            // 切换激活
-            function setActive(targetLink) {
-                // 移除旧的 active
-                links.forEach(link => link.classList.remove('active-link'));
-                // 目标设为 active
-                targetLink.classList.add('active-link');
-                // 清除悬停状态
-                targetLink.classList.remove('hover-in', 'hover-out');
-                clearAllStates();
-                updateLog(targetLink.textContent, '点击切换 → ' + targetLink.textContent);
-            }
-
-            // ----- 悬停逻辑 -----
-            links.forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    if (!this.classList.contains('active-link')) {
-                        this.classList.remove('hover-out');
-                        this.classList.add('hover-in');
-                        actionLog.textContent = '悬停移入 → ' + this.textContent;
-                    } else {
-                        actionLog.textContent = '悬停激活项（无变化）';
-                    }
-                });
-
-                link.addEventListener('mouseleave', function() {
-                    if (!this.classList.contains('active-link')) {
-                        this.classList.remove('hover-in');
-                        this.classList.add('hover-out');
-                        actionLog.textContent = '悬停移出 → ' + this.textContent;
-                    }
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有 active
+                    buttons.forEach(b => b.classList.remove('active'));
+                    // 当前添加 active
+                    this.classList.add('active');
+                    // 更新提示
+                    activeDisplay.textContent = this.getAttribute('data-filter');
                 });
             });
-
-            // ----- 点击逻辑 -----
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (this.classList.contains('active-link')) {
-                        actionLog.textContent = '点击当前激活项（无变化）';
-                        return;
-                    }
-                    setActive(this);
-                });
-            });
-
-            // 初始状态：作品激活
-            const initial = document.querySelector('.test-nav a[data-target="work"]');
-            if (initial) setActive(initial);
-
-            // 额外：点击页面空白清除悬停日志（方便观察）
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.test-nav')) {
-                    // 不清理悬停状态，只是日志提醒
-                    actionLog.textContent = '点击外部，悬停状态保持不变';
-                }
-            });
-
         })();
     </script>
+
 </body>
 </html>
