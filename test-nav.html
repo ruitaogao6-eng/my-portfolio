@@ -80,29 +80,27 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
+            min-width: 28px;
             height: 28px;
-            border-radius: 50%;
-            background: transparent;
-            color: #5a5a5a;
             font-size: 0.7rem;
             font-weight: 600;
+            color: #5a5a5a;
             transition: all 0.25s ease;
         }
-        /* 其他分类激活时：文字加粗变黑，数字带深色圆底 */
+        /* 其他分类激活时：文字加粗变黑，数字变黑（无背景） */
         .filter-tabs button:not([data-filter="全部"]).active {
             color: #1c1c1c;
             font-weight: 700;
         }
         .filter-tabs button:not([data-filter="全部"]).active .num {
-            background: #c7a17a;
-            color: #ffffff;
+            color: #1c1c1c;
+            background: transparent;
         }
-        /* 其他分类悬停时：数字浅色圆底预览 */
-        .filter-tabs button:not([data-filter="全部"]):hover .num {
-            background: #e8e4de;
-        }
+        /* 其他分类悬停时：文字变深色，数字变深色 */
         .filter-tabs button:not([data-filter="全部"]):hover {
+            color: #1c1c1c;
+        }
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
             color: #1c1c1c;
         }
 
@@ -154,7 +152,7 @@
             <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
             <p style="margin-top:6px;color:#8a8a8a;font-size:0.85rem;">
                 “全部” → 深色跑道圆背景 + 白色文字<br />
-                其他分类 → 文字加粗变黑 + 数字深色圆底
+                其他分类 → 文字加粗变黑 + 数字变黑（无背景）
             </p>
         </div>
 
@@ -171,11 +169,8 @@
 
             buttons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // 移除所有 active
                     buttons.forEach(b => b.classList.remove('active'));
-                    // 当前添加 active
                     this.classList.add('active');
-                    // 更新提示
                     activeDisplay.textContent = this.getAttribute('data-filter');
                 });
             });
