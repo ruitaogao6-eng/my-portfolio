@@ -43,12 +43,12 @@
             height: auto;
         }
         .container {
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        /* ===== 导航（与首页完全一致） ===== */
+        /* ===== 导航（logo 左，导航右） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -62,15 +62,18 @@
         }
         .navbar .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 32px;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .logo span {
             color: var(--accent);
@@ -139,7 +142,7 @@
             color: var(--text-primary);
         }
 
-        /* ===== 二级导航条（返回全部作品 + 上一步） ===== */
+        /* ===== 二级导航条 ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -155,9 +158,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .sub-navbar .back-link {
             color: var(--text-secondary);
@@ -182,7 +185,7 @@
         .section-header {
             text-align: center;
             max-width: 640px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 30px auto;
         }
         .section-header h2 {
             font-size: clamp(2rem, 4vw, 3rem);
@@ -194,13 +197,13 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类标签（全部改成"分类"，圆底仅第一个显示） ===== */
+        /* ===== 分类标签（同首页样式） ===== */
         .filter-tabs {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 32px;
             flex-wrap: wrap;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
         .filter-tabs button {
             background: transparent;
@@ -212,53 +215,40 @@
             cursor: pointer;
             transition: var(--transition);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
+            gap: 4px;
+            padding: 0 4px 6px 4px;
+            position: relative;
         }
-        .filter-tabs button .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
+        .filter-tabs button .dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition);
+            transition: background 0.25s;
         }
-        .filter-tabs button.active {
+        .filter-tabs button[data-filter="分类"] .dot {
+            background: var(--accent);
+        }
+        .filter-tabs button:not([data-filter="分类"]):hover .dot,
+        .filter-tabs button:not([data-filter="分类"]).active .dot {
+            background: var(--accent);
+        }
+        .filter-tabs button:not([data-filter="分类"]):hover,
+        .filter-tabs button:not([data-filter="分类"]).active {
             color: var(--text-primary);
             font-weight: 700;
         }
-        .filter-tabs button.active .num {
+        .filter-tabs button.active .dot {
             background: var(--accent);
-            color: #fff;
-        }
-        /* 第一个（分类）始终保持圆底深色 */
-        .filter-tabs button:first-child .num {
-            background: var(--accent);
-            color: #fff;
-        }
-        .filter-tabs button:first-child.active .num {
-            background: var(--accent);
-            color: #fff;
-        }
-        .filter-tabs button:not(:first-child) .num {
-            background: transparent;
-            color: var(--text-secondary);
-        }
-        .filter-tabs button:not(:first-child):hover .num {
-            background: var(--border-light);
-            color: var(--text-primary);
         }
 
+        /* ===== 作品网格 — 一排4个 ===== */
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
         }
         .work-item {
             background: var(--bg-card);
@@ -307,11 +297,11 @@
             opacity: 1;
         }
         .work-info {
-            padding: 18px 22px 22px;
+            padding: 16px 18px 18px;
         }
         .work-info h3 {
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1rem;
             margin-bottom: 4px;
         }
         .work-info .tag {
@@ -359,37 +349,46 @@
             transform: translateY(-2px);
         }
 
-        @media (max-width: 900px) {
-            .container {
-                padding: 0 24px;
+        @media (max-width: 1200px) {
+            .work-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
-            .sub-navbar .container {
-                padding: 0 24px;
+        }
+        @media (max-width: 992px) {
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         @media (max-width: 768px) {
             .navbar .container {
-                gap: 16px;
                 flex-wrap: wrap;
-                justify-content: center;
+                gap: 8px;
             }
             .nav-links {
-                gap: 16px;
-                font-size: 0.85rem;
+                gap: 14px;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
             }
             .phone-number {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+            }
+            .filter-tabs {
+                gap: 16px;
+            }
+            .filter-tabs button {
+                font-size: 0.85rem;
             }
         }
         @media (max-width: 640px) {
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
             .nav-links {
                 display: none;
             }
             .hamburger {
                 display: flex;
-            }
-            .work-grid {
-                grid-template-columns: 1fr;
             }
             .section {
                 padding: 180px 0 40px 0;
@@ -404,6 +403,12 @@
             .footer {
                 flex-direction: column;
                 text-align: center;
+            }
+            .filter-tabs {
+                gap: 12px;
+            }
+            .filter-tabs button {
+                font-size: 0.75rem;
             }
         }
         .hamburger {
@@ -464,7 +469,7 @@
 </head>
 <body>
 
-    <!-- ===== 导航（与首页一致） ===== -->
+    <!-- ===== 导航 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -546,7 +551,6 @@
             ];
 
             const categories = ['分类', '家具', '消费电子', '家居', '概念'];
-            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '分类';
 
             // ===== 渲染分类 =====
@@ -555,13 +559,12 @@
                 container.innerHTML = '';
                 const labels = ['分类', '家具', '消费电子', '家居', '概念'];
                 const keys = ['分类', '家具', '消费电子', '家居', '概念'];
-                const nums = ['', '01', '02', '03', '04'];
 
                 keys.forEach((key, idx) => {
                     const btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
+                    btn.innerHTML = `${labels[idx]} <span class="dot"></span>`;
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
@@ -603,7 +606,7 @@
                 });
             }
 
-            // ===== 上一步功能（返回三级界面） =====
+            // ===== 上一步功能 =====
             const backToDetailBtn = document.getElementById('backToDetailBtn');
             const lastDetailId = localStorage.getItem('lastDetailId');
 
@@ -615,7 +618,6 @@
                 backToDetailBtn.style.display = 'none';
             }
 
-            // 点击作品链接时，记录id到localStorage
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('.work-link');
                 if (link) {
