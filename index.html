@@ -52,7 +52,6 @@
             padding: 0 20px;
         }
 
-        /* ===== 导航栏（logo 左，导航右） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -85,7 +84,7 @@
 
         .nav-links {
             display: flex;
-            gap: 28px;
+            gap: 40px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -110,7 +109,6 @@
             display: none !important;
         }
 
-        /* ===== 作品悬停下拉菜单 ===== */
         .nav-works-dropdown {
             position: relative;
         }
@@ -147,7 +145,6 @@
         .works-dropdown-menu .drop-item:hover {
             transform: translateY(-4px);
         }
-        /* 16:9 比例 */
         .works-dropdown-menu .drop-item .drop-img {
             width: 100%;
             aspect-ratio: 16/9;
@@ -164,7 +161,6 @@
             white-space: normal;
         }
 
-        /* ===== 电话（仅手机可点） ===== */
         .phone-number {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -204,7 +200,6 @@
             color: var(--text-primary);
         }
 
-        /* ===== Hero ===== */
         .hero {
             padding: 100px 0 50px 0;
             min-height: 90vh;
@@ -310,7 +305,6 @@
             color: var(--accent);
         }
 
-        /* ===== 作品集 ===== */
         .section {
             padding: 50px 0 70px 0;
         }
@@ -329,57 +323,94 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类标签（新样式：圆在文字下方） ===== */
+        /* ===== 分类标签 — 最终版 ===== */
         .filter-tabs {
             display: flex;
             justify-content: center;
-            gap: 32px;
+            align-items: center;
+            gap: 0;
             flex-wrap: wrap;
             margin-bottom: 40px;
+            background: #ffffff;
+            padding: 8px 20px;
+            border-radius: 60px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e8e4de;
         }
+
         .filter-tabs button {
             background: transparent;
             border: none;
             font-family: var(--font);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.2s ease;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            padding: 6px 16px;
+            border-radius: 40px;
             gap: 4px;
-            padding: 0 4px 6px 4px;
-            position: relative;
         }
-        /* 底部圆点（默认全部显示，只有“全部”常亮） */
-        .filter-tabs button .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
+
+        .filter-tabs button .num {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* ---- “全部”样式 ---- */
+        .filter-tabs button[data-filter="全部"] {
+            color: var(--text-secondary);
             background: transparent;
-            transition: background 0.25s;
+            padding: 6px 20px;
         }
-        /* “全部”的圆点默认显示深色 */
-        .filter-tabs button[data-filter="全部"] .dot {
-            background: var(--accent);
+        /* “全部”激活时：深灰色跑道圆 + 白色文字 */
+        .filter-tabs button[data-filter="全部"].active {
+            background: #2c2c2c;
+            color: #ffffff;
+            font-weight: 600;
         }
-        /* 其他分类：悬停或激活时显示深色圆点 + 文字加粗 */
-        .filter-tabs button:not([data-filter="全部"]):hover .dot,
-        .filter-tabs button:not([data-filter="全部"]).active .dot {
-            background: var(--accent);
+
+        /* ---- 其他分类样式 ---- */
+        .filter-tabs button:not([data-filter="全部"]):hover {
+            color: var(--text-primary);
         }
-        .filter-tabs button:not([data-filter="全部"]):hover,
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
+            color: var(--text-primary);
+        }
+
+        /* 激活时：文字和数字都加粗变黑，数字带深色圆底，数字为黑色 */
         .filter-tabs button:not([data-filter="全部"]).active {
             color: var(--text-primary);
             font-weight: 700;
         }
-        .filter-tabs button.active .dot {
-            background: var(--accent);
+        .filter-tabs button:not([data-filter="全部"]).active .num {
+            color: #1c1c1c;
+            background: #c7a17a;
+            border-radius: 50%;
+            padding: 2px 6px;
+            min-width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ===== 作品网格 — 一排4个 ===== */
+        /* ---- 分隔线 ---- */
+        .filter-tabs .divider {
+            width: 1px;
+            height: 28px;
+            background: #e0dcd6;
+            margin: 0 8px;
+            flex-shrink: 0;
+        }
+
         .work-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -452,19 +483,19 @@
         }
 
         .more-wrapper {
-            text-align: center;
-            margin-top: 40px;
+            text-align: right;
+            margin-top: 32px;
         }
         .more-wrapper .btn-more {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 36px;
+            padding: 10px 28px;
             border-radius: 60px;
             background: transparent;
             border: 1.5px solid var(--border-light);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             transition: var(--transition);
             cursor: pointer;
@@ -477,7 +508,6 @@
             background: #fff;
         }
 
-        /* ===== 关于 ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -542,7 +572,6 @@
             margin-top: 2px;
         }
 
-        /* ===== 联系 ===== */
         .contact-section {
             background: var(--text-primary);
             color: #fff;
@@ -649,7 +678,6 @@
             box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
         }
 
-        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -765,7 +793,6 @@
             transform: translateY(0);
         }
 
-        /* ===== 响应式 ===== */
         @media (max-width: 1200px) {
             .work-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -805,7 +832,7 @@
                 gap: 8px;
             }
             .nav-links {
-                gap: 14px;
+                gap: 20px;
                 font-size: 0.8rem;
                 flex-wrap: wrap;
                 justify-content: flex-end;
@@ -817,19 +844,24 @@
                 flex: 0 0 120px;
             }
             .filter-tabs {
-                gap: 16px;
+                gap: 4px;
+                padding: 8px 12px;
             }
             .filter-tabs button {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+            .filter-tabs .divider {
+                margin: 0 4px;
+            }
+            .hero {
+                padding: 80px 0 30px 0;
+                min-height: auto;
             }
         }
         @media (max-width: 640px) {
             .work-grid {
                 grid-template-columns: 1fr;
-            }
-            .hero {
-                padding: 80px 0 30px 0;
-                min-height: auto;
             }
             .floating-badge {
                 display: none;
@@ -848,10 +880,16 @@
                 display: none !important;
             }
             .filter-tabs {
-                gap: 12px;
+                border-radius: 30px;
+                padding: 6px 12px;
             }
             .filter-tabs button {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            .filter-tabs button .num {
+                font-size: 0.6rem;
+                min-width: 18px;
             }
         }
         .hamburger {
@@ -912,7 +950,6 @@
 </head>
 <body>
 
-    <!-- ===== 导航栏 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -921,9 +958,7 @@
                 <li class="nav-works-dropdown" id="worksDropdown">
                     <a href="#work" id="worksNavLink">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
-                        <div class="drop-inner" id="dropInner">
-                            <!-- 由 JS 动态生成 -->
-                        </div>
+                        <div class="drop-inner" id="dropInner"></div>
                     </div>
                 </li>
                 <li><a href="#about">关于</a></li>
@@ -937,7 +972,6 @@
         </div>
     </nav>
 
-    <!-- ===== Hero ===== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-grid">
@@ -962,7 +996,6 @@
         </div>
     </section>
 
-    <!-- ===== 作品集 ===== -->
     <section class="section" id="work">
         <div class="container">
             <div class="section-header reveal">
@@ -970,23 +1003,16 @@
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
 
-            <div class="filter-tabs reveal" id="filterTabs">
-                <!-- 由 JS 动态生成 -->
-            </div>
+            <div class="filter-tabs reveal" id="filterTabs"></div>
 
-            <div class="work-grid" id="workGrid">
-                <!-- 由 JS 动态生成 -->
-            </div>
+            <div class="work-grid" id="workGrid"></div>
 
             <div class="more-wrapper">
-                <a href="category.html" class="btn-more">
-                    查看更多 <i class="fas fa-arrow-right"></i>
-                </a>
+                <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- ===== 关于 ===== -->
     <section class="section" id="about">
         <div class="container">
             <div class="about-grid">
@@ -1010,7 +1036,6 @@
         </div>
     </section>
 
-    <!-- ===== 联系 ===== -->
     <section class="section" id="contact">
         <div class="container">
             <div class="contact-section reveal">
@@ -1035,7 +1060,6 @@
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -1046,7 +1070,6 @@
         </div>
     </footer>
 
-    <!-- ===== 微信弹窗 ===== -->
     <div class="qr-modal" id="wechatModal">
         <div class="qr-modal-content">
             <button class="close-btn" id="qrCloseBtn">&times;</button>
@@ -1061,7 +1084,6 @@
         (function() {
             'use strict';
 
-            // ===== 作品数据（8个） =====
             const projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
@@ -1074,11 +1096,10 @@
             ];
 
             const categories = ['全部', '家具', '消费电子', '家居', '概念'];
-            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
+            const categoryNums = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '全部';
             let currentLang = 'zh';
 
-            // ===== 语言包 =====
             const translations = {
                 zh: {
                     'nav-home': '首页',
@@ -1174,12 +1195,16 @@
                 ] : key;
             }
 
-            // ===== 渲染分类标签 =====
             function renderFilters() {
                 const container = document.getElementById('filterTabs');
                 container.innerHTML = '';
-                const labels = [t('filter-all'), t('filter-furniture'), t('filter-electronics'), t('filter-home'), t(
-                    'filter-concept')];
+                const labels = [
+                    t('filter-all'),
+                    t('filter-furniture'),
+                    t('filter-electronics'),
+                    t('filter-home'),
+                    t('filter-concept')
+                ];
                 const keys = ['全部', '家具', '消费电子', '家居', '概念'];
                 const nums = ['', '01', '02', '03', '04'];
 
@@ -1187,17 +1212,27 @@
                     const btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    btn.innerHTML = `${labels[idx]} <span class="dot"></span>`;
+                    if (key === '全部') {
+                        btn.innerHTML = `${labels[idx]}`;
+                    } else {
+                        btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
+                    }
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
                         renderProjects();
                     });
                     container.appendChild(btn);
+
+                    // 添加分隔线（在“全部”之后）
+                    if (key === '全部') {
+                        const divider = document.createElement('span');
+                        divider.className = 'divider';
+                        container.appendChild(divider);
+                    }
                 });
             }
 
-            // ===== 渲染作品 =====
             function renderProjects() {
                 const grid = document.getElementById('workGrid');
                 grid.innerHTML = '';
@@ -1227,17 +1262,8 @@
                     `;
                     grid.appendChild(item);
                 });
-                // 触发滚动动画
-                const reveals = document.querySelectorAll('.reveal');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) entry.target.classList.add('visible');
-                    });
-                }, { threshold: 0.15 });
-                reveals.forEach(el => observer.observe(el));
             }
 
-            // ===== 渲染下拉菜单 =====
             function renderDropdown() {
                 const inner = document.getElementById('dropInner');
                 inner.innerHTML = '';
@@ -1254,11 +1280,10 @@
                 });
             }
 
-            // ===== 导航悬停弹窗 =====
+            // 导航悬停弹窗
             const dropdownTrigger = document.querySelector('.nav-works-dropdown');
             const dropdownMenu = document.getElementById('worksDropdownMenu');
             let hoverTimeout;
-
             dropdownTrigger.addEventListener('mouseenter', function() {
                 clearTimeout(hoverTimeout);
                 dropdownMenu.classList.add('open');
@@ -1279,18 +1304,15 @@
                 }, 150);
             });
 
-            // ===== 语言切换 =====
+            // 语言切换
             document.getElementById('langSwitch').addEventListener('click', function() {
                 currentLang = currentLang === 'zh' ? 'en' : 'zh';
                 this.textContent = currentLang === 'zh' ? 'EN' : '中文';
-                // 更新导航文字
                 document.querySelectorAll('.nav-links a[data-i18n]').forEach(el => {
                     el.textContent = t(el.getAttribute('data-i18n'));
                 });
-                // 更新分类和作品
                 renderFilters();
                 renderProjects();
-                // 更新hero等
                 document.querySelector('.hero-content h1').innerHTML =
                     `${t('hero-title1')}<br /><span class="highlight">${t('hero-title2')}</span> ${t('hero-title3')}`;
                 document.querySelector('.hero-content p').textContent = t('hero-desc');
@@ -1300,7 +1322,6 @@
                 document.querySelector('.section-header h2').textContent = t('work-title');
                 document.querySelector('.section-header p').textContent = t('work-desc');
                 document.querySelector('.btn-more').innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
-                // about
                 document.querySelector('.about-text h2').innerHTML = t('about-title').replace(/\n/g, '<br />');
                 document.querySelectorAll('.about-text p')[0].textContent = t('about-p1');
                 document.querySelectorAll('.about-text p')[1].textContent = t('about-p2');
@@ -1311,7 +1332,6 @@
                 document.querySelectorAll('.stat-item .label')[1].textContent = t('stat-projects-label');
                 document.querySelectorAll('.stat-item .number')[2].textContent = t('stat-awards');
                 document.querySelectorAll('.stat-item .label')[2].textContent = t('stat-awards-label');
-                // contact
                 document.querySelector('.contact-info h2').innerHTML = t('contact-title').replace(/\n/g, '<br />');
                 document.querySelector('.contact-info p').textContent = t('contact-desc');
                 document.querySelector('.contact-links a:last-child span').textContent = t('contact-address');
@@ -1320,13 +1340,12 @@
                 document.querySelector('.contact-form textarea').placeholder = t('form-message');
                 document.querySelector('.contact-form .btn').textContent = t('form-submit');
                 document.querySelector('.footer span').textContent = t('footer');
-                // wechat
                 document.querySelector('.qr-modal-content h3').textContent = t('wechat-title');
                 document.querySelector('.qr-modal-content .sub').textContent = t('wechat-sub');
                 document.querySelector('.qr-modal-content .hint').textContent = t('wechat-hint');
             });
 
-            // ===== 汉堡菜单 =====
+            // 汉堡菜单
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('navLinks');
             hamburger.addEventListener('click', function() {
@@ -1334,7 +1353,7 @@
                 navLinks.classList.toggle('open');
             });
 
-            // ===== 微信弹窗 =====
+            // 微信弹窗
             const modal = document.getElementById('wechatModal');
             const wechatBtn = document.getElementById('wechatBtn');
             const closeBtn = document.getElementById('qrCloseBtn');
@@ -1349,7 +1368,7 @@
             modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-            // ===== 表单 =====
+            // 表单
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 const action = this.getAttribute('action');
                 if (!action || action === 'https://formspree.io/f/your-form-id') {
@@ -1363,7 +1382,7 @@
                 }
             });
 
-            // ===== 初始化 =====
+            // 初始化
             renderFilters();
             renderProjects();
             renderDropdown();
