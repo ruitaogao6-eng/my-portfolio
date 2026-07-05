@@ -43,12 +43,12 @@
             height: auto;
         }
         .container {
-            max-width: 960px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        /* ===== 导航（与首页一致） ===== */
+        /* ===== 导航 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -62,18 +62,18 @@
         }
         .navbar .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 32px;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .logo span {
             color: var(--accent);
@@ -142,7 +142,7 @@
             color: var(--text-primary);
         }
 
-        /* ===== 返回全部作品按钮（固定在导航下方） ===== */
+        /* ===== 返回全部作品按钮 ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -158,9 +158,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .sub-navbar .back-link {
             color: var(--text-secondary);
@@ -184,7 +184,7 @@
         }
         .detail-hero img {
             width: 100%;
-            max-height: 500px;
+            aspect-ratio: 16/9;
             object-fit: cover;
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
@@ -218,14 +218,18 @@
             margin-bottom: 40px;
             line-height: 1.9;
         }
+
+        /* 4张细节图，16:9，放大 */
         .detail-gallery {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
             margin: 40px 0;
         }
         .detail-gallery img {
             width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
             border-radius: 16px;
             box-shadow: var(--shadow-sm);
         }
@@ -263,29 +267,32 @@
             transform: translateY(-2px);
         }
 
-        @media (max-width: 900px) {
-            .container {
-                padding: 0 24px;
+        @media (max-width: 1200px) {
+            .detail-gallery {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .sub-navbar .container {
-                padding: 0 24px;
-            }
-            .navbar .container {
-                padding: 0 24px;
+        }
+        @media (max-width: 992px) {
+            .detail-gallery {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         @media (max-width: 768px) {
             .navbar .container {
-                gap: 16px;
                 flex-wrap: wrap;
-                justify-content: center;
+                gap: 8px;
             }
             .nav-links {
-                gap: 16px;
-                font-size: 0.85rem;
+                gap: 14px;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
             }
             .phone-number {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+            }
+            .detail-gallery {
+                grid-template-columns: 1fr 1fr;
             }
         }
         @media (max-width: 640px) {
@@ -374,7 +381,7 @@
 </head>
 <body>
 
-    <!-- ===== 导航（与首页一致） ===== -->
+    <!-- ===== 导航 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -403,7 +410,7 @@
     <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
         <div class="container">
-            <img id="detailMainImg" src="https://picsum.photos/1200/600?random=10" alt="作品主图" loading="lazy" />
+            <img id="detailMainImg" src="https://picsum.photos/1200/675?random=10" alt="作品主图" loading="lazy" />
         </div>
     </section>
 
@@ -418,9 +425,9 @@
             <p class="desc" id="detailDesc">
                 流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
             </p>
-            <div class="detail-gallery">
-                <img src="https://picsum.photos/600/400?random=11" alt="细节1" loading="lazy" />
-                <img src="https://picsum.photos/600/400?random=12" alt="细节2" loading="lazy" />
+
+            <div class="detail-gallery" id="detailGallery">
+                <!-- 由 JS 动态生成 4 张 16:9 细节图 -->
             </div>
         </div>
     </section>
@@ -438,27 +445,104 @@
 
     <script>
         (function() {
+            // ===== 作品数据（含细节图，每个作品4张） =====
             const projectData = {
-                1: { title: '流线椅', category: '家具', desc: '流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。', mainImg: 'https://picsum.photos/1200/600?random=20' },
-                2: { title: '智能音箱 · 极光', category: '消费电子', desc: '极光智能音箱融合声学科技与极简美学。织物网罩与金属机身的碰撞，配合氛围灯效，让音乐不仅是听觉体验，更是视觉享受。', mainImg: 'https://picsum.photos/1200/600?random=21' },
-                3: { title: '模块化灯具 · 棱', category: '家居', desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。', mainImg: 'https://picsum.photos/1200/600?random=22' },
-                4: { title: '未来出行 · 畅想', category: '概念', desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。', mainImg: 'https://picsum.photos/1200/600?random=23' },
-                5: { title: '极简办公桌 · 静', category: '家具', desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。', mainImg: 'https://picsum.photos/1200/600?random=24' },
-                6: { title: '便携投影仪 · 光羽', category: '消费电子', desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。', mainImg: 'https://picsum.photos/1200/600?random=25' },
-                7: { title: '悬浮台灯 · 云影', category: '家居', desc: '悬浮台灯以磁悬浮技术为核心，灯体悬浮于底座之上，营造出轻盈而梦幻的光影效果。', mainImg: 'https://picsum.photos/1200/600?random=33' },
-                8: { title: '模块化置物架 · 叠', category: '概念', desc: '叠系列置物架采用模块化设计，可根据空间需求自由组合，材质为再生竹与金属，兼顾环保与结构美感。', mainImg: 'https://picsum.photos/1200/600?random=34' },
-                9: { title: '竹编灯具 · 织', category: '家居', desc: '织灯具以传统竹编工艺为灵感，将自然光影与现代照明技术结合，营造温暖而富有层次的空间氛围。', mainImg: 'https://picsum.photos/1200/600?random=35' },
-                10: { title: '折叠自行车 · 翼', category: '概念', desc: '翼折叠自行车以轻量化碳纤维打造，折叠后可轻松携带，适合城市通勤与短途旅行。', mainImg: 'https://picsum.photos/1200/600?random=36' },
-                11: { title: '陶瓷茶具 · 山韵', category: '家居', desc: '山韵茶具以传统陶瓷工艺结合现代极简设计，每一件都是手工制作，呈现自然质朴的质感。', mainImg: 'https://picsum.photos/1200/600?random=37' },
-                12: { title: '智能手环 · 隐', category: '消费电子', desc: '隐智能手环以极简无屏设计，通过触控与震动反馈交互，全天候健康监测，佩戴如无物。', mainImg: 'https://picsum.photos/1200/600?random=38' },
-                13: { title: '模块化插座 · 集', category: '家具', desc: '集插座系统以模块化设计，可自由组合电源与数据接口，适配不同场景需求，材质为再生塑料与铝合金。', mainImg: 'https://picsum.photos/1200/600?random=39' },
-                14: { title: '便携水壶 · 流', category: '概念', desc: '流水壶以极简曲线设计，采用食品级硅胶与不锈钢，可折叠收纳，适合户外出行。', mainImg: 'https://picsum.photos/1200/600?random=40' },
-                15: { title: '木质时钟 · 晷', category: '家居', desc: '晷时钟以实木与黄铜打造，指针缓慢移动，在光影中感受时间的流动，既是时钟也是雕塑。', mainImg: 'https://picsum.photos/1200/600?random=41' },
-                16: { title: '无线充电器 · 浮', category: '消费电子', desc: '浮无线充电器采用磁吸悬浮设计，设备充电时可悬停于空中，兼具科技感与实用性。', mainImg: 'https://picsum.photos/1200/600?random=42' },
-                17: { title: '收纳系统 · 方', category: '家具', desc: '方收纳系统以模块化网格设计，可根据空间自由组合，材质为再生纸浆与金属框架。', mainImg: 'https://picsum.photos/1200/600?random=43' },
-                18: { title: '空气净化器 · 净', category: '消费电子', desc: '净空气净化器以极简柱状设计，360°进风与出风，高效过滤PM2.5与甲醛，低噪运行。', mainImg: 'https://picsum.photos/1200/600?random=44' },
-                19: { title: '餐桌 · 合', category: '家具', desc: '合餐桌以实木与金属结合，可伸缩设计满足不同人数用餐需求，线条简洁优雅。', mainImg: 'https://picsum.photos/1200/600?random=45' },
-                20: { title: '灯具 · 光晕', category: '家居', desc: '光晕灯具以亚克力与LED结合，光线均匀柔和，适合多种空间氛围，简约而不简单。', mainImg: 'https://picsum.photos/1200/600?random=46' }
+                1: {
+                    title: '流线椅',
+                    category: '家具',
+                    desc: '流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。',
+                    mainImg: 'https://picsum.photos/1200/675?random=20',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=101',
+                        'https://picsum.photos/600/338?random=102',
+                        'https://picsum.photos/600/338?random=103',
+                        'https://picsum.photos/600/338?random=104'
+                    ]
+                },
+                2: {
+                    title: '智能音箱 · 极光',
+                    category: '消费电子',
+                    desc: '极光智能音箱融合声学科技与极简美学。织物网罩与金属机身的碰撞，配合氛围灯效，让音乐不仅是听觉体验，更是视觉享受。',
+                    mainImg: 'https://picsum.photos/1200/675?random=21',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=201',
+                        'https://picsum.photos/600/338?random=202',
+                        'https://picsum.photos/600/338?random=203',
+                        'https://picsum.photos/600/338?random=204'
+                    ]
+                },
+                3: {
+                    title: '模块化灯具 · 棱',
+                    category: '家居',
+                    desc: '棱系列灯具以几何模块化设计，允许用户自由组合光线方向。铝材与磨砂玻璃的结合，营造出温暖而富有层次的光影。',
+                    mainImg: 'https://picsum.photos/1200/675?random=22',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=301',
+                        'https://picsum.photos/600/338?random=302',
+                        'https://picsum.photos/600/338?random=303',
+                        'https://picsum.photos/600/338?random=304'
+                    ]
+                },
+                4: {
+                    title: '未来出行 · 畅想',
+                    category: '概念',
+                    desc: '面向2030年的城市通勤概念，以轻量化碳纤维与透明座舱设计，重新定义人、车与城市的关系。',
+                    mainImg: 'https://picsum.photos/1200/675?random=23',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=401',
+                        'https://picsum.photos/600/338?random=402',
+                        'https://picsum.photos/600/338?random=403',
+                        'https://picsum.photos/600/338?random=404'
+                    ]
+                },
+                5: {
+                    title: '极简办公桌 · 静',
+                    category: '家具',
+                    desc: '静系列办公桌以悬浮式结构减轻视觉负重，隐藏式线缆管理让桌面始终保持整洁，适合现代居家办公场景。',
+                    mainImg: 'https://picsum.photos/1200/675?random=24',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=501',
+                        'https://picsum.photos/600/338?random=502',
+                        'https://picsum.photos/600/338?random=503',
+                        'https://picsum.photos/600/338?random=504'
+                    ]
+                },
+                6: {
+                    title: '便携投影仪 · 光羽',
+                    category: '消费电子',
+                    desc: '光羽投影仪仅重600克，支持4K投屏与自动对焦。金属机身搭配织物手提带，既是科技产品，也是移动的艺术品。',
+                    mainImg: 'https://picsum.photos/1200/675?random=25',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=601',
+                        'https://picsum.photos/600/338?random=602',
+                        'https://picsum.photos/600/338?random=603',
+                        'https://picsum.photos/600/338?random=604'
+                    ]
+                },
+                7: {
+                    title: '悬浮台灯 · 云影',
+                    category: '家居',
+                    desc: '悬浮台灯以磁悬浮技术为核心，灯体悬浮于底座之上，营造出轻盈而梦幻的光影效果。',
+                    mainImg: 'https://picsum.photos/1200/675?random=33',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=701',
+                        'https://picsum.photos/600/338?random=702',
+                        'https://picsum.photos/600/338?random=703',
+                        'https://picsum.photos/600/338?random=704'
+                    ]
+                },
+                8: {
+                    title: '模块化置物架 · 叠',
+                    category: '概念',
+                    desc: '叠系列置物架采用模块化设计，可根据空间需求自由组合，材质为再生竹与金属，兼顾环保与结构美感。',
+                    mainImg: 'https://picsum.photos/1200/675?random=34',
+                    detailImgs: [
+                        'https://picsum.photos/600/338?random=801',
+                        'https://picsum.photos/600/338?random=802',
+                        'https://picsum.photos/600/338?random=803',
+                        'https://picsum.photos/600/338?random=804'
+                    ]
+                }
             };
 
             const params = new URLSearchParams(window.location.search);
@@ -468,19 +552,29 @@
             function renderProject(id) {
                 const data = projectData[id];
                 if (!data) return;
+
                 document.getElementById('detailTitle').textContent = data.title;
                 document.getElementById('detailCategory').textContent = data.category;
                 document.getElementById('detailDesc').textContent = data.desc;
                 document.getElementById('detailMainImg').src = data.mainImg;
-                // 更新计数器
+
+                // 渲染 4 张 16:9 细节图
+                const gallery = document.getElementById('detailGallery');
+                gallery.innerHTML = '';
+                data.detailImgs.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = data.title + ' 细节';
+                    img.loading = 'lazy';
+                    gallery.appendChild(img);
+                });
+
                 const total = Object.keys(projectData).length;
                 const idx = Object.keys(projectData).indexOf(String(id));
                 document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
             }
 
             renderProject(currentId);
-
-            // 记录当前id到localStorage，供二级界面“上一步”使用
             localStorage.setItem('lastDetailId', currentId);
         })();
     </script>
