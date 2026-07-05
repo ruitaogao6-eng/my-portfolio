@@ -27,11 +27,17 @@
             --transition: 0.25s ease;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        html,
+        body {
+            height: 100%;
+        }
         body {
             font-family: var(--font);
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.7;
+            display: flex;
+            flex-direction: column;
         }
         a {
             text-decoration: none;
@@ -178,30 +184,66 @@
             font-size: 0.8rem;
         }
 
-        /* ===== 详情内容：文字左 图片右 ===== */
+        /* ===== 主内容区域（flex:1 撑开，底部固定） ===== */
+        .main-content {
+            flex: 1;
+            padding-top: 130px;
+        }
+
+        /* ===== 首图：纯白背景，文字覆盖在图片上方 ===== */
         .detail-hero {
-            padding: 140px 0 40px 0;
+            padding: 40px 0 60px 0;
         }
         .detail-hero .hero-inner {
+            position: relative;
+            background: #ffffff;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            min-height: 420px;
             display: flex;
-            gap: 60px;
-            align-items: center;
+            align-items: stretch;
         }
-        .detail-hero .hero-text {
+        .detail-hero .hero-image {
             flex: 1;
+            min-height: 420px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .detail-hero .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+        }
+        /* 文字层：绝对定位在图片上方，左对齐 */
+        .detail-hero .hero-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px 60px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
         }
         .detail-hero .hero-text h1 {
             font-size: 2.8rem;
             font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 12px;
+            color: var(--text-primary);
         }
         .detail-hero .hero-text .meta {
             display: flex;
             gap: 24px;
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
         .detail-hero .hero-text .meta span {
@@ -215,32 +257,22 @@
             max-width: 560px;
             line-height: 1.9;
         }
-        .detail-hero .hero-image {
-            flex: 1;
-            max-width: 480px;
-        }
-        .detail-hero .hero-image img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-        }
 
-        /* ===== 详情图：4张，16:9，放大 ===== */
+        /* ===== 详情图：放大，比主图大 ===== */
         .detail-content {
-            padding: 40px 0 80px 0;
+            padding: 20px 0 60px 0;
         }
         .detail-content .section-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             color: var(--text-primary);
+            text-align: center;
         }
         .detail-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 28px;
+            gap: 32px;
         }
         .detail-gallery img {
             width: 100%;
@@ -251,11 +283,11 @@
             transition: var(--transition);
         }
         .detail-gallery img:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 页脚 ===== */
+        /* ===== 页脚：固定在底部 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -266,6 +298,8 @@
             gap: 16px;
             font-size: 0.9rem;
             color: var(--text-muted);
+            margin-top: auto;
+            background: var(--bg-primary);
         }
         .footer-socials {
             display: flex;
@@ -289,11 +323,12 @@
         }
 
         @media (max-width: 1024px) {
-            .detail-hero .hero-inner {
-                gap: 40px;
-            }
             .detail-gallery {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .detail-hero .hero-text {
+                padding: 40px;
+                background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0) 100%);
             }
         }
         @media (max-width: 900px) {
@@ -307,13 +342,18 @@
                 padding: 0 24px;
             }
             .detail-hero .hero-inner {
+                min-height: 320px;
                 flex-direction: column;
-                text-align: center;
-            }
-            .detail-hero .hero-text .desc {
-                max-width: 100%;
             }
             .detail-hero .hero-image {
+                min-height: 240px;
+            }
+            .detail-hero .hero-text {
+                position: relative;
+                padding: 30px;
+                background: #ffffff;
+            }
+            .detail-hero .hero-text .desc {
                 max-width: 100%;
             }
         }
@@ -334,19 +374,19 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 16px;
             }
+            .detail-hero .hero-text h1 {
+                font-size: 2rem;
+            }
         }
         @media (max-width: 640px) {
             .nav-links {
                 display: none;
             }
-            .detail-hero .hero-text h1 {
-                font-size: 2rem;
-            }
             .detail-gallery {
                 grid-template-columns: 1fr;
             }
             .detail-hero {
-                padding: 120px 0 20px 0;
+                padding: 20px 0 30px 0;
             }
             .sub-navbar {
                 top: 60px;
@@ -364,6 +404,12 @@
             }
             .dropdown-menu {
                 display: none;
+            }
+            .main-content {
+                padding-top: 110px;
+            }
+            .detail-hero .hero-text {
+                padding: 20px;
             }
         }
         .hamburger {
@@ -448,37 +494,42 @@
         </div>
     </div>
 
-    <!-- ===== 详情内容 ===== -->
-    <section class="detail-hero">
-        <div class="container">
-            <div class="hero-inner">
-                <div class="hero-text">
-                    <h1 id="detailTitle">流线椅</h1>
-                    <div class="meta">
-                        <span><i class="fas fa-tag"></i> <span id="detailCategory">家具</span></span>
-                        <span><i class="far fa-calendar-alt"></i> 2025</span>
-                        <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
+    <!-- ===== 主内容 ===== -->
+    <div class="main-content">
+
+        <section class="detail-hero">
+            <div class="container">
+                <div class="hero-inner">
+                    <div class="hero-image">
+                        <img id="detailMainImg" src="https://picsum.photos/800/450?random=10" alt="作品主图" loading="lazy" />
                     </div>
-                    <p class="desc" id="detailDesc">
-                        流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
-                    </p>
-                </div>
-                <div class="hero-image">
-                    <img id="detailMainImg" src="https://picsum.photos/800/450?random=10" alt="作品主图" loading="lazy" />
+                    <div class="hero-text">
+                        <h1 id="detailTitle">流线椅</h1>
+                        <div class="meta">
+                            <span><i class="fas fa-tag"></i> <span id="detailCategory">家具</span></span>
+                            <span><i class="far fa-calendar-alt"></i> 2025</span>
+                            <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
+                        </div>
+                        <p class="desc" id="detailDesc">
+                            流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="detail-content">
-        <div class="container">
-            <div class="section-title">细节展示</div>
-            <div class="detail-gallery" id="detailGallery">
-                <!-- 由 JS 生成 4 张 -->
+        <section class="detail-content">
+            <div class="container">
+                <div class="section-title">细节展示</div>
+                <div class="detail-gallery" id="detailGallery">
+                    <!-- 由 JS 生成 4 张 -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+    </div>
+
+    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
