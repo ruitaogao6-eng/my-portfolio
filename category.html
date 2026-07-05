@@ -18,8 +18,8 @@
             --text-primary: #1c1c1c;
             --text-secondary: #5a5a5a;
             --text-muted: #8a8a8a;
-            --gold: #c7a17a;
-            --gold-dark: #a88462;
+            --accent: #c7a17a;
+            --accent-dark: #a88462;
             --border-light: #e8e4de;
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
@@ -43,12 +43,12 @@
             height: auto;
         }
         .container {
-            max-width: 1440px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
 
-        /* ===== 顶部导航（修改点3） ===== */
+        /* ===== 导航（与首页完全一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -62,25 +62,22 @@
         }
         .navbar .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 20px;
+            gap: 32px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
-            flex-shrink: 0;
         }
         .logo span {
-            color: var(--gold);
+            color: var(--accent);
         }
         .nav-links {
             display: flex;
-            gap: 48px;
+            gap: 28px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -142,7 +139,7 @@
             color: var(--text-primary);
         }
 
-        /* ===== 二级导航条 ===== */
+        /* ===== 二级导航条（返回全部作品 + 上一步） ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -158,9 +155,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1440px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
         .sub-navbar .back-link {
             color: var(--text-secondary);
@@ -178,13 +175,14 @@
             font-size: 0.8rem;
         }
 
+        /* ===== 内容 ===== */
         .section {
             padding: 140px 0 60px 0;
         }
         .section-header {
             text-align: center;
             max-width: 640px;
-            margin: 0 auto 30px auto;
+            margin: 0 auto 40px auto;
         }
         .section-header h2 {
             font-size: clamp(2rem, 4vw, 3rem);
@@ -196,78 +194,71 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类导航（修改点1） ===== */
+        /* ===== 分类标签（全部改成"分类"，圆底仅第一个显示） ===== */
         .filter-tabs {
             display: flex;
-            align-items: center;
-            gap: 0;
+            justify-content: center;
+            gap: 24px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
-            padding: 8px 0;
+            margin-bottom: 48px;
         }
         .filter-tabs button {
             background: transparent;
             border: none;
             font-family: var(--font);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
-            color: #6b6b6b;
+            color: var(--text-secondary);
             cursor: pointer;
-            transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            padding: 6px 16px;
-            border-radius: 40px;
-            gap: 4px;
+            gap: 8px;
+            padding: 4px 8px;
         }
         .filter-tabs button .num {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #6b6b6b;
-            min-width: 28px;
+            width: 28px;
             height: 28px;
             border-radius: 50%;
             background: transparent;
-            transition: color 0.25s ease, background 0.25s ease;
-            padding: 0 6px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition);
         }
-        .filter-tabs button[data-filter="分类"] {
-            color: #6b6b6b;
-            background: transparent;
-            padding: 6px 20px;
-            transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
-            border-radius: 40px;
-        }
-        .filter-tabs button[data-filter="分类"].active {
-            background: var(--gold);
-            color: #1c1c1c;
+        .filter-tabs button.active {
+            color: var(--text-primary);
             font-weight: 700;
         }
-        .filter-tabs button:not([data-filter="分类"]):hover {
-            color: #1c1c1c;
+        .filter-tabs button.active .num {
+            background: var(--accent);
+            color: #fff;
         }
-        .filter-tabs button:not([data-filter="分类"]):hover .num {
-            color: #1c1c1c;
+        /* 第一个（分类）始终保持圆底深色 */
+        .filter-tabs button:first-child .num {
+            background: var(--accent);
+            color: #fff;
         }
-        .filter-tabs button:not([data-filter="分类"]).active {
-            color: #1c1c1c;
-            font-weight: 700;
+        .filter-tabs button:first-child.active .num {
+            background: var(--accent);
+            color: #fff;
         }
-        .filter-tabs button:not([data-filter="分类"]).active .num {
-            color: #1c1c1c;
-            background: var(--gold);
-        }
-        .filter-tabs button:not([data-filter="分类"]):not(.active) .num {
+        .filter-tabs button:not(:first-child) .num {
             background: transparent;
+            color: var(--text-secondary);
+        }
+        .filter-tabs button:not(:first-child):hover .num {
+            background: var(--border-light);
+            color: var(--text-primary);
         }
 
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
         }
         .work-item {
             background: var(--bg-card);
@@ -316,11 +307,11 @@
             opacity: 1;
         }
         .work-info {
-            padding: 16px 18px 18px;
+            padding: 18px 22px 22px;
         }
         .work-info h3 {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-bottom: 4px;
         }
         .work-info .tag {
@@ -328,13 +319,14 @@
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--accent);
             background: rgba(199, 161, 122, 0.12);
             padding: 4px 14px;
             border-radius: 40px;
             margin-top: 4px;
         }
 
+        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -367,49 +359,37 @@
             transform: translateY(-2px);
         }
 
-        @media (max-width: 1200px) {
-            .work-grid {
-                grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 24px;
             }
-        }
-        @media (max-width: 992px) {
-            .work-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .sub-navbar .container {
+                padding: 0 24px;
             }
         }
         @media (max-width: 768px) {
             .navbar .container {
+                gap: 16px;
                 flex-wrap: wrap;
-                gap: 8px;
+                justify-content: center;
             }
             .nav-links {
-                gap: 24px;
-                font-size: 0.8rem;
-                flex-wrap: wrap;
-                justify-content: flex-end;
+                gap: 16px;
+                font-size: 0.85rem;
             }
             .phone-number {
-                font-size: 0.75rem;
-            }
-            .filter-tabs button {
                 font-size: 0.8rem;
-                padding: 4px 12px;
-            }
-            .filter-tabs button .num {
-                font-size: 0.65rem;
-                min-width: 24px;
-                height: 24px;
             }
         }
         @media (max-width: 640px) {
-            .work-grid {
-                grid-template-columns: 1fr;
-            }
             .nav-links {
                 display: none;
             }
             .hamburger {
                 display: flex;
+            }
+            .work-grid {
+                grid-template-columns: 1fr;
             }
             .section {
                 padding: 180px 0 40px 0;
@@ -424,19 +404,6 @@
             .footer {
                 flex-direction: column;
                 text-align: center;
-            }
-            .filter-tabs {
-                gap: 4px;
-                padding: 4px 0;
-            }
-            .filter-tabs button {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-            .filter-tabs button .num {
-                font-size: 0.6rem;
-                min-width: 20px;
-                height: 20px;
             }
         }
         .hamburger {
@@ -497,6 +464,7 @@
 </head>
 <body>
 
+    <!-- ===== 导航（与首页一致） ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -514,6 +482,7 @@
         </div>
     </nav>
 
+    <!-- ===== 二级导航条 ===== -->
     <div class="sub-navbar" id="subNavbar">
         <div class="container">
             <a href="index.html#work" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
@@ -521,6 +490,7 @@
         </div>
     </div>
 
+    <!-- ===== 全部作品 ===== -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -528,12 +498,17 @@
                 <p>所有设计项目一览</p>
             </div>
 
-            <div class="filter-tabs" id="filterTabs"></div>
+            <div class="filter-tabs" id="filterTabs">
+                <!-- 由 JS 生成 -->
+            </div>
 
-            <div class="work-grid" id="workGrid"></div>
+            <div class="work-grid" id="workGrid">
+                <!-- 由 JS 生成 -->
+            </div>
         </div>
     </section>
 
+    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -546,6 +521,7 @@
 
     <script>
         (function() {
+            // ===== 作品数据（20个） =====
             const projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
@@ -570,9 +546,10 @@
             ];
 
             const categories = ['分类', '家具', '消费电子', '家居', '概念'];
-            const categoryNums = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
+            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '分类';
 
+            // ===== 渲染分类 =====
             function renderFilters() {
                 const container = document.getElementById('filterTabs');
                 container.innerHTML = '';
@@ -584,11 +561,7 @@
                     const btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    if (key === '分类') {
-                        btn.innerHTML = `${labels[idx]}`;
-                    } else {
-                        btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
-                    }
+                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
@@ -598,6 +571,7 @@
                 });
             }
 
+            // ===== 渲染作品 =====
             function renderProjects() {
                 const grid = document.getElementById('workGrid');
                 grid.innerHTML = '';
@@ -629,8 +603,10 @@
                 });
             }
 
+            // ===== 上一步功能（返回三级界面） =====
             const backToDetailBtn = document.getElementById('backToDetailBtn');
             const lastDetailId = localStorage.getItem('lastDetailId');
+
             if (lastDetailId) {
                 backToDetailBtn.style.display = 'flex';
                 backToDetailBtn.href = 'detail.html?id=' + lastDetailId;
@@ -639,6 +615,7 @@
                 backToDetailBtn.style.display = 'none';
             }
 
+            // 点击作品链接时，记录id到localStorage
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('.work-link');
                 if (link) {
