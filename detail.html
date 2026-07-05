@@ -18,8 +18,8 @@
             --text-primary: #1c1c1c;
             --text-secondary: #5a5a5a;
             --text-muted: #8a8a8a;
-            --accent: #c7a17a;
-            --accent-dark: #a88462;
+            --gold: #c7a17a;
+            --gold-dark: #a88462;
             --border-light: #e8e4de;
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
@@ -48,7 +48,7 @@
             padding: 0 20px;
         }
 
-        /* ===== 导航 ===== */
+        /* ===== 顶部导航（修改点3） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -76,11 +76,11 @@
             flex-shrink: 0;
         }
         .logo span {
-            color: var(--accent);
+            color: var(--gold);
         }
         .nav-links {
             display: flex;
-            gap: 28px;
+            gap: 48px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -142,7 +142,7 @@
             color: var(--text-primary);
         }
 
-        /* ===== 返回全部作品按钮 ===== */
+        /* ===== 二级导航条（返回全部作品） ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -178,17 +178,22 @@
             font-size: 0.8rem;
         }
 
-        /* ===== 详情内容 ===== */
+        /* ===== 三级界面内容 ===== */
+        /* 首图：尺寸改小，比例16:9 */
         .detail-hero {
-            padding: 160px 0 40px 0;
+            padding: 160px 0 30px 0;
         }
         .detail-hero img {
-            width: 100%;
+            width: 80%;
+            max-width: 900px;
             aspect-ratio: 16/9;
             object-fit: cover;
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
+            margin: 0 auto;
+            display: block;
         }
+
         .detail-content {
             padding: 30px 0 80px 0;
         }
@@ -219,11 +224,11 @@
             line-height: 1.9;
         }
 
-        /* 4张细节图，16:9，放大 */
+        /* 详情图：放大，比例保持16:9 */
         .detail-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            gap: 28px;
             margin: 40px 0;
         }
         .detail-gallery img {
@@ -271,6 +276,9 @@
             .detail-gallery {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .detail-hero img {
+                width: 90%;
+            }
         }
         @media (max-width: 992px) {
             .detail-gallery {
@@ -283,7 +291,7 @@
                 gap: 8px;
             }
             .nav-links {
-                gap: 14px;
+                gap: 24px;
                 font-size: 0.8rem;
                 flex-wrap: wrap;
                 justify-content: flex-end;
@@ -293,6 +301,9 @@
             }
             .detail-gallery {
                 grid-template-columns: 1fr 1fr;
+            }
+            .detail-hero img {
+                width: 100%;
             }
         }
         @media (max-width: 640px) {
@@ -381,7 +392,6 @@
 </head>
 <body>
 
-    <!-- ===== 导航 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -399,7 +409,6 @@
         </div>
     </nav>
 
-    <!-- ===== 返回全部作品按钮 ===== -->
     <div class="sub-navbar" id="subNavbar">
         <div class="container">
             <a href="category.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
@@ -407,7 +416,6 @@
         </div>
     </div>
 
-    <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
         <div class="container">
             <img id="detailMainImg" src="https://picsum.photos/1200/675?random=10" alt="作品主图" loading="lazy" />
@@ -426,13 +434,10 @@
                 流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
             </p>
 
-            <div class="detail-gallery" id="detailGallery">
-                <!-- 由 JS 动态生成 4 张 16:9 细节图 -->
-            </div>
+            <div class="detail-gallery" id="detailGallery"></div>
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -445,7 +450,6 @@
 
     <script>
         (function() {
-            // ===== 作品数据（含细节图，每个作品4张） =====
             const projectData = {
                 1: {
                     title: '流线椅',
@@ -558,7 +562,6 @@
                 document.getElementById('detailDesc').textContent = data.desc;
                 document.getElementById('detailMainImg').src = data.mainImg;
 
-                // 渲染 4 张 16:9 细节图
                 const gallery = document.getElementById('detailGallery');
                 gallery.innerHTML = '';
                 data.detailImgs.forEach(src => {
