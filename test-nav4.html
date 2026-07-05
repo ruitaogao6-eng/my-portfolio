@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>导航测试 · 最终版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f6f3;
+            padding: 120px 40px 60px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #8a8a8a;
+            margin-bottom: 40px;
+        }
+
+        /* ===== 导航容器（无底衬色） ===== */
+        .filter-tabs {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            padding: 8px 0;
+        }
+
+        /* ===== 所有按钮基础样式 ===== */
+        .filter-tabs button {
+            background: transparent;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #b0b0b0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: 40px;
+            gap: 4px;
+        }
+
+        /* ===== 数字基础样式 ===== */
+        .filter-tabs button .num {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #b0b0b0;
+            transition: all 0.25s ease;
+            min-width: 28px;
+            text-align: center;
+            border-radius: 50%;
+            padding: 2px 4px;
+        }
+
+        /* ===== “全部”按钮 ===== */
+        .filter-tabs button[data-filter="全部"] {
+            color: #b0b0b0;
+            background: transparent;
+            padding: 6px 20px;
+        }
+        /* “全部”激活时：金色跑道圆背景 + 黑色加粗文字 */
+        .filter-tabs button[data-filter="全部"].active {
+            background: #c7a17a;
+            color: #1c1c1c;
+            font-weight: 700;
+            border-radius: 40px;
+        }
+
+        /* ===== 其他分类（01家具、02消费电子...） ===== */
+        /* 悬停时：文字变深色，数字变深色 */
+        .filter-tabs button:not([data-filter="全部"]):hover {
+            color: #1c1c1c;
+        }
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
+            color: #1c1c1c;
+        }
+
+        /* 激活时：文字和数字都加粗变黑，数字带金色圆底 */
+        .filter-tabs button:not([data-filter="全部"]).active {
+            color: #1c1c1c;
+            font-weight: 700;
+        }
+        .filter-tabs button:not([data-filter="全部"]).active .num {
+            color: #1c1c1c;
+            background: #c7a17a;
+            border-radius: 50%;
+            padding: 2px 6px;
+            min-width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== 分隔线（浅灰色竖线） ===== */
+        .filter-tabs .divider {
+            width: 1px;
+            height: 28px;
+            background: #d0d0d0;
+            margin: 0 8px;
+            flex-shrink: 0;
+        }
+
+        /* ===== 状态提示 ===== */
+        .status-box {
+            margin-top: 40px;
+            padding: 20px 24px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8e4de;
+            font-size: 0.95rem;
+        }
+        .status-box strong {
+            color: #1c1c1c;
+        }
+        .status-box .badge {
+            display: inline-block;
+            background: #c7a17a;
+            color: #1c1c1c;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-box .badge-dot {
+            display: inline-block;
+            background: #c7a17a;
+            color: #1c1c1c;
+            padding: 2px 10px;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h2>🧪 导航测试 · 最终版</h2>
+        <p class="sub">点击不同分类查看样式变化，确认后告诉我“可以合并”</p>
+
+        <!-- ===== 导航 ===== -->
+        <div class="filter-tabs" id="filterTabs">
+            <button data-filter="全部" class="active">全部</button>
+            <span class="divider"></span>
+            <button data-filter="家具"><span class="num">01</span> 家具</button>
+            <button data-filter="消费电子"><span class="num">02</span> 消费电子</button>
+            <button data-filter="家居"><span class="num">03</span> 家居</button>
+            <button data-filter="概念"><span class="num">04</span> 概念</button>
+        </div>
+
+        <!-- ===== 状态提示 ===== -->
+        <div class="status-box" id="statusBox">
+            <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
+            <p style="margin-top: 8px; color: #8a8a8a; font-size: 0.9rem;">
+                “全部”激活 → <span class="badge">金色跑道圆</span> + 黑色加粗文字<br />
+                其他分类激活 → 文字和数字黑色加粗 + 数字带 <span class="badge-dot">金色圆底</span>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            const buttons = document.querySelectorAll('.filter-tabs button');
+            const activeDisplay = document.getElementById('currentActive');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeDisplay.textContent = this.getAttribute('data-filter');
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
