@@ -189,7 +189,7 @@
             padding-top: 130px;
         }
 
-        /* ===== 首图 ===== */
+        /* ===== 首图：文字在左，图片在右 ===== */
         .detail-hero {
             padding: 40px 0 60px 0;
         }
@@ -203,6 +203,7 @@
             align-items: stretch;
             min-height: 320px;
         }
+        /* 图片在右 */
         .detail-hero .hero-image {
             flex: 0 0 50%;
             min-height: 320px;
@@ -210,6 +211,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            order: 2;
         }
         .detail-hero .hero-image img {
             width: 100%;
@@ -217,6 +219,7 @@
             object-fit: cover;
             aspect-ratio: 16/9;
         }
+        /* 文字在左 */
         .detail-hero .hero-text {
             flex: 1;
             display: flex;
@@ -224,6 +227,7 @@
             justify-content: center;
             padding: 40px 50px;
             background: #ffffff;
+            order: 1;
         }
         .detail-hero .hero-text h1 {
             font-size: 2.4rem;
@@ -252,7 +256,7 @@
             line-height: 1.9;
         }
 
-        /* ===== 详情图 ===== */
+        /* ===== 详情图：放大两倍 ===== */
         .detail-content {
             padding: 20px 0 60px 0;
         }
@@ -265,8 +269,8 @@
         }
         .detail-gallery {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
         .detail-gallery img {
             width: 100%;
@@ -281,7 +285,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 页脚（与主页一致） ===== */
+        /* ===== 页脚：左对齐，图标右对齐 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -294,6 +298,9 @@
             color: var(--text-muted);
             margin-top: auto;
             background: var(--bg-primary);
+        }
+        .footer .copyright {
+            text-align: left;
         }
         .footer-socials {
             display: flex;
@@ -317,9 +324,6 @@
         }
 
         @media (max-width: 1024px) {
-            .detail-gallery {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .detail-hero .hero-text {
                 padding: 30px 35px;
             }
@@ -344,8 +348,10 @@
             .detail-hero .hero-image {
                 flex: 1;
                 min-height: 200px;
+                order: 1;
             }
             .detail-hero .hero-text {
+                order: 2;
                 padding: 30px;
             }
             .detail-hero .hero-text .desc {
@@ -393,6 +399,9 @@
             .footer {
                 flex-direction: column;
                 text-align: center;
+            }
+            .footer-socials {
+                justify-content: center;
             }
             .hamburger {
                 display: flex;
@@ -494,9 +503,6 @@
         <section class="detail-hero">
             <div class="container">
                 <div class="hero-inner">
-                    <div class="hero-image">
-                        <img id="detailMainImg" src="https://picsum.photos/800/450?random=10" alt="作品主图" loading="lazy" />
-                    </div>
                     <div class="hero-text">
                         <h1 id="detailTitle">流线椅</h1>
                         <div class="meta">
@@ -507,6 +513,9 @@
                         <p class="desc" id="detailDesc">
                             流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
                         </p>
+                    </div>
+                    <div class="hero-image">
+                        <img id="detailMainImg" src="https://picsum.photos/800/450?random=10" alt="作品主图" loading="lazy" />
                     </div>
                 </div>
             </div>
@@ -523,9 +532,8 @@
 
     </div>
 
-    <!-- ===== 页脚（与主页一致） ===== -->
     <footer class="footer container">
-        <span>&copy; 2026 杨一 · 工业设计</span>
+        <span class="copyright">&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
             <a href="javascript:void(0)" id="wechatBtn" aria-label="微信"><i class="fab fa-weixin"></i></a>
             <a href="https://www.douyin.com/your-id" target="_blank" aria-label="抖音"><i class="fab fa-tiktok"></i></a>
