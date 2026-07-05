@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>导航测试 · Logo左 导航右</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f6f3;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ===== 导航栏 ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 12px 0;
+            background: rgba(248, 246, 243, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1c1c1c;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .logo span {
+            color: #c7a17a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #5a5a5a;
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 4px 0;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-links a:hover {
+            color: #1c1c1c;
+            font-weight: 700;
+        }
+        .nav-links a::after {
+            display: none !important;
+        }
+
+        .phone-number {
+            color: #5a5a5a;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .lang-switch {
+            background: none;
+            border: 1.5px solid #e8e4de;
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #5a5a5a;
+            cursor: pointer;
+            transition: 0.25s ease;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            white-space: nowrap;
+        }
+        .lang-switch:hover {
+            border-color: #1c1c1c;
+            color: #1c1c1c;
+        }
+
+        /* ===== 页面占位 ===== */
+        .placeholder {
+            margin-top: 120px;
+            padding: 60px 0;
+            text-align: center;
+            color: #8a8a8a;
+        }
+        .placeholder h2 {
+            font-size: 2rem;
+            color: #1c1c1c;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 导航栏 ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">Studio<span>·</span>Y</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">作品</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">联系</a></li>
+                <li class="phone-number"><a href="tel:+8613800008888" style="color:#5a5a5a;cursor:default;pointer-events:none;">138 0000 8888</a></li>
+                <li><button class="lang-switch">EN</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== 页面占位 ===== -->
+    <div class="placeholder">
+        <h2>✅ 导航测试</h2>
+        <p>Logo 靠左 · 导航靠右 · 间距 48px</p>
+        <p style="margin-top:8px;font-size:0.9rem;">确认样式无误后告诉我“可以合并”</p>
+    </div>
+
+</body>
+</html>
