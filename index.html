@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== 所有样式完全保留，没有删减 ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         :root {
             --bg-primary: #f8f6f3;
             --bg-card: #ffffff;
@@ -18,13 +21,15 @@
             --gold: #c7a17a;
             --gold-dark: #a88462;
             --border-light: #e8e4de;
-            --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
-            --shadow-md: 0 12px 40px rgba(0,0,0,0.07);
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
             --radius: 20px;
             --transition: 0.25s ease;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: var(--font);
             background-color: var(--bg-primary);
@@ -32,11 +37,21 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; height: auto; }
-        .container { max-width: 1440px; margin: 0 auto; padding: 0 20px; }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-        /* ===== 导航栏 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -44,9 +59,9 @@
             width: 100%;
             z-index: 1000;
             padding: 12px 0;
-            background: rgba(248,246,243,0.92);
+            background: rgba(248, 246, 243, 0.92);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(232,228,222,0.4);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
         }
         .navbar .container {
             display: flex;
@@ -56,8 +71,17 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); white-space: nowrap; flex-shrink: 0; }
-        .logo span { color: var(--gold); }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .logo span {
+            color: var(--gold);
+        }
+
         .nav-links {
             display: flex;
             gap: 48px;
@@ -77,26 +101,35 @@
             text-decoration: none;
             white-space: nowrap;
         }
-        .nav-links a:hover { color: var(--text-primary); font-weight: 700; }
-        .nav-links a::after { display: none !important; }
+        .nav-links a:hover {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .nav-links a::after {
+            display: none !important;
+        }
 
-        /* ===== 作品悬停下拉弹窗 ===== */
-        .nav-works-dropdown { position: relative; }
+        /* ===== 作品悬停下拉弹窗（背景与导航一致） ===== */
+        .nav-works-dropdown {
+            position: relative;
+        }
         .works-dropdown-menu {
             display: none;
             position: fixed;
             top: 68px;
             left: 0;
             width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
+            background: rgba(248, 246, 243, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
             box-shadow: var(--shadow-md);
             padding: 28px 20px;
             z-index: 998;
             overflow-x: auto;
         }
-        .works-dropdown-menu.open { display: block; }
+        .works-dropdown-menu.open {
+            display: block;
+        }
         .works-dropdown-menu .drop-inner {
             display: flex;
             gap: 28px;
@@ -109,7 +142,9 @@
             transition: transform 0.2s;
             cursor: pointer;
         }
-        .works-dropdown-menu .drop-item:hover { transform: translateY(-4px); }
+        .works-dropdown-menu .drop-item:hover {
+            transform: translateY(-4px);
+        }
         .works-dropdown-menu .drop-item .drop-img {
             width: 100%;
             aspect-ratio: 16/9;
@@ -118,7 +153,13 @@
             box-shadow: var(--shadow-sm);
             background: #e8e4de;
         }
-        .works-dropdown-menu .drop-item p { margin-top: 10px; font-size: 0.95rem; font-weight: 500; color: var(--text-primary); white-space: normal; }
+        .works-dropdown-menu .drop-item p {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: normal;
+        }
 
         .phone-number {
             color: var(--text-secondary);
@@ -127,9 +168,17 @@
             white-space: nowrap;
             cursor: default;
         }
-        .phone-number a { color: inherit; text-decoration: none; cursor: default; pointer-events: none; }
+        .phone-number a {
+            color: inherit;
+            text-decoration: none;
+            cursor: default;
+            pointer-events: none;
+        }
         @media (max-width: 768px) {
-            .phone-number a { cursor: pointer; pointer-events: auto; }
+            .phone-number a {
+                cursor: pointer;
+                pointer-events: auto;
+            }
         }
 
         .lang-switch {
@@ -146,10 +195,17 @@
             background: transparent;
             white-space: nowrap;
         }
-        .lang-switch:hover { border-color: var(--text-primary); color: var(--text-primary); }
+        .lang-switch:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
 
-        /* ===== Hero ===== */
-        .hero { padding: 100px 0 50px 0; min-height: 90vh; display: flex; align-items: center; }
+        .hero {
+            padding: 100px 0 50px 0;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
         .hero-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -162,14 +218,20 @@
             line-height: 1.1;
             margin-bottom: 24px;
         }
-        .hero-content h1 .highlight { color: var(--gold); }
+        .hero-content h1 .highlight {
+            color: var(--gold);
+        }
         .hero-content p {
             font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 480px;
             margin-bottom: 40px;
         }
-        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
 
         .btn {
             display: inline-block;
@@ -183,10 +245,25 @@
             background: var(--text-primary);
             color: #fff;
         }
-        .btn-outline { background: transparent; color: var(--text-primary); border: 1.5px solid var(--border-light); }
-        .btn-outline:hover { border-color: var(--text-primary); background: var(--text-primary); color: #fff; }
-        .btn-primary { background: var(--gold); color: #fff; }
-        .btn-primary:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(199,161,122,0.3); }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border-light);
+        }
+        .btn-outline:hover {
+            border-color: var(--text-primary);
+            background: var(--text-primary);
+            color: #fff;
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
+        }
 
         .hero-image {
             position: relative;
@@ -202,12 +279,16 @@
             box-shadow: var(--shadow-md);
             overflow: hidden;
         }
-        .hero-image .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-image .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .floating-badge {
             position: absolute;
             bottom: 10%;
             right: 0;
-            background: rgba(255,255,255,0.85);
+            background: rgba(255, 255, 255, 0.85);
             padding: 16px 24px;
             border-radius: 16px;
             box-shadow: var(--shadow-md);
@@ -217,12 +298,16 @@
             font-weight: 600;
             font-size: 0.9rem;
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.6);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .floating-badge i { font-size: 1.6rem; color: var(--gold); }
+        .floating-badge i {
+            font-size: 1.6rem;
+            color: var(--gold);
+        }
 
-        /* ===== 作品集 ===== */
-        .section { padding: 50px 0 70px 0; }
+        .section {
+            padding: 50px 0 70px 0;
+        }
         .section-header {
             text-align: center;
             max-width: 640px;
@@ -238,7 +323,6 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类导航 ===== */
         .filter-tabs {
             display: flex;
             align-items: center;
@@ -288,8 +372,12 @@
             color: #1c1c1c;
             font-weight: 700;
         }
-        .filter-tabs button:not([data-filter="全部"]):hover { color: #1c1c1c; }
-        .filter-tabs button:not([data-filter="全部"]):hover .num { color: #1c1c1c; }
+        .filter-tabs button:not([data-filter="全部"]):hover {
+            color: #1c1c1c;
+        }
+        .filter-tabs button:not([data-filter="全部"]):hover .num {
+            color: #1c1c1c;
+        }
         .filter-tabs button:not([data-filter="全部"]).active {
             color: #1c1c1c;
             font-weight: 700;
@@ -302,7 +390,6 @@
             background: transparent;
         }
 
-        /* ===== 作品网格（内容写死，不依赖 JS） ===== */
         .work-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -314,22 +401,34 @@
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
-            border: 1px solid rgba(232,228,222,0.3);
+            border: 1px solid rgba(232, 228, 222, 0.3);
         }
-        .work-item:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
-        .work-item a { display: block; }
+        .work-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+        .work-item a {
+            display: block;
+        }
         .work-thumb {
             aspect-ratio: 4/3;
             background: #e8e4de;
             overflow: hidden;
             position: relative;
         }
-        .work-thumb img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
-        .work-item:hover .work-thumb img { transform: scale(1.04); }
+        .work-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .work-item:hover .work-thumb img {
+            transform: scale(1.04);
+        }
         .work-thumb .work-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(28,28,28,0.3);
+            background: rgba(28, 28, 28, 0.3);
             opacity: 0;
             transition: var(--transition);
             display: flex;
@@ -339,16 +438,24 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
-        .work-item:hover .work-overlay { opacity: 1; }
-        .work-info { padding: 16px 18px 18px; }
-        .work-info h3 { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+        .work-item:hover .work-overlay {
+            opacity: 1;
+        }
+        .work-info {
+            padding: 16px 18px 18px;
+        }
+        .work-info h3 {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
         .work-info .tag {
             display: inline-block;
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             color: var(--gold);
-            background: rgba(199,161,122,0.12);
+            background: rgba(199, 161, 122, 0.12);
             padding: 4px 14px;
             border-radius: 40px;
             margin-top: 4px;
@@ -380,7 +487,6 @@
             background: #fff;
         }
 
-        /* ===== 关于 ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -395,7 +501,11 @@
             overflow: hidden;
             box-shadow: var(--shadow-md);
         }
-        .about-image .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .about-image .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .about-text h2 {
             font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
@@ -428,7 +538,11 @@
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-light);
         }
-        .stat-item .number { font-size: 1.8rem; font-weight: 800; display: block; }
+        .stat-item .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: block;
+        }
         .stat-item .label {
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -437,7 +551,6 @@
             margin-top: 2px;
         }
 
-        /* ===== 联系 ===== */
         .contact-section {
             background: var(--text-primary);
             color: #fff;
@@ -454,7 +567,7 @@
             right: -10%;
             width: 400px;
             height: 400px;
-            background: rgba(199,161,122,0.08);
+            background: rgba(199, 161, 122, 0.08);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -472,7 +585,7 @@
             margin-bottom: 16px;
         }
         .contact-info p {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.05rem;
             margin-bottom: 32px;
             max-width: 400px;
@@ -486,19 +599,26 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             transition: var(--transition);
             font-size: 1rem;
         }
-        .contact-links a:hover { color: #fff; transform: translateX(4px); }
-        .contact-links a i { width: 24px; font-size: 1.2rem; color: var(--gold); }
+        .contact-links a:hover {
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .contact-links a i {
+            width: 24px;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
         .contact-form input,
         .contact-form textarea {
             width: 100%;
             padding: 16px 20px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
             color: #fff;
             font-family: var(--font);
             font-size: 0.95rem;
@@ -507,14 +627,19 @@
             backdrop-filter: blur(4px);
         }
         .contact-form input::placeholder,
-        .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        .contact-form textarea { min-height: 120px; resize: vertical; }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
         .contact-form .btn {
             background: var(--gold);
             color: #fff;
@@ -529,7 +654,7 @@
         .contact-form .btn:hover {
             background: var(--gold-dark);
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(199,161,122,0.3);
+            box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
         }
 
         .footer {
@@ -543,7 +668,10 @@
             font-size: 0.9rem;
             color: var(--text-muted);
         }
-        .footer-socials { display: flex; gap: 20px; }
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
         .footer-socials a {
             color: var(--text-muted);
             transition: all 0.3s ease;
@@ -568,13 +696,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.55);
+            background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(6px);
             z-index: 9999;
             justify-content: center;
             align-items: center;
         }
-        .qr-modal.open { display: flex; }
+        .qr-modal.open {
+            display: flex;
+        }
         .qr-modal-content {
             background: #fff;
             padding: 40px;
@@ -582,7 +712,7 @@
             max-width: 340px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
             animation: qrFadeIn 0.3s ease;
             position: relative;
         }
@@ -596,53 +726,155 @@
             background: none;
             border: none;
         }
-        .qr-modal-content .close-btn:hover { color: #333; }
-        .qr-modal-content h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
-        .qr-modal-content .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-        .qr-modal-content img { width: 200px; height: 200px; margin: 0 auto 16px; border-radius: 12px; border: 1px solid var(--border-light); }
-        .qr-modal-content .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
+        .qr-modal-content .close-btn:hover {
+            color: #333;
+        }
+        .qr-modal-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .qr-modal-content .sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .qr-modal-content img {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+        .qr-modal-content .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
         @keyframes qrFadeIn {
-            from { opacity: 0; transform: scale(0.92) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         @media (max-width: 1200px) {
-            .work-grid { grid-template-columns: repeat(3, 1fr); }
+            .work-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
         @media (max-width: 992px) {
-            .work-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-content p { margin: 0 auto 40px; }
-            .hero-actions { justify-content: center; }
-            .about-grid { grid-template-columns: 1fr; text-align: center; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .contact-info p { max-width: 100%; }
-            .contact-section { padding: 50px 30px; }
-            .works-dropdown-menu .drop-item { flex: 0 0 150px; }
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin: 0 auto 40px;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-info p {
+                max-width: 100%;
+            }
+            .contact-section {
+                padding: 50px 30px;
+            }
+            .works-dropdown-menu .drop-item {
+                flex: 0 0 150px;
+            }
         }
         @media (max-width: 768px) {
-            .navbar .container { flex-wrap: wrap; gap: 8px; }
-            .nav-links { gap: 24px; font-size: 0.8rem; flex-wrap: wrap; justify-content: flex-end; }
-            .phone-number { font-size: 0.75rem; }
-            .works-dropdown-menu .drop-item { flex: 0 0 130px; }
-            .works-dropdown-menu { padding: 20px 16px; }
-            .filter-tabs button { font-size: 0.8rem; padding: 4px 12px; }
-            .filter-tabs button .num { font-size: 0.65rem; min-width: 24px; height: 24px; }
-            .hero { padding: 80px 0 30px 0; min-height: auto; }
+            .navbar .container {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .nav-links {
+                gap: 24px;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .phone-number {
+                font-size: 0.75rem;
+            }
+            .works-dropdown-menu .drop-item {
+                flex: 0 0 130px;
+            }
+            .works-dropdown-menu {
+                padding: 20px 16px;
+            }
+            .filter-tabs button {
+                font-size: 0.8rem;
+                padding: 4px 12px;
+            }
+            .filter-tabs button .num {
+                font-size: 0.65rem;
+                min-width: 24px;
+                height: 24px;
+            }
+            .hero {
+                padding: 80px 0 30px 0;
+                min-height: auto;
+            }
         }
         @media (max-width: 640px) {
-            .work-grid { grid-template-columns: 1fr; }
-            .floating-badge { display: none; }
-            .footer { flex-direction: column; text-align: center; }
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .works-dropdown-menu { display: none !important; }
-            .filter-tabs { gap: 4px; padding: 4px 0; }
-            .filter-tabs button { font-size: 0.7rem; padding: 4px 8px; }
-            .filter-tabs button .num { font-size: 0.6rem; min-width: 20px; height: 20px; }
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+            .floating-badge {
+                display: none;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .works-dropdown-menu {
+                display: none !important;
+            }
+            .filter-tabs {
+                gap: 4px;
+                padding: 4px 0;
+            }
+            .filter-tabs button {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            .filter-tabs button .num {
+                font-size: 0.6rem;
+                min-width: 20px;
+                height: 20px;
+            }
         }
         .hamburger {
             display: none;
@@ -653,16 +885,28 @@
             border: none;
             z-index: 1001;
         }
-        .hamburger span { display: block; width: 26px; height: 2px; background: var(--text-primary); transition: var(--transition); }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
         .dropdown-menu {
             display: none;
             position: absolute;
             top: 100%;
             right: 0;
-            background: rgba(248,246,243,0.98);
+            background: rgba(248, 246, 243, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 16px;
             box-shadow: var(--shadow-md);
@@ -671,7 +915,9 @@
             border: 1px solid var(--border-light);
             z-index: 999;
         }
-        .dropdown-menu.open { display: block; }
+        .dropdown-menu.open {
+            display: block;
+        }
         .dropdown-menu a {
             display: block;
             padding: 12px 28px;
@@ -679,12 +925,15 @@
             font-weight: 500;
             font-size: 0.95rem;
         }
-        .dropdown-menu a:hover { background: var(--border-light); color: var(--text-primary); font-weight: 700; }
+        .dropdown-menu a:hover {
+            background: var(--border-light);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ===== 导航栏 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -693,9 +942,7 @@
                 <li class="nav-works-dropdown" id="worksDropdown">
                     <a href="#work" id="worksNavLink">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
-                        <div class="drop-inner" id="dropInner">
-                            <!-- 下拉菜单内容由 JS 生成 -->
-                        </div>
+                        <div class="drop-inner" id="dropInner"></div>
                     </div>
                 </li>
                 <li><a href="#about">关于</a></li>
@@ -709,7 +956,6 @@
         </div>
     </nav>
 
-    <!-- ===== Hero ===== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-grid">
@@ -734,7 +980,6 @@
         </div>
     </section>
 
-    <!-- ===== 作品集 ===== -->
     <section class="section" id="work">
         <div class="container">
             <div class="section-header reveal">
@@ -742,7 +987,6 @@
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
 
-            <!-- 分类导航 -->
             <div class="filter-tabs reveal" id="filterTabs">
                 <button data-filter="全部" class="active">全部</button>
                 <button data-filter="家具"><span class="num">01</span> 家具</button>
@@ -751,9 +995,7 @@
                 <button data-filter="概念"><span class="num">04</span> 概念</button>
             </div>
 
-            <!-- ===== 作品列表：直接写死在 HTML 里，不依赖 JS ===== -->
             <div class="work-grid" id="workGrid">
-                <!-- 作品 1 -->
                 <div class="work-item" data-category="家具">
                     <a href="detail.html?id=1">
                         <div class="work-thumb">
@@ -766,7 +1008,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 2 -->
                 <div class="work-item" data-category="消费电子">
                     <a href="detail.html?id=2">
                         <div class="work-thumb">
@@ -779,7 +1020,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 3 -->
                 <div class="work-item" data-category="家居">
                     <a href="detail.html?id=3">
                         <div class="work-thumb">
@@ -792,7 +1032,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 4 -->
                 <div class="work-item" data-category="概念">
                     <a href="detail.html?id=4">
                         <div class="work-thumb">
@@ -805,7 +1044,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 5 -->
                 <div class="work-item" data-category="家具">
                     <a href="detail.html?id=5">
                         <div class="work-thumb">
@@ -818,7 +1056,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 6 -->
                 <div class="work-item" data-category="消费电子">
                     <a href="detail.html?id=6">
                         <div class="work-thumb">
@@ -831,7 +1068,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 7 -->
                 <div class="work-item" data-category="家居">
                     <a href="detail.html?id=7">
                         <div class="work-thumb">
@@ -844,7 +1080,6 @@
                         </div>
                     </a>
                 </div>
-                <!-- 作品 8 -->
                 <div class="work-item" data-category="概念">
                     <a href="detail.html?id=8">
                         <div class="work-thumb">
@@ -865,7 +1100,6 @@
         </div>
     </section>
 
-    <!-- ===== 关于 ===== -->
     <section class="section" id="about">
         <div class="container">
             <div class="about-grid">
@@ -889,7 +1123,6 @@
         </div>
     </section>
 
-    <!-- ===== 联系 ===== -->
     <section class="section" id="contact">
         <div class="container">
             <div class="contact-section reveal">
@@ -914,7 +1147,6 @@
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -925,7 +1157,6 @@
         </div>
     </footer>
 
-    <!-- ===== 微信弹窗 ===== -->
     <div class="qr-modal" id="wechatModal">
         <div class="qr-modal-content">
             <button class="close-btn" id="qrCloseBtn">&times;</button>
@@ -940,13 +1171,12 @@
         (function() {
             'use strict';
 
-            // ===== 1. 分类筛选功能 =====
+            // ===== 分类筛选 =====
             var filterButtons = document.querySelectorAll('.filter-tabs button');
             var workItems = document.querySelectorAll('.work-item');
 
             filterButtons.forEach(function(btn) {
                 btn.addEventListener('click', function() {
-                    // 切换按钮激活状态
                     filterButtons.forEach(function(b) { b.classList.remove('active'); });
                     this.classList.add('active');
 
@@ -963,12 +1193,7 @@
                 });
             });
 
-            // ===== 2. 导航悬停下拉弹窗 =====
-            var dropdownTrigger = document.querySelector('.nav-works-dropdown');
-            var dropdownMenu = document.getElementById('worksDropdownMenu');
-            var hoverTimeout;
-
-            // 生成下拉菜单内容（8个作品）
+            // ===== 下拉菜单 =====
             var projects = [
                 { id: 1, title: '流线椅', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', img: 'https://picsum.photos/600/450?random=3' },
@@ -994,6 +1219,10 @@
                 });
             }
 
+            var dropdownTrigger = document.querySelector('.nav-works-dropdown');
+            var dropdownMenu = document.getElementById('worksDropdownMenu');
+            var hoverTimeout;
+
             if (dropdownTrigger && dropdownMenu) {
                 dropdownTrigger.addEventListener('mouseenter', function() {
                     clearTimeout(hoverTimeout);
@@ -1016,13 +1245,12 @@
                 });
             }
 
-            // ===== 3. 语言切换 =====
+            // ===== 语言切换 =====
             var langSwitch = document.getElementById('langSwitch');
             if (langSwitch) {
                 langSwitch.addEventListener('click', function() {
                     var currentLang = this.textContent === 'EN' ? 'zh' : 'en';
                     this.textContent = currentLang === 'zh' ? 'EN' : '中文';
-                    // 简单切换分类文字
                     var filterLabels = {
                         'zh': ['全部', '家具', '消费电子', '家居', '概念'],
                         'en': ['All', 'Furniture', 'Electronics', 'Home', 'Concept']
@@ -1032,7 +1260,6 @@
                     btns.forEach(function(btn, index) {
                         if (index < filterLabels[Object.keys(filterLabels)[langIdx]].length) {
                             var label = filterLabels[Object.keys(filterLabels)[langIdx]][index];
-                            // 保留数字（如果有）
                             var numSpan = btn.querySelector('.num');
                             if (numSpan) {
                                 btn.innerHTML = '<span class="num">' + numSpan.textContent + '</span> ' +
@@ -1042,7 +1269,6 @@
                             }
                         }
                     });
-                    // 更新"查看更多"
                     var moreBtn = document.querySelector('.btn-more');
                     if (moreBtn) {
                         moreBtn.innerHTML = (currentLang === 'zh' ? '查看更多' : 'View More') +
@@ -1051,7 +1277,7 @@
                 });
             }
 
-            // ===== 4. 汉堡菜单 =====
+            // ===== 汉堡菜单 =====
             var hamburger = document.getElementById('hamburger');
             var navLinks = document.getElementById('navLinks');
             if (hamburger && navLinks) {
@@ -1061,7 +1287,7 @@
                 });
             }
 
-            // ===== 5. 微信弹窗 =====
+            // ===== 微信弹窗 =====
             var modal = document.getElementById('wechatModal');
             var wechatBtn = document.getElementById('wechatBtn');
             var closeBtn = document.getElementById('qrCloseBtn');
@@ -1086,7 +1312,7 @@
                 if (e.key === 'Escape') closeModal();
             });
 
-            // ===== 6. 表单 =====
+            // ===== 表单 =====
             var contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
@@ -1105,7 +1331,7 @@
                 });
             }
 
-            // ===== 7. 滚动动画 =====
+            // ===== 滚动动画 =====
             setTimeout(function() {
                 document.querySelectorAll('.reveal').forEach(function(el) {
                     if (el.getBoundingClientRect().top < window.innerHeight) {
