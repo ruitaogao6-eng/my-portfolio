@@ -18,8 +18,8 @@
             --text-primary: #1c1c1c;
             --text-secondary: #5a5a5a;
             --text-muted: #8a8a8a;
-            --gold: #c7a17a;
-            --gold-dark: #a88462;
+            --accent: #c7a17a;
+            --accent-dark: #a88462;
             --border-light: #e8e4de;
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.07);
@@ -47,12 +47,12 @@
             height: auto;
         }
         .container {
-            max-width: 1600px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 40px;
         }
 
-        /* ===== 顶部导航：金色背景 ===== */
+        /* ===== 导航栏 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -60,32 +60,29 @@
             width: 100%;
             z-index: 1000;
             padding: 12px 0;
-            background: rgba(199, 161, 122, 0.15);
+            background: rgba(248, 246, 243, 0.92);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(199, 161, 122, 0.2);
+            border-bottom: 1px solid rgba(232, 228, 222, 0.4);
         }
         .navbar .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 16px;
+            gap: 32px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
-            flex-shrink: 0;
         }
         .logo span {
-            color: var(--gold-dark);
+            color: var(--accent);
         }
 
         .nav-links {
             display: flex;
-            gap: 56px;
+            gap: 28px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -110,7 +107,7 @@
             display: none !important;
         }
 
-        /* ===== 作品下拉弹窗：金色半透明 ===== */
+        /* ===== 作品悬停下拉菜单 — 铺满左右上，一行 ===== */
         .nav-works-dropdown {
             position: relative;
         }
@@ -120,25 +117,26 @@
             top: 68px;
             left: 0;
             width: 100%;
-            background: rgba(199, 161, 122, 0.18);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(199, 161, 122, 0.15);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            padding: 28px 20px;
-            z-index: 999;
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            padding: 20px 40px;
+            z-index: 998;
             overflow-x: auto;
+            white-space: nowrap;
         }
         .works-dropdown-menu.open {
             display: block;
         }
         .works-dropdown-menu .drop-inner {
             display: flex;
-            gap: 28px;
-            max-width: 1600px;
+            gap: 24px;
+            max-width: 1280px;
             margin: 0 auto;
         }
         .works-dropdown-menu .drop-item {
-            flex: 0 0 180px;
+            flex: 0 0 140px;
             text-align: center;
             transition: transform 0.2s;
             cursor: pointer;
@@ -146,22 +144,23 @@
         .works-dropdown-menu .drop-item:hover {
             transform: translateY(-4px);
         }
-        .works-dropdown-menu .drop-item .drop-img {
+        .works-dropdown-menu .drop-item img {
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 1/1;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
             background: #e8e4de;
         }
         .works-dropdown-menu .drop-item p {
-            margin-top: 10px;
-            font-size: 0.95rem;
+            margin-top: 6px;
+            font-size: 0.8rem;
             font-weight: 500;
             color: var(--text-primary);
             white-space: normal;
         }
 
+        /* ===== 电话（仅手机可点） ===== */
         .phone-number {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -182,6 +181,7 @@
             }
         }
 
+        /* ===== 语言切换 ===== */
         .lang-switch {
             background: none;
             border: 1.5px solid var(--border-light);
@@ -203,8 +203,8 @@
 
         /* ===== Hero ===== */
         .hero {
-            padding: 100px 0 50px 0;
-            min-height: 90vh;
+            padding: 120px 0 60px 0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
         }
@@ -221,7 +221,7 @@
             margin-bottom: 24px;
         }
         .hero-content h1 .highlight {
-            color: var(--gold);
+            color: var(--accent);
         }
         .hero-content p {
             font-size: 1.2rem;
@@ -258,16 +258,15 @@
             color: #fff;
         }
         .btn-primary {
-            background: var(--gold);
+            background: var(--accent);
             color: #fff;
         }
         .btn-primary:hover {
-            background: var(--gold-dark);
+            background: var(--accent-dark);
             transform: translateY(-2px);
             box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
         }
 
-        /* ===== 首页右侧图片 16:9 ===== */
         .hero-image {
             position: relative;
             display: flex;
@@ -276,7 +275,8 @@
         }
         .hero-image .img-placeholder {
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 1/1;
+            max-width: 480px;
             border-radius: var(--radius);
             background: linear-gradient(145deg, #e8e4de, #d6d0c8);
             box-shadow: var(--shadow-md);
@@ -305,12 +305,12 @@
         }
         .floating-badge i {
             font-size: 1.6rem;
-            color: var(--gold);
+            color: var(--accent);
         }
 
-        /* ===== 作品集（删除分类导航） ===== */
+        /* ===== 作品集 ===== */
         .section {
-            padding: 50px 0 70px 0;
+            padding: 60px 0 80px 0;
         }
         .section-header {
             text-align: center;
@@ -327,11 +327,58 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 作品网格：一排4个 ===== */
+        /* ===== 分类标签 ===== */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        .filter-tabs button {
+            background: transparent;
+            border: none;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+        }
+        .filter-tabs button .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--border-light);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .filter-tabs button.active {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .filter-tabs button.active .num {
+            background: var(--accent);
+            color: #fff;
+        }
+        .filter-tabs button:hover .num {
+            background: var(--accent);
+            color: #fff;
+        }
+
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
         }
         .work-item {
             background: var(--bg-card);
@@ -380,11 +427,11 @@
             opacity: 1;
         }
         .work-info {
-            padding: 16px 18px 18px;
+            padding: 18px 22px 22px;
         }
         .work-info h3 {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-bottom: 4px;
         }
         .work-info .tag {
@@ -392,28 +439,27 @@
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--accent);
             background: rgba(199, 161, 122, 0.12);
             padding: 4px 14px;
             border-radius: 40px;
             margin-top: 4px;
         }
 
-        /* ===== 查看更多：右下角 ===== */
         .more-wrapper {
-            text-align: right;
-            margin-top: 32px;
+            text-align: center;
+            margin-top: 48px;
         }
         .more-wrapper .btn-more {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 28px;
+            padding: 12px 36px;
             border-radius: 60px;
             background: transparent;
             border: 1.5px solid var(--border-light);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
             transition: var(--transition);
             cursor: pointer;
@@ -460,7 +506,7 @@
         .about-text .signature {
             font-family: 'Georgia', serif;
             font-size: 1.6rem;
-            color: var(--gold);
+            color: var(--accent);
             margin-top: 8px;
             font-style: italic;
         }
@@ -551,7 +597,7 @@
         .contact-links a i {
             width: 24px;
             font-size: 1.2rem;
-            color: var(--gold);
+            color: var(--accent);
         }
         .contact-form input,
         .contact-form textarea {
@@ -574,7 +620,7 @@
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
-            border-color: var(--gold);
+            border-color: var(--accent);
             background: rgba(255, 255, 255, 0.1);
         }
         .contact-form textarea {
@@ -582,7 +628,7 @@
             resize: vertical;
         }
         .contact-form .btn {
-            background: var(--gold);
+            background: var(--accent);
             color: #fff;
             width: 100%;
             padding: 16px;
@@ -593,11 +639,12 @@
             transition: var(--transition);
         }
         .contact-form .btn:hover {
-            background: var(--gold-dark);
+            background: var(--accent-dark);
             transform: translateY(-2px);
             box-shadow: 0 12px 28px rgba(199, 161, 122, 0.3);
         }
 
+        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -714,14 +761,20 @@
         }
 
         /* ===== 响应式 ===== */
-        @media (max-width: 1200px) {
-            .work-grid {
-                grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 1024px) {
+            .hero-grid {
+                gap: 40px;
+            }
+            .about-grid {
+                gap: 40px;
+            }
+            .contact-grid {
+                gap: 40px;
             }
         }
-        @media (max-width: 992px) {
-            .work-grid {
-                grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 24px;
             }
             .hero-grid {
                 grid-template-columns: 1fr;
@@ -733,9 +786,20 @@
             .hero-actions {
                 justify-content: center;
             }
+            .hero-image .img-placeholder {
+                max-width: 360px;
+                margin: 0 auto;
+            }
+            .floating-badge {
+                bottom: 0;
+                right: 10%;
+            }
             .about-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
+            }
+            .about-stats {
+                grid-template-columns: repeat(3, 1fr);
             }
             .contact-grid {
                 grid-template-columns: 1fr;
@@ -746,38 +810,49 @@
             .contact-section {
                 padding: 50px 30px;
             }
+            .works-dropdown-menu {
+                padding: 16px 24px;
+            }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 150px;
+                flex: 0 0 100px;
             }
         }
         @media (max-width: 768px) {
             .navbar .container {
+                gap: 16px;
                 flex-wrap: wrap;
-                gap: 8px;
+                justify-content: center;
             }
             .nav-links {
-                gap: 24px;
-                font-size: 0.8rem;
-                flex-wrap: wrap;
-                justify-content: flex-end;
+                gap: 16px;
+                font-size: 0.85rem;
             }
             .phone-number {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 130px;
+                flex: 0 0 80px;
             }
-            .works-dropdown-menu {
-                padding: 20px 16px;
-            }
-            .hero {
-                padding: 80px 0 30px 0;
-                min-height: auto;
+            .works-dropdown-menu .drop-item p {
+                font-size: 0.7rem;
             }
         }
         @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
             .work-grid {
                 grid-template-columns: 1fr;
+            }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero {
+                padding: 100px 0 30px 0;
+                min-height: auto;
             }
             .floating-badge {
                 display: none;
@@ -786,14 +861,11 @@
                 flex-direction: column;
                 text-align: center;
             }
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
             .works-dropdown-menu {
                 display: none !important;
+            }
+            .phone-number {
+                font-size: 0.75rem;
             }
         }
         .hamburger {
@@ -854,6 +926,7 @@
 </head>
 <body>
 
+    <!-- ===== 导航栏 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -862,7 +935,9 @@
                 <li class="nav-works-dropdown" id="worksDropdown">
                     <a href="#work" id="worksNavLink">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
-                        <div class="drop-inner" id="dropInner"></div>
+                        <div class="drop-inner" id="dropInner">
+                            <!-- 由 JS 动态生成 -->
+                        </div>
                     </div>
                 </li>
                 <li><a href="#about">关于</a></li>
@@ -876,6 +951,7 @@
         </div>
     </nav>
 
+    <!-- ===== Hero ===== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-grid">
@@ -889,7 +965,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="img-placeholder">
-                        <img src="https://picsum.photos/800/450?random=1" alt="工业设计工作室" loading="lazy" />
+                        <img src="https://picsum.photos/600/600?random=1" alt="工业设计工作室" loading="lazy" />
                     </div>
                     <div class="floating-badge">
                         <i class="fas fa-pencil-ruler"></i>
@@ -900,6 +976,7 @@
         </div>
     </section>
 
+    <!-- ===== 作品集 ===== -->
     <section class="section" id="work">
         <div class="container">
             <div class="section-header reveal">
@@ -907,113 +984,23 @@
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
 
-            <!-- 分类导航已删除 -->
+            <div class="filter-tabs reveal" id="filterTabs">
+                <!-- 由 JS 动态生成 -->
+            </div>
 
             <div class="work-grid" id="workGrid">
-                <div class="work-item" data-category="家具">
-                    <a href="detail.html?id=1">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=2" alt="流线椅" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>流线椅</h3>
-                            <span class="tag">家具</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="消费电子">
-                    <a href="detail.html?id=2">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=3" alt="智能音箱" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>智能音箱 · 极光</h3>
-                            <span class="tag">消费电子</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="家居">
-                    <a href="detail.html?id=3">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=4" alt="模块化灯具" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>模块化灯具 · 棱</h3>
-                            <span class="tag">家居</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="概念">
-                    <a href="detail.html?id=4">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=5" alt="未来出行" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>未来出行 · 畅想</h3>
-                            <span class="tag">概念</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="家具">
-                    <a href="detail.html?id=5">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=6" alt="极简办公桌" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>极简办公桌 · 静</h3>
-                            <span class="tag">家具</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="消费电子">
-                    <a href="detail.html?id=6">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=7" alt="便携投影仪" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>便携投影仪 · 光羽</h3>
-                            <span class="tag">消费电子</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="家居">
-                    <a href="detail.html?id=7">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=13" alt="悬浮台灯" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>悬浮台灯 · 云影</h3>
-                            <span class="tag">家居</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="work-item" data-category="概念">
-                    <a href="detail.html?id=8">
-                        <div class="work-thumb">
-                            <img src="https://picsum.photos/600/450?random=14" alt="模块化置物架" loading="lazy" />
-                            <div class="work-overlay">查看详情</div>
-                        </div>
-                        <div class="work-info">
-                            <h3>模块化置物架 · 叠</h3>
-                            <span class="tag">概念</span>
-                        </div>
-                    </a>
-                </div>
+                <!-- 由 JS 动态生成 -->
             </div>
 
             <div class="more-wrapper">
-                <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
+                <a href="category.html" class="btn-more">
+                    查看更多 <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- ===== 关于 ===== -->
     <section class="section" id="about">
         <div class="container">
             <div class="about-grid">
@@ -1037,6 +1024,7 @@
         </div>
     </section>
 
+    <!-- ===== 联系 ===== -->
     <section class="section" id="contact">
         <div class="container">
             <div class="contact-section reveal">
@@ -1061,6 +1049,7 @@
         </div>
     </section>
 
+    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -1071,6 +1060,7 @@
         </div>
     </footer>
 
+    <!-- ===== 微信弹窗 ===== -->
     <div class="qr-modal" id="wechatModal">
         <div class="qr-modal-content">
             <button class="close-btn" id="qrCloseBtn">&times;</button>
@@ -1085,110 +1075,315 @@
         (function() {
             'use strict';
 
-            var projects = [
-                { id: 1, title: '流线椅', img: 'https://picsum.photos/600/450?random=2' },
-                { id: 2, title: '智能音箱 · 极光', img: 'https://picsum.photos/600/450?random=3' },
-                { id: 3, title: '模块化灯具 · 棱', img: 'https://picsum.photos/600/450?random=4' },
-                { id: 4, title: '未来出行 · 畅想', img: 'https://picsum.photos/600/450?random=5' },
-                { id: 5, title: '极简办公桌 · 静', img: 'https://picsum.photos/600/450?random=6' },
-                { id: 6, title: '便携投影仪 · 光羽', img: 'https://picsum.photos/600/450?random=7' },
-                { id: 7, title: '悬浮台灯 · 云影', img: 'https://picsum.photos/600/450?random=13' },
-                { id: 8, title: '模块化置物架 · 叠', img: 'https://picsum.photos/600/450?random=14' }
+            // ===== 作品数据（8个） =====
+            const projects = [
+                { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
+                { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
+                { id: 3, title: '模块化灯具 · 棱', category: '家居', img: 'https://picsum.photos/600/450?random=4' },
+                { id: 4, title: '未来出行 · 畅想', category: '概念', img: 'https://picsum.photos/600/450?random=5' },
+                { id: 5, title: '极简办公桌 · 静', category: '家具', img: 'https://picsum.photos/600/450?random=6' },
+                { id: 6, title: '便携投影仪 · 光羽', category: '消费电子', img: 'https://picsum.photos/600/450?random=7' },
+                { id: 7, title: '悬浮台灯 · 云影', category: '家居', img: 'https://picsum.photos/600/450?random=13' },
+                { id: 8, title: '模块化置物架 · 叠', category: '概念', img: 'https://picsum.photos/600/450?random=14' }
             ];
 
-            var inner = document.getElementById('dropInner');
-            if (inner) {
-                projects.forEach(function(p) {
-                    var div = document.createElement('div');
+            const categories = ['全部', '家具', '消费电子', '家居', '概念'];
+            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
+            let currentFilter = '全部';
+            let currentLang = 'zh';
+
+            // ===== 语言包 =====
+            const translations = {
+                zh: {
+                    'nav-home': '首页',
+                    'nav-work': '作品',
+                    'nav-about': '关于',
+                    'nav-contact': '联系',
+                    'hero-title1': '工业设计',
+                    'hero-title2': '塑造生活',
+                    'hero-title3': '的形态',
+                    'hero-desc': '我是杨一，工业设计师。专注于可持续产品、人机交互与美学表达。让每一件作品都成为功能与艺术的平衡。',
+                    'btn-work': '查看作品',
+                    'btn-contact': '合作洽谈',
+                    'badge': '8年 · 设计经验',
+                    'work-title': '精选作品',
+                    'work-desc': '从概念到落地，每一件作品都承载着对细节的执着。',
+                    'filter-all': '全部',
+                    'filter-furniture': '家具',
+                    'filter-electronics': '消费电子',
+                    'filter-home': '家居',
+                    'filter-concept': '概念',
+                    'view-detail': '查看详情',
+                    'more': '查看更多',
+                    'about-title': '用设计 \n回应真实需求',
+                    'about-p1': '我毕业于中央美术学院工业设计专业，先后在深圳、上海的设计事务所工作。我相信好的设计不只是好看，更在于它如何与使用者产生共鸣。',
+                    'about-p2': '从概念草图到量产落地，我全程参与每一个环节。擅长将材料、工艺与人机工学融合，创造出既有温度又有质感的作品。',
+                    'about-signature': '— 杨一',
+                    'stat-years': '8+',
+                    'stat-years-label': '年经验',
+                    'stat-projects': '36',
+                    'stat-projects-label': '落地项目',
+                    'stat-awards': '12',
+                    'stat-awards-label': '设计奖项',
+                    'contact-title': '一起创造 \n更好的产品',
+                    'contact-desc': '无论是一个新概念、产品迭代还是设计咨询，欢迎随时与我沟通。',
+                    'contact-address': '中国 · 上海',
+                    'form-name': '你的名字',
+                    'form-email': '邮箱地址',
+                    'form-message': '说说你的想法…',
+                    'form-submit': '发送消息',
+                    'footer': '© 2026 杨一 · 工业设计',
+                    'wechat-title': '微信',
+                    'wechat-sub': '扫一扫添加好友',
+                    'wechat-hint': '长按或扫码添加微信'
+                },
+                en: {
+                    'nav-home': 'Home',
+                    'nav-work': 'Work',
+                    'nav-about': 'About',
+                    'nav-contact': 'Contact',
+                    'hero-title1': 'Industrial Design',
+                    'hero-title2': 'Shaping Life',
+                    'hero-title3': '',
+                    'hero-desc': 'I am Yang Yi, an industrial designer focused on sustainable products, human interaction, and aesthetic expression. Let every work become a balance of function and art.',
+                    'btn-work': 'View Work',
+                    'btn-contact': 'Get in Touch',
+                    'badge': '8 Years · Design Experience',
+                    'work-title': 'Selected Works',
+                    'work-desc': 'From concept to production, every work carries a commitment to detail.',
+                    'filter-all': 'All',
+                    'filter-furniture': 'Furniture',
+                    'filter-electronics': 'Electronics',
+                    'filter-home': 'Home',
+                    'filter-concept': 'Concept',
+                    'view-detail': 'View Detail',
+                    'more': 'View More',
+                    'about-title': 'Design that\nResponds to Real Needs',
+                    'about-p1': 'I graduated from the Central Academy of Fine Arts in Industrial Design and have worked in design firms in Shenzhen and Shanghai. I believe good design is not just about aesthetics, but about how it resonates with users.',
+                    'about-p2': 'From concept sketches to production, I\'m involved in every stage. I excel at blending materials, craftsmanship, and ergonomics to create works that are both warm and textured.',
+                    'about-signature': '— Yang Yi',
+                    'stat-years': '8+',
+                    'stat-years-label': 'Years',
+                    'stat-projects': '36',
+                    'stat-projects-label': 'Projects',
+                    'stat-awards': '12',
+                    'stat-awards-label': 'Awards',
+                    'contact-title': 'Let\'s Create\nBetter Products Together',
+                    'contact-desc': 'Whether it\'s a new concept, product iteration, or design consultation, feel free to reach out anytime.',
+                    'contact-address': 'Shanghai, China',
+                    'form-name': 'Your Name',
+                    'form-email': 'Email',
+                    'form-message': 'Share your thoughts…',
+                    'form-submit': 'Send Message',
+                    'footer': '© 2026 Yang Yi · Industrial Design',
+                    'wechat-title': 'WeChat',
+                    'wechat-sub': 'Scan to add friend',
+                    'wechat-hint': 'Long press or scan to add WeChat'
+                }
+            };
+
+            function t(key) {
+                return translations[currentLang] && translations[currentLang][key] !== undefined ? translations[currentLang][
+                    key
+                ] : key;
+            }
+
+            // ===== 渲染分类标签 =====
+            function renderFilters() {
+                const container = document.getElementById('filterTabs');
+                container.innerHTML = '';
+                const labels = [t('filter-all'), t('filter-furniture'), t('filter-electronics'), t('filter-home'), t(
+                    'filter-concept')];
+                const keys = ['全部', '家具', '消费电子', '家居', '概念'];
+                const nums = ['', '01', '02', '03', '04'];
+
+                keys.forEach((key, idx) => {
+                    const btn = document.createElement('button');
+                    btn.setAttribute('data-filter', key);
+                    if (key === currentFilter) btn.classList.add('active');
+                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
+                    btn.addEventListener('click', function() {
+                        currentFilter = key;
+                        renderFilters();
+                        renderProjects();
+                    });
+                    container.appendChild(btn);
+                });
+            }
+
+            // ===== 渲染作品 =====
+            function renderProjects() {
+                const grid = document.getElementById('workGrid');
+                grid.innerHTML = '';
+                let filtered = projects;
+                if (currentFilter !== '全部') {
+                    filtered = projects.filter(p => p.category === currentFilter);
+                }
+                if (filtered.length === 0) {
+                    grid.innerHTML =
+                        '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px 0;">没有匹配的作品</p>';
+                    return;
+                }
+                filtered.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'work-item reveal';
+                    item.innerHTML = `
+                        <a href="detail.html?id=${p.id}">
+                            <div class="work-thumb">
+                                <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                                <div class="work-overlay">${t('view-detail')}</div>
+                            </div>
+                            <div class="work-info">
+                                <h3>${p.title}</h3>
+                                <span class="tag">${p.category}</span>
+                            </div>
+                        </a>
+                    `;
+                    grid.appendChild(item);
+                });
+                // 触发滚动动画
+                const reveals = document.querySelectorAll('.reveal');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.15 });
+                reveals.forEach(el => observer.observe(el));
+            }
+
+            // ===== 渲染下拉菜单 =====
+            function renderDropdown() {
+                const inner = document.getElementById('dropInner');
+                inner.innerHTML = '';
+                projects.forEach(p => {
+                    const div = document.createElement('div');
                     div.className = 'drop-item';
-                    div.innerHTML =
-                        '<a href="detail.html?id=' + p.id + '">' +
-                        '<img class="drop-img" src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
-                        '<p>' + p.title + '</p>' +
-                        '</a>';
+                    div.innerHTML = `
+                        <a href="detail.html?id=${p.id}">
+                            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                            <p>${p.title}</p>
+                        </a>
+                    `;
                     inner.appendChild(div);
                 });
             }
 
-            var dropdownTrigger = document.querySelector('.nav-works-dropdown');
-            var dropdownMenu = document.getElementById('worksDropdownMenu');
-            var hoverTimeout;
+            // ===== 导航悬停弹窗 =====
+            const dropdownTrigger = document.querySelector('.nav-works-dropdown');
+            const dropdownMenu = document.getElementById('worksDropdownMenu');
+            let hoverTimeout;
 
-            if (dropdownTrigger && dropdownMenu) {
-                dropdownTrigger.addEventListener('mouseenter', function() {
-                    clearTimeout(hoverTimeout);
-                    dropdownMenu.classList.add('open');
-                });
-                dropdownTrigger.addEventListener('mouseleave', function(e) {
-                    if (!dropdownMenu.contains(e.relatedTarget)) {
-                        hoverTimeout = setTimeout(function() {
-                            dropdownMenu.classList.remove('open');
-                        }, 150);
-                    }
-                });
-                dropdownMenu.addEventListener('mouseenter', function() {
-                    clearTimeout(hoverTimeout);
-                });
-                dropdownMenu.addEventListener('mouseleave', function() {
-                    hoverTimeout = setTimeout(function() {
+            dropdownTrigger.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+                dropdownMenu.classList.add('open');
+            });
+            dropdownTrigger.addEventListener('mouseleave', function(e) {
+                if (!dropdownMenu.contains(e.relatedTarget)) {
+                    hoverTimeout = setTimeout(() => {
                         dropdownMenu.classList.remove('open');
                     }, 150);
-                });
-            }
-
-            var hamburger = document.getElementById('hamburger');
-            var navLinks = document.getElementById('navLinks');
-            if (hamburger && navLinks) {
-                hamburger.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    navLinks.classList.toggle('open');
-                });
-            }
-
-            var modal = document.getElementById('wechatModal');
-            var wechatBtn = document.getElementById('wechatBtn');
-            var closeBtn = document.getElementById('qrCloseBtn');
-
-            function openModal() {
-                if (modal) { modal.classList.add('open');
-                    document.body.style.overflow = 'hidden'; }
-            }
-
-            function closeModal() {
-                if (modal) { modal.classList.remove('open');
-                    document.body.style.overflow = ''; }
-            }
-            if (wechatBtn) wechatBtn.addEventListener('click', openModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) closeModal();
-                });
-            }
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeModal();
+                }
+            });
+            dropdownMenu.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+            });
+            dropdownMenu.addEventListener('mouseleave', function() {
+                hoverTimeout = setTimeout(() => {
+                    dropdownMenu.classList.remove('open');
+                }, 150);
             });
 
-            var contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    var action = this.getAttribute('action');
-                    if (!action || action === 'https://formspree.io/f/your-form-id') {
-                        e.preventDefault();
-                        var btn = this.querySelector('.btn');
-                        var original = btn.textContent;
-                        btn.textContent = '请先配置表单 ✦';
-                        btn.style.background = '#c0392b';
-                        setTimeout(function() {
-                            btn.textContent = original;
-                            btn.style.background = '';
-                        }, 3000);
-                    }
+            // ===== 语言切换 =====
+            document.getElementById('langSwitch').addEventListener('click', function() {
+                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                this.textContent = currentLang === 'zh' ? 'EN' : '中文';
+                // 更新导航文字
+                document.querySelectorAll('.nav-links a[data-i18n]').forEach(el => {
+                    el.textContent = t(el.getAttribute('data-i18n'));
                 });
-            }
+                // 更新分类和作品
+                renderFilters();
+                renderProjects();
+                // 更新hero等
+                document.querySelector('.hero-content h1').innerHTML =
+                    `${t('hero-title1')}<br /><span class="highlight">${t('hero-title2')}</span> ${t('hero-title3')}`;
+                document.querySelector('.hero-content p').textContent = t('hero-desc');
+                document.querySelector('.hero-actions .btn-primary').textContent = t('btn-work');
+                document.querySelector('.hero-actions .btn-outline').textContent = t('btn-contact');
+                document.querySelector('.floating-badge span').textContent = t('badge');
+                document.querySelector('.section-header h2').textContent = t('work-title');
+                document.querySelector('.section-header p').textContent = t('work-desc');
+                document.querySelector('.btn-more').innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
+                // about
+                document.querySelector('.about-text h2').innerHTML = t('about-title').replace(/\n/g, '<br />');
+                document.querySelectorAll('.about-text p')[0].textContent = t('about-p1');
+                document.querySelectorAll('.about-text p')[1].textContent = t('about-p2');
+                document.querySelector('.about-text .signature').textContent = t('about-signature');
+                document.querySelectorAll('.stat-item .number')[0].textContent = t('stat-years');
+                document.querySelectorAll('.stat-item .label')[0].textContent = t('stat-years-label');
+                document.querySelectorAll('.stat-item .number')[1].textContent = t('stat-projects');
+                document.querySelectorAll('.stat-item .label')[1].textContent = t('stat-projects-label');
+                document.querySelectorAll('.stat-item .number')[2].textContent = t('stat-awards');
+                document.querySelectorAll('.stat-item .label')[2].textContent = t('stat-awards-label');
+                // contact
+                document.querySelector('.contact-info h2').innerHTML = t('contact-title').replace(/\n/g, '<br />');
+                document.querySelector('.contact-info p').textContent = t('contact-desc');
+                document.querySelector('.contact-links a:last-child span').textContent = t('contact-address');
+                document.querySelector('.contact-form input[name="name"]').placeholder = t('form-name');
+                document.querySelector('.contact-form input[name="email"]').placeholder = t('form-email');
+                document.querySelector('.contact-form textarea').placeholder = t('form-message');
+                document.querySelector('.contact-form .btn').textContent = t('form-submit');
+                document.querySelector('.footer span').textContent = t('footer');
+                // wechat
+                document.querySelector('.qr-modal-content h3').textContent = t('wechat-title');
+                document.querySelector('.qr-modal-content .sub').textContent = t('wechat-sub');
+                document.querySelector('.qr-modal-content .hint').textContent = t('wechat-hint');
+            });
 
-            setTimeout(function() {
-                document.querySelectorAll('.reveal').forEach(function(el) {
+            // ===== 汉堡菜单 =====
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('open');
+            });
+
+            // ===== 微信弹窗 =====
+            const modal = document.getElementById('wechatModal');
+            const wechatBtn = document.getElementById('wechatBtn');
+            const closeBtn = document.getElementById('qrCloseBtn');
+
+            function openModal() { modal.classList.add('open');
+                document.body.style.overflow = 'hidden'; }
+
+            function closeModal() { modal.classList.remove('open');
+                document.body.style.overflow = ''; }
+            wechatBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+            // ===== 表单 =====
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                const action = this.getAttribute('action');
+                if (!action || action === 'https://formspree.io/f/your-form-id') {
+                    e.preventDefault();
+                    const btn = this.querySelector('.btn');
+                    const original = btn.textContent;
+                    btn.textContent = '请先配置表单 ✦';
+                    btn.style.background = '#c0392b';
+                    setTimeout(() => { btn.textContent = original;
+                        btn.style.background = ''; }, 3000);
+                }
+            });
+
+            // ===== 初始化 =====
+            renderFilters();
+            renderProjects();
+            renderDropdown();
+
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
                     if (el.getBoundingClientRect().top < window.innerHeight) {
                         el.classList.add('visible');
                     }
