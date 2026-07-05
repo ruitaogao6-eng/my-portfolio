@@ -70,7 +70,6 @@
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 40px;
-            position: relative;
         }
         .logo {
             font-size: 1.4rem;
@@ -101,8 +100,6 @@
             cursor: pointer;
             text-decoration: none;
             white-space: nowrap;
-            min-width: 36px;
-            text-align: center;
         }
         .nav-links a:hover {
             color: var(--text-primary);
@@ -110,94 +107,6 @@
         }
         .nav-links a::after {
             display: none !important;
-        }
-
-        /* ===== 汉堡菜单（手机端） ===== */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-            z-index: 1001;
-        }
-        .hamburger span {
-            display: block;
-            width: 26px;
-            height: 2.5px;
-            background: var(--text-primary);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 0;
-            background: rgba(248, 246, 243, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            padding: 16px 0;
-            min-width: 160px;
-            border: 1px solid var(--border-light);
-            z-index: 999;
-        }
-        .dropdown-menu.open {
-            display: block;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 10px 24px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            text-decoration: none;
-            font-size: 0.95rem;
-            min-width: 36px;
-        }
-        .dropdown-menu a:hover {
-            background: var(--border-light);
-            color: var(--text-primary);
-        }
-
-        /* ===== 回到顶部按钮 ===== */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: #fff;
-            font-size: 1.4rem;
-            box-shadow: var(--shadow-md);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-        .back-to-top:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-        }
-        .back-to-top.visible {
-            display: flex;
         }
 
         .nav-works-dropdown {
@@ -286,8 +195,6 @@
             font-family: var(--font);
             background: transparent;
             white-space: nowrap;
-            min-width: 36px;
-            text-align: center;
         }
         .lang-switch:hover {
             border-color: var(--text-primary);
@@ -851,7 +758,6 @@
             transform: translateY(0);
         }
 
-        /* ===== 响应式 ===== */
         @media (max-width: 1024px) {
             .hero-grid {
                 gap: 40px;
@@ -932,9 +838,6 @@
             .nav-links {
                 display: none;
             }
-            .hamburger {
-                display: flex;
-            }
             .work-grid {
                 grid-template-columns: 1fr;
             }
@@ -958,6 +861,12 @@
             .phone-number {
                 font-size: 0.75rem;
             }
+            .hamburger {
+                display: none;
+            }
+            .dropdown-menu {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -980,19 +889,6 @@
                 <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
                 <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
-
-            <button class="hamburger" id="hamburger" aria-label="菜单">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <div class="dropdown-menu" id="dropdownMenu">
-                <a href="#home" data-i18n="nav-home">首页</a>
-                <a href="#work" data-i18n="nav-work">作品</a>
-                <a href="#about" data-i18n="nav-about">关于</a>
-                <a href="#contact" data-i18n="nav-contact">联系</a>
-            </div>
         </div>
     </nav>
 
@@ -1104,15 +1000,10 @@
         </div>
     </div>
 
-    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
     <script>
         (function() {
             'use strict';
 
-            // ===== 作品数据 =====
             var projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
@@ -1128,7 +1019,6 @@
             var currentFilter = '全部';
             var currentLang = 'zh';
 
-            // ===== 语言包 =====
             var translations = {
                 zh: {
                     'nav-home': '首页',
@@ -1220,10 +1110,9 @@
                 ] : key;
             }
 
-            // ===== 更新所有文本 =====
             function updateAllText() {
                 // 导航
-                document.querySelectorAll('.nav-links a[data-i18n], .dropdown-menu a[data-i18n]').forEach(function(el) {
+                document.querySelectorAll('.nav-links a[data-i18n]').forEach(function(el) {
                     el.textContent = t(el.getAttribute('data-i18n'));
                 });
 
@@ -1242,15 +1131,12 @@
                 var badge = document.querySelector('.floating-badge span');
                 if (badge) badge.textContent = t('badge');
 
-                // 分类 & 作品
                 renderFilters();
                 renderProjects();
 
-                // 查看更多
                 var moreBtn = document.querySelector('.btn-more');
                 if (moreBtn) moreBtn.innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
 
-                // About
                 var aboutTitle = document.querySelector('.about-text h2');
                 if (aboutTitle) aboutTitle.innerHTML = t('about-title').replace(/\n/g, '<br />');
                 var aboutP1 = document.querySelectorAll('.about-text p')[0];
@@ -1298,7 +1184,6 @@
                 if (wechatHint) wechatHint.textContent = t('wechat-hint');
             }
 
-            // ===== 渲染分类 =====
             function renderFilters() {
                 var container = document.getElementById('filterTabs');
                 if (!container) return;
@@ -1324,7 +1209,6 @@
                 });
             }
 
-            // ===== 渲染作品 =====
             function renderProjects() {
                 var grid = document.getElementById('workGrid');
                 if (!grid) return;
@@ -1363,7 +1247,6 @@
                 }, 100);
             }
 
-            // ===== 渲染下拉菜单 =====
             function renderDropdown() {
                 var inner = document.getElementById('dropInner');
                 if (!inner) return;
@@ -1380,7 +1263,6 @@
                 });
             }
 
-            // ===== 导航悬停弹窗 =====
             var dropdownTrigger = document.querySelector('.nav-works-dropdown');
             var dropdownMenuWorks = document.getElementById('worksDropdownMenu');
             var hoverTimeout;
@@ -1407,7 +1289,6 @@
                 });
             }
 
-            // ===== 语言切换 =====
             var langSwitch = document.getElementById('langSwitch');
             if (langSwitch) {
                 langSwitch.addEventListener('click', function() {
@@ -1417,48 +1298,6 @@
                 });
             }
 
-            // ===== 汉堡菜单 =====
-            var hamburger = document.getElementById('hamburger');
-            var dropdownMenu = document.getElementById('dropdownMenu');
-
-            if (hamburger && dropdownMenu) {
-                hamburger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    this.classList.toggle('active');
-                    dropdownMenu.classList.toggle('open');
-                });
-
-                dropdownMenu.querySelectorAll('a').forEach(function(link) {
-                    link.addEventListener('click', function() {
-                        dropdownMenu.classList.remove('open');
-                        hamburger.classList.remove('active');
-                    });
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.navbar')) {
-                        dropdownMenu.classList.remove('open');
-                        hamburger.classList.remove('active');
-                    }
-                });
-            }
-
-            // ===== 回到顶部 =====
-            var backToTopBtn = document.getElementById('backToTop');
-            if (backToTopBtn) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 300) {
-                        backToTopBtn.classList.add('visible');
-                    } else {
-                        backToTopBtn.classList.remove('visible');
-                    }
-                });
-                backToTopBtn.addEventListener('click', function() {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-
-            // ===== 微信弹窗 =====
             var modal = document.getElementById('wechatModal');
             var wechatBtn = document.getElementById('wechatBtn');
             var closeBtn = document.getElementById('qrCloseBtn');
@@ -1475,7 +1314,6 @@
             }
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-            // ===== 表单 =====
             var contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
@@ -1494,12 +1332,10 @@
                 });
             }
 
-            // ===== 初始化 =====
             renderFilters();
             renderProjects();
             renderDropdown();
 
-            // 设置初始语言
             updateAllText();
 
             setTimeout(function() {
