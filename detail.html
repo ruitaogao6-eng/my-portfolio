@@ -184,13 +184,12 @@
             font-size: 0.8rem;
         }
 
-        /* ===== 主内容区域（flex:1 撑开，底部固定） ===== */
         .main-content {
             flex: 1;
             padding-top: 130px;
         }
 
-        /* ===== 首图：纯白背景，文字覆盖在图片上方 ===== */
+        /* ===== 首图 ===== */
         .detail-hero {
             padding: 40px 0 60px 0;
         }
@@ -200,13 +199,13 @@
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow-md);
-            min-height: 420px;
             display: flex;
             align-items: stretch;
+            min-height: 320px;
         }
         .detail-hero .hero-image {
-            flex: 1;
-            min-height: 420px;
+            flex: 0 0 50%;
+            min-height: 320px;
             background: #ffffff;
             display: flex;
             align-items: center;
@@ -218,21 +217,16 @@
             object-fit: cover;
             aspect-ratio: 16/9;
         }
-        /* 文字层：绝对定位在图片上方，左对齐 */
         .detail-hero .hero-text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 50px 60px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
+            padding: 40px 50px;
+            background: #ffffff;
         }
         .detail-hero .hero-text h1 {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 12px;
@@ -252,13 +246,13 @@
             gap: 6px;
         }
         .detail-hero .hero-text .desc {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-secondary);
             max-width: 560px;
             line-height: 1.9;
         }
 
-        /* ===== 详情图：放大，比主图大 ===== */
+        /* ===== 详情图 ===== */
         .detail-content {
             padding: 20px 0 60px 0;
         }
@@ -267,7 +261,7 @@
             font-weight: 600;
             margin-bottom: 28px;
             color: var(--text-primary);
-            text-align: center;
+            text-align: left;
         }
         .detail-gallery {
             display: grid;
@@ -287,7 +281,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 页脚：固定在底部 ===== */
+        /* ===== 页脚（与主页一致） ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -327,8 +321,10 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             .detail-hero .hero-text {
-                padding: 40px;
-                background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0) 100%);
+                padding: 30px 35px;
+            }
+            .detail-hero .hero-text h1 {
+                font-size: 2rem;
             }
         }
         @media (max-width: 900px) {
@@ -342,16 +338,15 @@
                 padding: 0 24px;
             }
             .detail-hero .hero-inner {
-                min-height: 320px;
                 flex-direction: column;
+                min-height: auto;
             }
             .detail-hero .hero-image {
-                min-height: 240px;
+                flex: 1;
+                min-height: 200px;
             }
             .detail-hero .hero-text {
-                position: relative;
                 padding: 30px;
-                background: #ffffff;
             }
             .detail-hero .hero-text .desc {
                 max-width: 100%;
@@ -375,7 +370,7 @@
                 gap: 16px;
             }
             .detail-hero .hero-text h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
         }
         @media (max-width: 640px) {
@@ -494,7 +489,6 @@
         </div>
     </div>
 
-    <!-- ===== 主内容 ===== -->
     <div class="main-content">
 
         <section class="detail-hero">
@@ -529,7 +523,7 @@
 
     </div>
 
-    <!-- ===== 页脚 ===== -->
+    <!-- ===== 页脚（与主页一致） ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
