@@ -48,13 +48,15 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* ===== 容器宽幅加大 ===== */
         .container {
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        /* ===== 导航 ===== */
+        /* ===== 导航（与主页完全一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -70,9 +72,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .logo {
             font-size: 1.4rem;
@@ -164,9 +166,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .sub-navbar .back-link {
             color: var(--text-secondary);
@@ -189,9 +191,9 @@
             padding-top: 130px;
         }
 
-        /* ===== 首图：文字在左，图片在右 ===== */
+        /* ===== 首图：文字在左，图片在右，放大 ===== */
         .detail-hero {
-            padding: 40px 0 60px 0;
+            padding: 50px 0 70px 0;
         }
         .detail-hero .hero-inner {
             position: relative;
@@ -201,12 +203,11 @@
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: stretch;
-            min-height: 320px;
+            min-height: 380px;
         }
-        /* 图片在右 */
         .detail-hero .hero-image {
-            flex: 0 0 50%;
-            min-height: 320px;
+            flex: 0 0 55%;
+            min-height: 380px;
             background: #ffffff;
             display: flex;
             align-items: center;
@@ -219,29 +220,28 @@
             object-fit: cover;
             aspect-ratio: 16/9;
         }
-        /* 文字在左 */
         .detail-hero .hero-text {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 40px 50px;
+            padding: 50px 60px;
             background: #ffffff;
             order: 1;
         }
         .detail-hero .hero-text h1 {
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             color: var(--text-primary);
         }
         .detail-hero .hero-text .meta {
             display: flex;
-            gap: 24px;
+            gap: 28px;
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 16px;
+            font-size: 1rem;
+            margin-bottom: 18px;
             flex-wrap: wrap;
         }
         .detail-hero .hero-text .meta span {
@@ -250,20 +250,20 @@
             gap: 6px;
         }
         .detail-hero .hero-text .desc {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--text-secondary);
-            max-width: 560px;
+            max-width: 640px;
             line-height: 1.9;
         }
 
-        /* ===== 详情图：放大两倍 ===== */
+        /* ===== 详情图：放大 ===== */
         .detail-content {
-            padding: 20px 0 60px 0;
+            padding: 20px 0 70px 0;
         }
         .detail-content .section-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             color: var(--text-primary);
             text-align: left;
         }
@@ -285,7 +285,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 页脚：左对齐，图标右对齐 ===== */
+        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -325,10 +325,13 @@
 
         @media (max-width: 1024px) {
             .detail-hero .hero-text {
-                padding: 30px 35px;
+                padding: 35px 40px;
             }
             .detail-hero .hero-text h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            .detail-hero .hero-text .desc {
+                font-size: 1.05rem;
             }
         }
         @media (max-width: 900px) {
@@ -347,7 +350,7 @@
             }
             .detail-hero .hero-image {
                 flex: 1;
-                min-height: 200px;
+                min-height: 220px;
                 order: 1;
             }
             .detail-hero .hero-text {
@@ -377,6 +380,9 @@
             }
             .detail-hero .hero-text h1 {
                 font-size: 1.8rem;
+            }
+            .detail-hero .hero-text .desc {
+                font-size: 1rem;
             }
         }
         @media (max-width: 640px) {
