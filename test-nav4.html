@@ -47,9 +47,9 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             font-weight: 500;
-            color: #b0b0b0;
+            color: #6b6b6b;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
             display: flex;
             align-items: center;
             padding: 6px 16px;
@@ -62,17 +62,20 @@
             display: inline-block;
             font-size: 0.75rem;
             font-weight: 600;
-            color: #b0b0b0;
-            transition: all 0.25s ease;
+            color: #6b6b6b;
+            transition: color 0.25s ease, background 0.25s ease, opacity 0.2s ease, transform 0.2s ease;
             min-width: 28px;
             text-align: center;
-            border-radius: 50%;
             padding: 2px 4px;
+            border-radius: 50%;
+            background: transparent;
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* ===== “全部”按钮 ===== */
         .filter-tabs button[data-filter="全部"] {
-            color: #b0b0b0;
+            color: #6b6b6b;
             background: transparent;
             padding: 6px 20px;
         }
@@ -93,7 +96,7 @@
             color: #1c1c1c;
         }
 
-        /* 激活时：文字和数字都加粗变黑，数字带金色圆底 */
+        /* 激活时：文字和数字都加粗变黑，数字带金色圆底（淡入淡出） */
         .filter-tabs button:not([data-filter="全部"]).active {
             color: #1c1c1c;
             font-weight: 700;
@@ -108,15 +111,22 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            opacity: 1;
+            transform: scale(1);
         }
 
-        /* ===== 分隔线（浅灰色竖线） ===== */
-        .filter-tabs .divider {
-            width: 1px;
-            height: 28px;
-            background: #d0d0d0;
-            margin: 0 8px;
-            flex-shrink: 0;
+        /* 非激活时：数字背景快速淡出（opacity → 0，无压扁） */
+        .filter-tabs button:not([data-filter="全部"]) .num {
+            background: transparent;
+            opacity: 1;
+            transform: scale(1);
+            transition: color 0.25s ease, background 0.2s ease, opacity 0.15s ease;
+        }
+        /* 注意：非激活状态下，如果之前有背景，需要快速消失 */
+        .filter-tabs button:not([data-filter="全部"]):not(.active) .num {
+            background: transparent !important;
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* ===== 状态提示 ===== */
@@ -158,10 +168,9 @@
         <h2>🧪 导航测试 · 最终版</h2>
         <p class="sub">点击不同分类查看样式变化，确认后告诉我“可以合并”</p>
 
-        <!-- ===== 导航 ===== -->
+        <!-- ===== 导航（无分割线） ===== -->
         <div class="filter-tabs" id="filterTabs">
             <button data-filter="全部" class="active">全部</button>
-            <span class="divider"></span>
             <button data-filter="家具"><span class="num">01</span> 家具</button>
             <button data-filter="消费电子"><span class="num">02</span> 消费电子</button>
             <button data-filter="家居"><span class="num">03</span> 家居</button>
@@ -173,7 +182,7 @@
             <p>📌 当前激活：<strong id="currentActive">全部</strong></p>
             <p style="margin-top: 8px; color: #8a8a8a; font-size: 0.9rem;">
                 “全部”激活 → <span class="badge">金色跑道圆</span> + 黑色加粗文字<br />
-                其他分类激活 → 文字和数字黑色加粗 + 数字带 <span class="badge-dot">金色圆底</span>
+                其他分类激活 → 文字和数字黑色加粗 + 数字带 <span class="badge-dot">金色圆底</span>（快速淡出）
             </p>
         </div>
 
