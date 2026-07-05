@@ -48,7 +48,6 @@
             padding: 0 40px;
         }
 
-        /* ===== 导航（与首页一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -79,7 +78,7 @@
         }
         .nav-links {
             display: flex;
-            gap: 48px;
+            gap: 40px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -141,7 +140,6 @@
             color: var(--text-primary);
         }
 
-        /* ===== 返回全部作品按钮（固定在导航下方） ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -177,7 +175,6 @@
             font-size: 0.8rem;
         }
 
-        /* ===== 详情内容 ===== */
         .detail-hero {
             padding: 160px 0 40px 0;
         }
@@ -229,7 +226,6 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -372,8 +368,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== 导航（与首页一致） ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -391,7 +385,6 @@
         </div>
     </nav>
 
-    <!-- ===== 返回全部作品按钮 ===== -->
     <div class="sub-navbar" id="subNavbar">
         <div class="container">
             <a href="category.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
@@ -399,7 +392,6 @@
         </div>
     </div>
 
-    <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
         <div class="container">
             <img id="detailMainImg" src="https://picsum.photos/1200/600?random=10" alt="作品主图" loading="lazy" />
@@ -424,7 +416,6 @@
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -471,15 +462,12 @@
                 document.getElementById('detailCategory').textContent = data.category;
                 document.getElementById('detailDesc').textContent = data.desc;
                 document.getElementById('detailMainImg').src = data.mainImg;
-                // 更新计数器
                 const total = Object.keys(projectData).length;
                 const idx = Object.keys(projectData).indexOf(String(id));
                 document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
             }
 
             renderProject(currentId);
-
-            // 记录当前id到localStorage，供二级界面“上一步”使用
             localStorage.setItem('lastDetailId', currentId);
         })();
     </script>
