@@ -47,12 +47,12 @@
             height: auto;
         }
         .container {
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        /* ===== 导航栏 ===== */
+        /* ===== 导航栏（logo 左，导航右） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -66,15 +66,18 @@
         }
         .navbar .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 32px;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         .logo {
             font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-primary);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .logo span {
             color: var(--accent);
@@ -107,7 +110,7 @@
             display: none !important;
         }
 
-        /* ===== 作品悬停下拉菜单 — 铺满左右上，一行 ===== */
+        /* ===== 作品悬停下拉菜单 ===== */
         .nav-works-dropdown {
             position: relative;
         }
@@ -121,7 +124,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-light);
             box-shadow: var(--shadow-md);
-            padding: 20px 40px;
+            padding: 16px 20px;
             z-index: 998;
             overflow-x: auto;
             white-space: nowrap;
@@ -131,12 +134,12 @@
         }
         .works-dropdown-menu .drop-inner {
             display: flex;
-            gap: 24px;
-            max-width: 1280px;
+            gap: 20px;
+            max-width: 1440px;
             margin: 0 auto;
         }
         .works-dropdown-menu .drop-item {
-            flex: 0 0 140px;
+            flex: 0 0 160px;
             text-align: center;
             transition: transform 0.2s;
             cursor: pointer;
@@ -144,9 +147,10 @@
         .works-dropdown-menu .drop-item:hover {
             transform: translateY(-4px);
         }
-        .works-dropdown-menu .drop-item img {
+        /* 16:9 比例 */
+        .works-dropdown-menu .drop-item .drop-img {
             width: 100%;
-            aspect-ratio: 1/1;
+            aspect-ratio: 16/9;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
@@ -181,7 +185,6 @@
             }
         }
 
-        /* ===== 语言切换 ===== */
         .lang-switch {
             background: none;
             border: 1.5px solid var(--border-light);
@@ -203,8 +206,8 @@
 
         /* ===== Hero ===== */
         .hero {
-            padding: 120px 0 60px 0;
-            min-height: 100vh;
+            padding: 100px 0 50px 0;
+            min-height: 90vh;
             display: flex;
             align-items: center;
         }
@@ -275,8 +278,7 @@
         }
         .hero-image .img-placeholder {
             width: 100%;
-            aspect-ratio: 1/1;
-            max-width: 480px;
+            aspect-ratio: 16/9;
             border-radius: var(--radius);
             background: linear-gradient(145deg, #e8e4de, #d6d0c8);
             box-shadow: var(--shadow-md);
@@ -310,12 +312,12 @@
 
         /* ===== 作品集 ===== */
         .section {
-            padding: 60px 0 80px 0;
+            padding: 50px 0 70px 0;
         }
         .section-header {
             text-align: center;
             max-width: 640px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 30px auto;
         }
         .section-header h2 {
             font-size: clamp(2rem, 4vw, 3rem);
@@ -327,13 +329,13 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 分类标签 ===== */
+        /* ===== 分类标签（新样式：圆在文字下方） ===== */
         .filter-tabs {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 32px;
             flex-wrap: wrap;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
         .filter-tabs button {
             background: transparent;
@@ -345,40 +347,43 @@
             cursor: pointer;
             transition: var(--transition);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
+            gap: 4px;
+            padding: 0 4px 6px 4px;
+            position: relative;
         }
-        .filter-tabs button .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
+        /* 底部圆点（默认全部显示，只有“全部”常亮） */
+        .filter-tabs button .dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: var(--border-light);
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition);
+            background: transparent;
+            transition: background 0.25s;
         }
-        .filter-tabs button.active {
+        /* “全部”的圆点默认显示深色 */
+        .filter-tabs button[data-filter="全部"] .dot {
+            background: var(--accent);
+        }
+        /* 其他分类：悬停或激活时显示深色圆点 + 文字加粗 */
+        .filter-tabs button:not([data-filter="全部"]):hover .dot,
+        .filter-tabs button:not([data-filter="全部"]).active .dot {
+            background: var(--accent);
+        }
+        .filter-tabs button:not([data-filter="全部"]):hover,
+        .filter-tabs button:not([data-filter="全部"]).active {
             color: var(--text-primary);
             font-weight: 700;
         }
-        .filter-tabs button.active .num {
+        .filter-tabs button.active .dot {
             background: var(--accent);
-            color: #fff;
-        }
-        .filter-tabs button:hover .num {
-            background: var(--accent);
-            color: #fff;
         }
 
+        /* ===== 作品网格 — 一排4个 ===== */
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
         }
         .work-item {
             background: var(--bg-card);
@@ -427,11 +432,11 @@
             opacity: 1;
         }
         .work-info {
-            padding: 18px 22px 22px;
+            padding: 16px 18px 18px;
         }
         .work-info h3 {
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1rem;
             margin-bottom: 4px;
         }
         .work-info .tag {
@@ -448,7 +453,7 @@
 
         .more-wrapper {
             text-align: center;
-            margin-top: 48px;
+            margin-top: 40px;
         }
         .more-wrapper .btn-more {
             display: inline-flex;
@@ -761,20 +766,14 @@
         }
 
         /* ===== 响应式 ===== */
-        @media (max-width: 1024px) {
-            .hero-grid {
-                gap: 40px;
-            }
-            .about-grid {
-                gap: 40px;
-            }
-            .contact-grid {
-                gap: 40px;
+        @media (max-width: 1200px) {
+            .work-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-        @media (max-width: 900px) {
-            .container {
-                padding: 0 24px;
+        @media (max-width: 992px) {
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             .hero-grid {
                 grid-template-columns: 1fr;
@@ -786,20 +785,9 @@
             .hero-actions {
                 justify-content: center;
             }
-            .hero-image .img-placeholder {
-                max-width: 360px;
-                margin: 0 auto;
-            }
-            .floating-badge {
-                bottom: 0;
-                right: 10%;
-            }
             .about-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
-            }
-            .about-stats {
-                grid-template-columns: repeat(3, 1fr);
             }
             .contact-grid {
                 grid-template-columns: 1fr;
@@ -810,48 +798,37 @@
             .contact-section {
                 padding: 50px 30px;
             }
-            .works-dropdown-menu {
-                padding: 16px 24px;
-            }
-            .works-dropdown-menu .drop-item {
-                flex: 0 0 100px;
-            }
         }
         @media (max-width: 768px) {
             .navbar .container {
-                gap: 16px;
                 flex-wrap: wrap;
-                justify-content: center;
+                gap: 8px;
             }
             .nav-links {
-                gap: 16px;
-                font-size: 0.85rem;
+                gap: 14px;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
             }
             .phone-number {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 80px;
+                flex: 0 0 120px;
             }
-            .works-dropdown-menu .drop-item p {
-                font-size: 0.7rem;
+            .filter-tabs {
+                gap: 16px;
+            }
+            .filter-tabs button {
+                font-size: 0.85rem;
             }
         }
         @media (max-width: 640px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
             .work-grid {
                 grid-template-columns: 1fr;
             }
-            .about-stats {
-                grid-template-columns: 1fr 1fr;
-            }
             .hero {
-                padding: 100px 0 30px 0;
+                padding: 80px 0 30px 0;
                 min-height: auto;
             }
             .floating-badge {
@@ -861,10 +838,19 @@
                 flex-direction: column;
                 text-align: center;
             }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
             .works-dropdown-menu {
                 display: none !important;
             }
-            .phone-number {
+            .filter-tabs {
+                gap: 12px;
+            }
+            .filter-tabs button {
                 font-size: 0.75rem;
             }
         }
@@ -965,7 +951,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="img-placeholder">
-                        <img src="https://picsum.photos/600/600?random=1" alt="工业设计工作室" loading="lazy" />
+                        <img src="https://picsum.photos/800/450?random=1" alt="工业设计工作室" loading="lazy" />
                     </div>
                     <div class="floating-badge">
                         <i class="fas fa-pencil-ruler"></i>
@@ -1201,7 +1187,7 @@
                     const btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
+                    btn.innerHTML = `${labels[idx]} <span class="dot"></span>`;
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
@@ -1260,7 +1246,7 @@
                     div.className = 'drop-item';
                     div.innerHTML = `
                         <a href="detail.html?id=${p.id}">
-                            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                            <img class="drop-img" src="${p.img}" alt="${p.title}" loading="lazy" />
                             <p>${p.title}</p>
                         </a>
                     `;
