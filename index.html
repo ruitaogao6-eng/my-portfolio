@@ -1065,7 +1065,7 @@
             const categories = ['全部', '家具', '消费电子', '家居', '概念'];
             const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '全部';
-            let currentLang = localStorage.getItem('lang') || 'zh';
+            let currentLang = 'zh';
 
             const translations = {
                 zh: {
@@ -1263,11 +1263,11 @@
             });
 
             document.getElementById('langSwitch').addEventListener('click', function() {
-    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-    localStorage.setItem('lang', currentLang);
-    this.textContent = currentLang === 'zh' ? 'EN' : '中文';
-    updateAllText();
-});
+                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                this.textContent = currentLang === 'zh' ? 'EN' : '中文';
+                document.querySelectorAll('.nav-links a[data-i18n]').forEach(el => {
+                    el.textContent = t(el.getAttribute('data-i18n'));
+                });
                 renderFilters();
                 renderProjects();
                 document.querySelector('.hero-content h1').innerHTML =
