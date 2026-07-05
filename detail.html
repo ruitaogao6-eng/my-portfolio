@@ -48,6 +48,7 @@
             padding: 0 20px;
         }
 
+        /* ===== 导航 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -79,7 +80,7 @@
         }
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 28px;
             list-style: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -141,6 +142,7 @@
             color: var(--text-primary);
         }
 
+        /* ===== 返回全部作品按钮 ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -176,6 +178,7 @@
             font-size: 0.8rem;
         }
 
+        /* ===== 详情内容 ===== */
         .detail-hero {
             padding: 160px 0 40px 0;
         }
@@ -216,6 +219,7 @@
             line-height: 1.9;
         }
 
+        /* 4张细节图，16:9，放大 */
         .detail-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -230,6 +234,7 @@
             box-shadow: var(--shadow-sm);
         }
 
+        /* ===== 页脚 ===== */
         .footer {
             padding: 40px 0 30px;
             border-top: 1px solid var(--border-light);
@@ -278,7 +283,7 @@
                 gap: 8px;
             }
             .nav-links {
-                gap: 20px;
+                gap: 14px;
                 font-size: 0.8rem;
                 flex-wrap: wrap;
                 justify-content: flex-end;
@@ -376,6 +381,7 @@
 </head>
 <body>
 
+    <!-- ===== 导航 ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
@@ -393,6 +399,7 @@
         </div>
     </nav>
 
+    <!-- ===== 返回全部作品按钮 ===== -->
     <div class="sub-navbar" id="subNavbar">
         <div class="container">
             <a href="category.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回全部作品</a>
@@ -400,6 +407,7 @@
         </div>
     </div>
 
+    <!-- ===== 详情内容 ===== -->
     <section class="detail-hero">
         <div class="container">
             <img id="detailMainImg" src="https://picsum.photos/1200/675?random=10" alt="作品主图" loading="lazy" />
@@ -418,10 +426,13 @@
                 流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
             </p>
 
-            <div class="detail-gallery" id="detailGallery"></div>
+            <div class="detail-gallery" id="detailGallery">
+                <!-- 由 JS 动态生成 4 张 16:9 细节图 -->
+            </div>
         </div>
     </section>
 
+    <!-- ===== 页脚 ===== -->
     <footer class="footer container">
         <span>&copy; 2026 杨一 · 工业设计</span>
         <div class="footer-socials">
@@ -434,6 +445,7 @@
 
     <script>
         (function() {
+            // ===== 作品数据（含细节图，每个作品4张） =====
             const projectData = {
                 1: {
                     title: '流线椅',
@@ -546,6 +558,7 @@
                 document.getElementById('detailDesc').textContent = data.desc;
                 document.getElementById('detailMainImg').src = data.mainImg;
 
+                // 渲染 4 张 16:9 细节图
                 const gallery = document.getElementById('detailGallery');
                 gallery.innerHTML = '';
                 data.detailImgs.forEach(src => {
