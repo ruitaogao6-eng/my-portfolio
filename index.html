@@ -110,6 +110,93 @@
             display: none !important;
         }
 
+        /* ===== 手机端下拉菜单 ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgba(248, 246, 243, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 16px 0;
+            min-width: 160px;
+            border: 1px solid var(--border-light);
+            z-index: 999;
+        }
+        .dropdown-menu.open {
+            display: block;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .dropdown-menu a:hover {
+            background: var(--border-light);
+            color: var(--text-primary);
+        }
+
+        /* ===== 回到顶部按钮 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1.4rem;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .back-to-top:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        .back-to-top.visible {
+            display: flex;
+        }
+
         /* ===== 作品悬停下拉菜单 ===== */
         .nav-works-dropdown {
             position: relative;
@@ -327,7 +414,6 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 修改：隐藏分类导航 ===== */
         .filter-tabs {
             display: none !important;
         }
@@ -403,7 +489,6 @@
             margin-top: 4px;
         }
 
-        /* ===== 修改：查看更多右对齐，去掉上边距 ===== */
         .more-wrapper {
             text-align: right;
             margin-top: 0;
@@ -611,6 +696,8 @@
             gap: 16px;
             font-size: 0.9rem;
             color: var(--text-muted);
+            margin-top: auto;
+            background: var(--bg-primary);
         }
         .footer-socials {
             display: flex;
@@ -802,6 +889,9 @@
             .nav-links {
                 display: none;
             }
+            .hamburger {
+                display: flex;
+            }
             .work-grid {
                 grid-template-columns: 1fr;
             }
@@ -825,66 +915,6 @@
             .phone-number {
                 font-size: 0.75rem;
             }
-            .hamburger {
-                display: flex;
-            }
-            .dropdown-menu {
-                display: none;
-            }
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-        .hamburger span {
-            display: block;
-            width: 26px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: var(--transition);
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(248, 246, 243, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            padding: 16px 0;
-            min-width: 180px;
-            border: 1px solid var(--border-light);
-            z-index: 999;
-        }
-        .dropdown-menu.open {
-            display: block;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 28px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .dropdown-menu a:hover {
-            background: var(--border-light);
-            color: var(--text-primary);
-            font-weight: 700;
         }
     </style>
 </head>
@@ -892,6 +922,7 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
+
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">首页</a></li>
                 <li class="nav-works-dropdown" id="worksDropdown">
@@ -905,9 +936,19 @@
                 <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
                 <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
+
             <button class="hamburger" id="hamburger" aria-label="菜单">
-                <span></span><span></span><span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#home">首页</a>
+                <a href="#work">作品</a>
+                <a href="#about">关于</a>
+                <a href="#contact">联系</a>
+            </div>
         </div>
     </nav>
 
@@ -942,15 +983,12 @@
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
 
-            <!-- ===== 修改：查看更多已移到标题下方，右对齐 ===== -->
             <div class="more-wrapper">
                 <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="filter-tabs reveal" id="filterTabs"></div>
             <div class="work-grid" id="workGrid"></div>
-
-            <!-- 原来这里的 more-wrapper 已删除 -->
         </div>
     </section>
 
@@ -1021,6 +1059,10 @@
         </div>
     </div>
 
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         (function() {
             'use strict';
@@ -1037,7 +1079,6 @@
             ];
 
             const categories = ['全部', '家具', '消费电子', '家居', '概念'];
-            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
             let currentFilter = '全部';
             let currentLang = 'zh';
 
@@ -1136,7 +1177,6 @@
                 ] : key;
             }
 
-            // ===== 修改：renderFilters 跳过执行（分类导航不生成） =====
             function renderFilters() {
                 return;
                 const container = document.getElementById('filterTabs');
@@ -1279,11 +1319,43 @@
             });
 
             const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-            hamburger.addEventListener('click', function() {
-                this.classList.toggle('active');
-                navLinks.classList.toggle('open');
-            });
+            const dropdownMenuMobile = document.getElementById('dropdownMenu');
+
+            if (hamburger && dropdownMenuMobile) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    dropdownMenuMobile.classList.toggle('open');
+                });
+
+                dropdownMenuMobile.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        dropdownMenuMobile.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.navbar')) {
+                        dropdownMenuMobile.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    }
+                });
+            }
+
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 300) {
+                        backToTopBtn.classList.add('visible');
+                    } else {
+                        backToTopBtn.classList.remove('visible');
+                    }
+                });
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
 
             const modal = document.getElementById('wechatModal');
             const wechatBtn = document.getElementById('wechatBtn');
