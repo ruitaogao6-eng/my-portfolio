@@ -49,14 +49,12 @@
             height: auto;
         }
 
-        /* ===== 容器宽幅加大 ===== */
         .container {
             max-width: 1440px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ===== 导航（与主页完全一致） ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -112,6 +110,93 @@
         .nav-links a::after {
             display: none !important;
         }
+
+        /* ===== 手机端下拉菜单 ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgba(248, 246, 243, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 16px 0;
+            min-width: 160px;
+            border: 1px solid var(--border-light);
+            z-index: 999;
+        }
+        .dropdown-menu.open {
+            display: block;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .dropdown-menu a:hover {
+            background: var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1.4rem;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .back-to-top:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        .back-to-top.visible {
+            display: flex;
+        }
+
         .phone-number {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -150,7 +235,6 @@
             color: var(--text-primary);
         }
 
-        /* ===== 返回全部作品 ===== */
         .sub-navbar {
             position: fixed;
             top: 68px;
@@ -191,7 +275,6 @@
             padding-top: 130px;
         }
 
-        /* ===== 首图：文字在左，图片在右，放大 ===== */
         .detail-hero {
             padding: 50px 0 70px 0;
         }
@@ -256,7 +339,6 @@
             line-height: 1.9;
         }
 
-        /* ===== 详情图：放大 ===== */
         .detail-content {
             padding: 20px 0 70px 0;
         }
@@ -285,7 +367,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 页脚 ===== */
         .footer {
             width: 100%;
             padding: 40px 0 30px;
@@ -390,6 +471,9 @@
             .nav-links {
                 display: none;
             }
+            .hamburger {
+                display: flex;
+            }
             .detail-gallery {
                 grid-template-columns: 1fr;
             }
@@ -410,72 +494,12 @@
             .footer-socials {
                 justify-content: center;
             }
-            .hamburger {
-                display: flex;
-            }
-            .dropdown-menu {
-                display: none;
-            }
             .main-content {
                 padding-top: 110px;
             }
             .detail-hero .hero-text {
                 padding: 20px;
             }
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-        .hamburger span {
-            display: block;
-            width: 26px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: var(--transition);
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(248, 246, 243, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            padding: 16px 0;
-            min-width: 180px;
-            border: 1px solid var(--border-light);
-            z-index: 999;
-        }
-        .dropdown-menu.open {
-            display: block;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 28px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .dropdown-menu a:hover {
-            background: var(--border-light);
-            color: var(--text-primary);
-            font-weight: 700;
         }
     </style>
 </head>
@@ -492,9 +516,17 @@
                 <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
                 <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
+
             <button class="hamburger" id="hamburger" aria-label="菜单">
                 <span></span><span></span><span></span>
             </button>
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="index.html">首页</a>
+                <a href="index.html#work">作品</a>
+                <a href="index.html#about">关于</a>
+                <a href="index.html#contact">联系</a>
+            </div>
         </div>
     </nav>
 
@@ -548,6 +580,10 @@
             <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站"><i class="fab fa-bilibili"></i></a>
         </div>
     </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
         (function() {
@@ -676,6 +712,45 @@
                 var total = Object.keys(projectData).length;
                 var idx = Object.keys(projectData).indexOf(String(id));
                 document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
+            }
+
+            var hamburger = document.getElementById('hamburger');
+            var dropdownMenu = document.getElementById('dropdownMenu');
+
+            if (hamburger && dropdownMenu) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    dropdownMenu.classList.toggle('open');
+                });
+
+                dropdownMenu.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        dropdownMenu.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.navbar')) {
+                        dropdownMenu.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    }
+                });
+            }
+
+            var backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 300) {
+                        backToTopBtn.classList.add('visible');
+                    } else {
+                        backToTopBtn.classList.remove('visible');
+                    }
+                });
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
             }
 
             renderProject(currentId);
