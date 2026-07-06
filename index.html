@@ -68,9 +68,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
         .logo {
             font-size: 1.4rem;
@@ -135,7 +135,7 @@
         .works-dropdown-menu .drop-inner {
             display: flex;
             gap: 24px;
-            max-width: 1280px;
+            max-width: 1440px;
             margin: 0 auto;
             justify-content: center;
         }
@@ -327,51 +327,9 @@
             font-size: 1.1rem;
         }
 
+        /* ===== 修改：隐藏分类导航 ===== */
         .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-bottom: 48px;
-        }
-        .filter-tabs button {
-            background: transparent;
-            border: none;
-            font-family: var(--font);
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-        }
-        .filter-tabs button .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--border-light);
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .filter-tabs button.active {
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-        .filter-tabs button.active .num {
-            background: var(--accent);
-            color: #fff;
-        }
-        .filter-tabs button:hover .num {
-            background: var(--accent);
-            color: #fff;
+            display: none !important;
         }
 
         .work-grid {
@@ -445,9 +403,11 @@
             margin-top: 4px;
         }
 
+        /* ===== 修改：查看更多右对齐，去掉上边距 ===== */
         .more-wrapper {
-            text-align: center;
-            margin-top: 48px;
+            text-align: right;
+            margin-top: 0;
+            margin-bottom: 40px;
         }
         .more-wrapper .btn-more {
             display: inline-flex;
@@ -782,8 +742,8 @@
                 justify-content: center;
             }
             .hero-image .img-placeholder {
-                max-width: 360px;
-                margin: 0 auto;
+                max-width: 100%;
+                height: auto;
             }
             .floating-badge {
                 bottom: 0;
@@ -809,7 +769,10 @@
                 padding: 16px 24px;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 100px;
+                flex: 0 0 150px;
+            }
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         @media (max-width: 768px) {
@@ -826,18 +789,18 @@
                 font-size: 0.8rem;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 80px;
+                flex: 0 0 130px;
             }
             .works-dropdown-menu .drop-item p {
-                font-size: 0.7rem;
+                font-size: 0.85rem;
+            }
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         @media (max-width: 640px) {
             .nav-links {
                 display: none;
-            }
-            .hamburger {
-                display: flex;
             }
             .work-grid {
                 grid-template-columns: 1fr;
@@ -861,6 +824,12 @@
             }
             .phone-number {
                 font-size: 0.75rem;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .dropdown-menu {
+                display: none;
             }
         }
         .hamburger {
@@ -955,7 +924,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="img-placeholder">
-                        <img src="https://picsum.photos/600/600?random=1" alt="工业设计工作室" loading="lazy" />
+                        <img src="https://picsum.photos/640/360?random=1" alt="工业设计工作室" loading="lazy" />
                     </div>
                     <div class="floating-badge">
                         <i class="fas fa-pencil-ruler"></i>
@@ -972,11 +941,16 @@
                 <h2>精选作品</h2>
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
-            <div class="filter-tabs reveal" id="filterTabs"></div>
-            <div class="work-grid" id="workGrid"></div>
+
+            <!-- ===== 修改：查看更多已移到标题下方，右对齐 ===== -->
             <div class="more-wrapper">
                 <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
             </div>
+
+            <div class="filter-tabs reveal" id="filterTabs"></div>
+            <div class="work-grid" id="workGrid"></div>
+
+            <!-- 原来这里的 more-wrapper 已删除 -->
         </div>
     </section>
 
@@ -1162,7 +1136,9 @@
                 ] : key;
             }
 
+            // ===== 修改：renderFilters 跳过执行（分类导航不生成） =====
             function renderFilters() {
+                return;
                 const container = document.getElementById('filterTabs');
                 container.innerHTML = '';
                 const labels = [t('filter-all'), t('filter-furniture'), t('filter-electronics'), t('filter-home'), t(
