@@ -367,7 +367,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== 图片预览弹窗（仅手机/平板） ===== */
+        /* ===== 图片预览弹窗 ===== */
         .image-preview-overlay {
             display: none;
             position: fixed;
@@ -768,13 +768,9 @@
                     img.alt = data.title + ' 细节';
                     img.loading = 'lazy';
                     img.dataset.src = src;
-                    // 点击图片触发预览（仅手机/平板）
+                    // 点击图片触发预览（所有设备）
                     img.addEventListener('click', function(e) {
-                        // 检测是否为触摸设备（手机/平板）
-                        var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                        if (isTouchDevice) {
-                            openPreview(this.dataset.src);
-                        }
+                        openPreview(this.dataset.src);
                     });
                     gallery.appendChild(img);
                 });
@@ -793,6 +789,9 @@
                 previewImg.src = src;
                 overlay.classList.add('open');
                 document.body.style.overflow = 'hidden';
+                // 重置缩放
+                previewImg.style.transform = 'scale(1)';
+                currentScale = 1;
             }
 
             function closePreview() {
@@ -807,9 +806,18 @@
                 }
             });
 
-            // 触摸缩放支持
-            var initialPinchDist = 0;
+            // 鼠标滚轮缩放（桌面端）
             var currentScale = 1;
+            previewImg.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                var delta = e.deltaY > 0 ? -0.1 : 0.1;
+                var newScale = Math.min(Math.max(currentScale + delta, 0.5), 3);
+                previewImg.style.transform = 'scale(' + newScale + ')';
+                currentScale = newScale;
+            }, { passive: false });
+
+            // 触摸双指缩放（移动端）
+            var initialPinchDist = 0;
             var initialScale = 1;
 
             previewImg.addEventListener('touchstart', function(e) {
@@ -833,10 +841,6 @@
                     currentScale = newScale;
                 }
             }, { passive: false });
-
-            previewImg.addEventListener('touchend', function() {
-                // 重置缩放（可选：保持当前缩放）
-            }, { passive: true });
 
             // 键盘 ESC 关闭
             document.addEventListener('keydown', function(e) {
