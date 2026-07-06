@@ -52,6 +52,7 @@
             padding: 0 20px;
         }
 
+        /* ===== 导航栏 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -67,9 +68,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1440px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
         .logo {
             font-size: 1.4rem;
@@ -109,6 +110,7 @@
             display: none !important;
         }
 
+        /* ===== 作品悬停下拉菜单 ===== */
         .nav-works-dropdown {
             position: relative;
         }
@@ -133,7 +135,7 @@
         .works-dropdown-menu .drop-inner {
             display: flex;
             gap: 24px;
-            max-width: 1440px;
+            max-width: 1280px;
             margin: 0 auto;
             justify-content: center;
         }
@@ -199,10 +201,6 @@
         .lang-switch:hover {
             border-color: var(--text-primary);
             color: var(--text-primary);
-        }
-
-        .hero-content {
-            min-height: 320px;
         }
 
         .hero {
@@ -329,21 +327,51 @@
             font-size: 1.1rem;
         }
 
-        /* ===== 修改1：隐藏分类导航 ===== */
         .filter-tabs {
-            display: none !important;
-            align-items: center;
-            gap: 0;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
-            padding: 8px 0;
+            margin-bottom: 48px;
         }
-
-        /* ===== 修改2：查看更多右对齐 ===== */
-        .more-wrapper {
-            text-align: right;
-            margin-top: 0;
-            margin-bottom: 40px;
+        .filter-tabs button {
+            background: transparent;
+            border: none;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+        }
+        .filter-tabs button .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--border-light);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .filter-tabs button.active {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .filter-tabs button.active .num {
+            background: var(--accent);
+            color: #fff;
+        }
+        .filter-tabs button:hover .num {
+            background: var(--accent);
+            color: #fff;
         }
 
         .work-grid {
@@ -415,6 +443,32 @@
             padding: 4px 14px;
             border-radius: 40px;
             margin-top: 4px;
+        }
+
+        .more-wrapper {
+            text-align: center;
+            margin-top: 48px;
+        }
+        .more-wrapper .btn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 36px;
+            border-radius: 60px;
+            background: transparent;
+            border: 1.5px solid var(--border-light);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: var(--font);
+            text-decoration: none;
+        }
+        .more-wrapper .btn-more:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+            background: #fff;
         }
 
         .about-grid {
@@ -597,8 +651,6 @@
             gap: 16px;
             font-size: 0.9rem;
             color: var(--text-muted);
-            margin-top: auto;
-            background: var(--bg-primary);
         }
         .footer-socials {
             display: flex;
@@ -730,8 +782,8 @@
                 justify-content: center;
             }
             .hero-image .img-placeholder {
-                max-width: 100%;
-                height: auto;
+                max-width: 360px;
+                margin: 0 auto;
             }
             .floating-badge {
                 bottom: 0;
@@ -757,7 +809,7 @@
                 padding: 16px 24px;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 150px;
+                flex: 0 0 100px;
             }
         }
         @media (max-width: 768px) {
@@ -774,18 +826,18 @@
                 font-size: 0.8rem;
             }
             .works-dropdown-menu .drop-item {
-                flex: 0 0 130px;
+                flex: 0 0 80px;
             }
             .works-dropdown-menu .drop-item p {
-                font-size: 0.85rem;
-            }
-            .work-grid {
-                grid-template-columns: repeat(2, 1fr);
+                font-size: 0.7rem;
             }
         }
         @media (max-width: 640px) {
             .nav-links {
                 display: none;
+            }
+            .hamburger {
+                display: flex;
             }
             .work-grid {
                 grid-template-columns: 1fr;
@@ -809,12 +861,6 @@
             }
             .phone-number {
                 font-size: 0.75rem;
-            }
-            .hamburger {
-                display: none;
-            }
-            .dropdown-menu {
-                display: none;
             }
         }
         .hamburger {
@@ -874,24 +920,25 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Studio<span>·</span>Y</a>
-
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home" data-i18n="nav-home">首页</a></li>
+                <li><a href="#home">首页</a></li>
                 <li class="nav-works-dropdown" id="worksDropdown">
-                    <a href="#work" id="worksNavLink" data-i18n="nav-work">作品</a>
+                    <a href="#work" id="worksNavLink">作品</a>
                     <div class="works-dropdown-menu" id="worksDropdownMenu">
                         <div class="drop-inner" id="dropInner"></div>
                     </div>
                 </li>
-                <li><a href="#about" data-i18n="nav-about">关于</a></li>
-                <li><a href="#contact" data-i18n="nav-contact">联系</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
                 <li class="phone-number"><a href="tel:+8613800008888">138 0000 8888</a></li>
                 <li><button class="lang-switch" id="langSwitch">EN</button></li>
             </ul>
+            <button class="hamburger" id="hamburger" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
@@ -908,7 +955,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="img-placeholder">
-                        <img src="https://picsum.photos/640/360?random=1" alt="工业设计工作室" loading="lazy" />
+                        <img src="https://picsum.photos/600/600?random=1" alt="工业设计工作室" loading="lazy" />
                     </div>
                     <div class="floating-badge">
                         <i class="fas fa-pencil-ruler"></i>
@@ -925,15 +972,11 @@
                 <h2>精选作品</h2>
                 <p>从概念到落地，每一件作品都承载着对细节的执着。</p>
             </div>
-
-            <!-- 修改：分类导航已隐藏，查看更多已移到此处 -->
+            <div class="filter-tabs reveal" id="filterTabs"></div>
+            <div class="work-grid" id="workGrid"></div>
             <div class="more-wrapper">
                 <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
             </div>
-
-            <div class="work-grid" id="workGrid"></div>
-
-            <!-- 原来的 more-wrapper 已移除 -->
         </div>
     </section>
 
@@ -1008,7 +1051,7 @@
         (function() {
             'use strict';
 
-            var projects = [
+            const projects = [
                 { id: 1, title: '流线椅', category: '家具', img: 'https://picsum.photos/600/450?random=2' },
                 { id: 2, title: '智能音箱 · 极光', category: '消费电子', img: 'https://picsum.photos/600/450?random=3' },
                 { id: 3, title: '模块化灯具 · 棱', category: '家居', img: 'https://picsum.photos/600/450?random=4' },
@@ -1019,23 +1062,17 @@
                 { id: 8, title: '模块化置物架 · 叠', category: '概念', img: 'https://picsum.photos/600/450?random=14' }
             ];
 
-            var categories = ['全部', '家具', '消费电子', '家居', '概念'];
-            var currentFilter = '全部';
-            var currentLang = 'zh';
+            const categories = ['全部', '家具', '消费电子', '家居', '概念'];
+            const categoryNum = { '家具': '01', '消费电子': '02', '家居': '03', '概念': '04' };
+            let currentFilter = '全部';
+            let currentLang = 'zh';
 
-            var translations = {
+            const translations = {
                 zh: {
                     'nav-home': '首页',
                     'nav-work': '作品',
                     'nav-about': '关于',
                     'nav-contact': '联系',
-                    'filter-all': '全部',
-                    'filter-furniture': '家具',
-                    'filter-electronics': '消费电子',
-                    'filter-home': '家居',
-                    'filter-concept': '概念',
-                    'view-detail': '查看详情',
-                    'more': '查看更多',
                     'hero-title1': '工业设计',
                     'hero-title2': '塑造生活',
                     'hero-title3': '的形态',
@@ -1043,6 +1080,15 @@
                     'btn-work': '查看作品',
                     'btn-contact': '合作洽谈',
                     'badge': '8年 · 设计经验',
+                    'work-title': '精选作品',
+                    'work-desc': '从概念到落地，每一件作品都承载着对细节的执着。',
+                    'filter-all': '全部',
+                    'filter-furniture': '家具',
+                    'filter-electronics': '消费电子',
+                    'filter-home': '家居',
+                    'filter-concept': '概念',
+                    'view-detail': '查看详情',
+                    'more': '查看更多',
                     'about-title': '用设计 \n回应真实需求',
                     'about-p1': '我毕业于中央美术学院工业设计专业，先后在深圳、上海的设计事务所工作。我相信好的设计不只是好看，更在于它如何与使用者产生共鸣。',
                     'about-p2': '从概念草图到量产落地，我全程参与每一个环节。擅长将材料、工艺与人机工学融合，创造出既有温度又有质感的作品。',
@@ -1070,13 +1116,6 @@
                     'nav-work': 'Work',
                     'nav-about': 'About',
                     'nav-contact': 'Contact',
-                    'filter-all': 'All',
-                    'filter-furniture': 'Furniture',
-                    'filter-electronics': 'Electronics',
-                    'filter-home': 'Home',
-                    'filter-concept': 'Concept',
-                    'view-detail': 'View Detail',
-                    'more': 'View More',
                     'hero-title1': 'Industrial Design',
                     'hero-title2': 'Shaping Life',
                     'hero-title3': '',
@@ -1084,6 +1123,15 @@
                     'btn-work': 'View Work',
                     'btn-contact': 'Get in Touch',
                     'badge': '8 Years · Design Experience',
+                    'work-title': 'Selected Works',
+                    'work-desc': 'From concept to production, every work carries a commitment to detail.',
+                    'filter-all': 'All',
+                    'filter-furniture': 'Furniture',
+                    'filter-electronics': 'Electronics',
+                    'filter-home': 'Home',
+                    'filter-concept': 'Concept',
+                    'view-detail': 'View Detail',
+                    'more': 'View More',
                     'about-title': 'Design that\nResponds to Real Needs',
                     'about-p1': 'I graduated from the Central Academy of Fine Arts in Industrial Design and have worked in design firms in Shenzhen and Shanghai. I believe good design is not just about aesthetics, but about how it resonates with users.',
                     'about-p2': 'From concept sketches to production, I\'m involved in every stage. I excel at blending materials, craftsmanship, and ergonomics to create works that are both warm and textured.',
@@ -1114,24 +1162,19 @@
                 ] : key;
             }
 
-            // ===== 修改3：renderFilters 跳过执行（已注释） =====
             function renderFilters() {
-                return;  // 跳过分类导航渲染
-                var container = document.getElementById('filterTabs');
-                if (!container) return;
+                const container = document.getElementById('filterTabs');
                 container.innerHTML = '';
-                var labels = [
-                    t('filter-all'), t('filter-furniture'), t('filter-electronics'),
-                    t('filter-home'), t('filter-concept')
-                ];
-                var keys = ['全部', '家具', '消费电子', '家居', '概念'];
-                var nums = ['', '01', '02', '03', '04'];
+                const labels = [t('filter-all'), t('filter-furniture'), t('filter-electronics'), t('filter-home'), t(
+                    'filter-concept')];
+                const keys = ['全部', '家具', '消费电子', '家居', '概念'];
+                const nums = ['', '01', '02', '03', '04'];
 
-                keys.forEach(function(key, idx) {
-                    var btn = document.createElement('button');
+                keys.forEach((key, idx) => {
+                    const btn = document.createElement('button');
                     btn.setAttribute('data-filter', key);
                     if (key === currentFilter) btn.classList.add('active');
-                    btn.innerHTML = '<span class="num">' + nums[idx] + '</span> ' + labels[idx];
+                    btn.innerHTML = `<span class="num">${nums[idx]}</span> ${labels[idx]}`;
                     btn.addEventListener('click', function() {
                         currentFilter = key;
                         renderFilters();
@@ -1142,205 +1185,163 @@
             }
 
             function renderProjects() {
-                var grid = document.getElementById('workGrid');
-                if (!grid) return;
+                const grid = document.getElementById('workGrid');
                 grid.innerHTML = '';
-                var filtered = projects;
+                let filtered = projects;
                 if (currentFilter !== '全部') {
-                    filtered = projects.filter(function(p) { return p.category === currentFilter; });
+                    filtered = projects.filter(p => p.category === currentFilter);
                 }
                 if (filtered.length === 0) {
                     grid.innerHTML =
                         '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px 0;">没有匹配的作品</p>';
                     return;
                 }
-                filtered.forEach(function(p) {
-                    var item = document.createElement('div');
+                filtered.forEach(p => {
+                    const item = document.createElement('div');
                     item.className = 'work-item reveal';
-                    item.innerHTML =
-                        '<a href="detail.html?id=' + p.id + '">' +
-                        '<div class="work-thumb">' +
-                        '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
-                        '<div class="work-overlay">' + t('view-detail') + '</div>' +
-                        '</div>' +
-                        '<div class="work-info">' +
-                        '<h3>' + p.title + '</h3>' +
-                        '<span class="tag">' + p.category + '</span>' +
-                        '</div>' +
-                        '</a>';
+                    item.innerHTML = `
+                        <a href="detail.html?id=${p.id}">
+                            <div class="work-thumb">
+                                <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                                <div class="work-overlay">${t('view-detail')}</div>
+                            </div>
+                            <div class="work-info">
+                                <h3>${p.title}</h3>
+                                <span class="tag">${p.category}</span>
+                            </div>
+                        </a>
+                    `;
                     grid.appendChild(item);
                 });
-                setTimeout(function() {
-                    document.querySelectorAll('.reveal').forEach(function(el) {
-                        if (el.getBoundingClientRect().top < window.innerHeight) {
-                            el.classList.add('visible');
-                        }
+                const reveals = document.querySelectorAll('.reveal');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
                     });
-                }, 100);
+                }, { threshold: 0.15 });
+                reveals.forEach(el => observer.observe(el));
             }
 
             function renderDropdown() {
-                var inner = document.getElementById('dropInner');
-                if (!inner) return;
+                const inner = document.getElementById('dropInner');
                 inner.innerHTML = '';
-                projects.forEach(function(p) {
-                    var div = document.createElement('div');
+                projects.forEach(p => {
+                    const div = document.createElement('div');
                     div.className = 'drop-item';
-                    div.innerHTML =
-                        '<a href="detail.html?id=' + p.id + '">' +
-                        '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
-                        '<p>' + p.title + '</p>' +
-                        '</a>';
+                    div.innerHTML = `
+                        <a href="detail.html?id=${p.id}">
+                            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+                            <p>${p.title}</p>
+                        </a>
+                    `;
                     inner.appendChild(div);
                 });
             }
 
-            function updateAllText() {
-                document.querySelectorAll('.nav-links a[data-i18n]').forEach(function(el) {
+            const dropdownTrigger = document.querySelector('.nav-works-dropdown');
+            const dropdownMenu = document.getElementById('worksDropdownMenu');
+            let hoverTimeout;
+
+            dropdownTrigger.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+                dropdownMenu.classList.add('open');
+            });
+            dropdownTrigger.addEventListener('mouseleave', function(e) {
+                if (!dropdownMenu.contains(e.relatedTarget)) {
+                    hoverTimeout = setTimeout(() => {
+                        dropdownMenu.classList.remove('open');
+                    }, 150);
+                }
+            });
+            dropdownMenu.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+            });
+            dropdownMenu.addEventListener('mouseleave', function() {
+                hoverTimeout = setTimeout(() => {
+                    dropdownMenu.classList.remove('open');
+                }, 150);
+            });
+
+            document.getElementById('langSwitch').addEventListener('click', function() {
+                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                this.textContent = currentLang === 'zh' ? 'EN' : '中文';
+                document.querySelectorAll('.nav-links a[data-i18n]').forEach(el => {
                     el.textContent = t(el.getAttribute('data-i18n'));
                 });
-
-                var heroTitle = document.querySelector('.hero-content h1');
-                if (heroTitle) {
-                    heroTitle.innerHTML = t('hero-title1') + '<br /><span class="highlight">' + t('hero-title2') +
-                        '</span> ' + t('hero-title3');
-                }
-                var heroDesc = document.querySelector('.hero-content p');
-                if (heroDesc) heroDesc.textContent = t('hero-desc');
-                var btnWork = document.querySelector('.hero-actions .btn-primary');
-                if (btnWork) btnWork.textContent = t('btn-work');
-                var btnContact = document.querySelector('.hero-actions .btn-outline');
-                if (btnContact) btnContact.textContent = t('btn-contact');
-                var badge = document.querySelector('.floating-badge span');
-                if (badge) badge.textContent = t('badge');
-
+                renderFilters();
                 renderProjects();
+                document.querySelector('.hero-content h1').innerHTML =
+                    `${t('hero-title1')}<br /><span class="highlight">${t('hero-title2')}</span> ${t('hero-title3')}`;
+                document.querySelector('.hero-content p').textContent = t('hero-desc');
+                document.querySelector('.hero-actions .btn-primary').textContent = t('btn-work');
+                document.querySelector('.hero-actions .btn-outline').textContent = t('btn-contact');
+                document.querySelector('.floating-badge span').textContent = t('badge');
+                document.querySelector('.section-header h2').textContent = t('work-title');
+                document.querySelector('.section-header p').textContent = t('work-desc');
+                document.querySelector('.btn-more').innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
+                document.querySelector('.about-text h2').innerHTML = t('about-title').replace(/\n/g, '<br />');
+                document.querySelectorAll('.about-text p')[0].textContent = t('about-p1');
+                document.querySelectorAll('.about-text p')[1].textContent = t('about-p2');
+                document.querySelector('.about-text .signature').textContent = t('about-signature');
+                document.querySelectorAll('.stat-item .number')[0].textContent = t('stat-years');
+                document.querySelectorAll('.stat-item .label')[0].textContent = t('stat-years-label');
+                document.querySelectorAll('.stat-item .number')[1].textContent = t('stat-projects');
+                document.querySelectorAll('.stat-item .label')[1].textContent = t('stat-projects-label');
+                document.querySelectorAll('.stat-item .number')[2].textContent = t('stat-awards');
+                document.querySelectorAll('.stat-item .label')[2].textContent = t('stat-awards-label');
+                document.querySelector('.contact-info h2').innerHTML = t('contact-title').replace(/\n/g, '<br />');
+                document.querySelector('.contact-info p').textContent = t('contact-desc');
+                document.querySelector('.contact-links a:last-child span').textContent = t('contact-address');
+                document.querySelector('.contact-form input[name="name"]').placeholder = t('form-name');
+                document.querySelector('.contact-form input[name="email"]').placeholder = t('form-email');
+                document.querySelector('.contact-form textarea').placeholder = t('form-message');
+                document.querySelector('.contact-form .btn').textContent = t('form-submit');
+                document.querySelector('.footer span').textContent = t('footer');
+                document.querySelector('.qr-modal-content h3').textContent = t('wechat-title');
+                document.querySelector('.qr-modal-content .sub').textContent = t('wechat-sub');
+                document.querySelector('.qr-modal-content .hint').textContent = t('wechat-hint');
+            });
 
-                var moreBtn = document.querySelector('.btn-more');
-                if (moreBtn) moreBtn.innerHTML = t('more') + ' <i class="fas fa-arrow-right"></i>';
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('open');
+            });
 
-                var aboutTitle = document.querySelector('.about-text h2');
-                if (aboutTitle) aboutTitle.innerHTML = t('about-title').replace(/\n/g, '<br />');
-                var aboutP1 = document.querySelectorAll('.about-text p')[0];
-                if (aboutP1) aboutP1.textContent = t('about-p1');
-                var aboutP2 = document.querySelectorAll('.about-text p')[1];
-                if (aboutP2) aboutP2.textContent = t('about-p2');
-                var aboutSig = document.querySelector('.about-text .signature');
-                if (aboutSig) aboutSig.textContent = t('about-signature');
+            const modal = document.getElementById('wechatModal');
+            const wechatBtn = document.getElementById('wechatBtn');
+            const closeBtn = document.getElementById('qrCloseBtn');
 
-                var statNumbers = document.querySelectorAll('.stat-item .number');
-                var statLabels = document.querySelectorAll('.stat-item .label');
-                if (statNumbers.length >= 3) {
-                    statNumbers[0].textContent = t('stat-years');
-                    statLabels[0].textContent = t('stat-years-label');
-                    statNumbers[1].textContent = t('stat-projects');
-                    statLabels[1].textContent = t('stat-projects-label');
-                    statNumbers[2].textContent = t('stat-awards');
-                    statLabels[2].textContent = t('stat-awards-label');
-                }
+            function openModal() { modal.classList.add('open');
+                document.body.style.overflow = 'hidden'; }
 
-                var contactTitle = document.querySelector('.contact-info h2');
-                if (contactTitle) contactTitle.innerHTML = t('contact-title').replace(/\n/g, '<br />');
-                var contactDesc = document.querySelector('.contact-info p');
-                if (contactDesc) contactDesc.textContent = t('contact-desc');
-                var contactAddr = document.querySelector('.contact-links a:last-child span');
-                if (contactAddr) contactAddr.textContent = t('contact-address');
-
-                var formName = document.querySelector('.contact-form input[name="name"]');
-                if (formName) formName.placeholder = t('form-name');
-                var formEmail = document.querySelector('.contact-form input[name="email"]');
-                if (formEmail) formEmail.placeholder = t('form-email');
-                var formMsg = document.querySelector('.contact-form textarea');
-                if (formMsg) formMsg.placeholder = t('form-message');
-                var formBtn = document.querySelector('.contact-form .btn');
-                if (formBtn) formBtn.textContent = t('form-submit');
-
-                var footerSpan = document.querySelector('.footer span');
-                if (footerSpan) footerSpan.textContent = t('footer');
-
-                var wechatTitle = document.querySelector('.qr-modal-content h3');
-                if (wechatTitle) wechatTitle.textContent = t('wechat-title');
-                var wechatSub = document.querySelector('.qr-modal-content .sub');
-                if (wechatSub) wechatSub.textContent = t('wechat-sub');
-                var wechatHint = document.querySelector('.qr-modal-content .hint');
-                if (wechatHint) wechatHint.textContent = t('wechat-hint');
-            }
-
-            var dropdownTrigger = document.querySelector('.nav-works-dropdown');
-            var dropdownMenuWorks = document.getElementById('worksDropdownMenu');
-            var hoverTimeout;
-
-            if (dropdownTrigger && dropdownMenuWorks) {
-                dropdownTrigger.addEventListener('mouseenter', function() {
-                    clearTimeout(hoverTimeout);
-                    dropdownMenuWorks.classList.add('open');
-                });
-                dropdownTrigger.addEventListener('mouseleave', function(e) {
-                    if (!dropdownMenuWorks.contains(e.relatedTarget)) {
-                        hoverTimeout = setTimeout(function() {
-                            dropdownMenuWorks.classList.remove('open');
-                        }, 150);
-                    }
-                });
-                dropdownMenuWorks.addEventListener('mouseenter', function() {
-                    clearTimeout(hoverTimeout);
-                });
-                dropdownMenuWorks.addEventListener('mouseleave', function() {
-                    hoverTimeout = setTimeout(function() {
-                        dropdownMenuWorks.classList.remove('open');
-                    }, 150);
-                });
-            }
-
-            var langSwitch = document.getElementById('langSwitch');
-            if (langSwitch) {
-                langSwitch.addEventListener('click', function() {
-                    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-                    this.textContent = currentLang === 'zh' ? 'EN' : '中文';
-                    updateAllText();
-                });
-            }
-
-            var modal = document.getElementById('wechatModal');
-            var wechatBtn = document.getElementById('wechatBtn');
-            var closeBtn = document.getElementById('qrCloseBtn');
-
-            function openModal() { if (modal) { modal.classList.add('open');
-                    document.body.style.overflow = 'hidden'; } }
-
-            function closeModal() { if (modal) { modal.classList.remove('open');
-                    document.body.style.overflow = ''; } }
-            if (wechatBtn) wechatBtn.addEventListener('click', openModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (modal) {
-                modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-            }
+            function closeModal() { modal.classList.remove('open');
+                document.body.style.overflow = ''; }
+            wechatBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
             document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-            var contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    var action = this.getAttribute('action');
-                    if (!action || action === 'https://formspree.io/f/your-form-id') {
-                        e.preventDefault();
-                        var btn = this.querySelector('.btn');
-                        var original = btn.textContent;
-                        btn.textContent = '请先配置表单 ✦';
-                        btn.style.background = '#c0392b';
-                        setTimeout(function() {
-                            btn.textContent = original;
-                            btn.style.background = '';
-                        }, 3000);
-                    }
-                });
-            }
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                const action = this.getAttribute('action');
+                if (!action || action === 'https://formspree.io/f/your-form-id') {
+                    e.preventDefault();
+                    const btn = this.querySelector('.btn');
+                    const original = btn.textContent;
+                    btn.textContent = '请先配置表单 ✦';
+                    btn.style.background = '#c0392b';
+                    setTimeout(() => { btn.textContent = original;
+                        btn.style.background = ''; }, 3000);
+                }
+            });
 
+            renderFilters();
             renderProjects();
             renderDropdown();
-            updateAllText();
 
-            setTimeout(function() {
-                document.querySelectorAll('.reveal').forEach(function(el) {
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
                     if (el.getBoundingClientRect().top < window.innerHeight) {
                         el.classList.add('visible');
                     }
