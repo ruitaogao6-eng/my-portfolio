@@ -328,15 +328,16 @@
         }
 
         .filter-tabs {
-            display: flex;
+    display: flex;
     align-items: center;
     gap: 0;
     flex-wrap: wrap;
     margin-bottom: 40px;
     padding: 8px 0;
 }
-        .filter-tabs button {
-            background: transparent;
+
+.filter-tabs button {
+    background: transparent;
     border: none;
     font-family: var(--font);
     font-size: 0.95rem;
@@ -346,12 +347,15 @@
     transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 6px 16px;
     border-radius: 40px;
     gap: 4px;
 }
-        .filter-tabs button .num {
-            display: inline-flex;
+
+.filter-tabs button .num {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
@@ -362,14 +366,22 @@
     border-radius: 50%;
     background: transparent;
     transition: color 0.25s ease, background 0.25s ease;
-    padding: 0 6px;   
+    padding: 0 6px;
 }
-        .filter-tabs button[data-filter="全部"] {
+
+/* ----- "全部" 样式 ----- */
+.filter-tabs button[data-filter="全部"] {
     color: #6b6b6b;
     background: transparent;
-    padding: 6px 20px;
+    padding: 6px 24px;
     transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
     border-radius: 40px;
+}
+
+.filter-tabs button[data-filter="全部"]:hover {
+    background: #c7a17a;
+    color: #1c1c1c;
+    font-weight: 700;
 }
 
 .filter-tabs button[data-filter="全部"].active {
@@ -378,6 +390,7 @@
     font-weight: 700;
 }
 
+/* ----- 其他分类样式 ----- */
 .filter-tabs button:not([data-filter="全部"]):hover {
     color: #1c1c1c;
 }
