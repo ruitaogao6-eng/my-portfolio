@@ -55,6 +55,7 @@
             padding: 0 20px;
         }
 
+        /* ===== 导航 ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -111,6 +112,7 @@
             display: none !important;
         }
 
+        /* ===== 手机端下拉菜单 ===== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -169,9 +171,10 @@
             color: var(--text-primary);
         }
 
+        /* ===== 回到顶部按钮（上移） ===== */
         .back-to-top {
             position: fixed;
-            bottom: 30px;
+            bottom: 120px;
             right: 30px;
             z-index: 999;
             display: none;
@@ -382,18 +385,34 @@
             padding: 20px;
             opacity: 0;
             transition: opacity 0.3s ease;
+            overflow: hidden;
         }
         .image-preview-overlay.open {
             display: flex;
             opacity: 1;
         }
-        .image-preview-overlay img {
+        .image-preview-overlay .preview-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .image-preview-overlay .preview-wrapper img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             border-radius: 8px;
             touch-action: none;
             cursor: grab;
+            transition: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .image-preview-overlay .preview-wrapper img:active {
+            cursor: grabbing;
         }
         .image-preview-overlay .close-btn {
             position: absolute;
@@ -460,6 +479,14 @@
             .detail-hero .hero-text .desc {
                 font-size: 1.05rem;
             }
+            /* 平板端取消作品弹窗 */
+            .detail-gallery img {
+                cursor: default;
+            }
+            .detail-gallery img:hover {
+                transform: none;
+                box-shadow: var(--shadow-sm);
+            }
         }
         @media (max-width: 900px) {
             .container {
@@ -516,6 +543,13 @@
                 top: 16px;
                 right: 20px;
             }
+            .back-to-top {
+                bottom: 100px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
         }
         @media (max-width: 640px) {
             .nav-links {
@@ -554,6 +588,13 @@
                 font-size: 1.6rem;
                 top: 14px;
                 right: 16px;
+            }
+            .back-to-top {
+                bottom: 90px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -643,7 +684,9 @@
     <!-- ===== 图片预览弹窗 ===== -->
     <div class="image-preview-overlay" id="imagePreviewOverlay">
         <button class="close-btn" id="imagePreviewClose">&times;</button>
-        <img id="imagePreviewImg" src="" alt="预览大图" />
+        <div class="preview-wrapper" id="previewWrapper">
+            <img id="imagePreviewImg" src="" alt="预览大图" />
+        </div>
     </div>
 
     <script>
@@ -762,16 +805,19 @@
 
                 var gallery = document.getElementById('detailGallery');
                 gallery.innerHTML = '';
+                var isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
                 data.detailImgs.forEach(function(src) {
                     var img = document.createElement('img');
                     img.src = src;
                     img.alt = data.title + ' 细节';
                     img.loading = 'lazy';
                     img.dataset.src = src;
-                    // 点击图片触发预览（所有设备）
-                    img.addEventListener('click', function(e) {
-                        openPreview(this.dataset.src);
-                    });
+                    // 仅桌面端和手机端可点击预览，平板端取消
+                    if (!isTablet) {
+                        img.addEventListener('click', function(e) {
+                            openPreview(this.dataset.src);
+                        });
+                    }
                     gallery.appendChild(img);
                 });
 
@@ -780,72 +826,149 @@
                 document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
             }
 
-            // ===== 图片预览功能 =====
+            // ===== 图片预览功能（含拖拽移动 + 缩放） =====
             var overlay = document.getElementById('imagePreviewOverlay');
             var previewImg = document.getElementById('imagePreviewImg');
             var closeBtn = document.getElementById('imagePreviewClose');
+            var wrapper = document.getElementById('previewWrapper');
+
+            var currentScale = 1;
+            var posX = 0,
+                posY = 0;
+            var isDragging = false;
+            var startX = 0,
+                startY = 0;
+            var dragStartX = 0,
+                dragStartY = 0;
+
+            function resetTransform() {
+                currentScale = 1;
+                posX = 0;
+                posY = 0;
+                previewImg.style.transform = 'translate(0px, 0px) scale(1)';
+            }
 
             function openPreview(src) {
                 previewImg.src = src;
                 overlay.classList.add('open');
                 document.body.style.overflow = 'hidden';
-                // 重置缩放
-                previewImg.style.transform = 'scale(1)';
-                currentScale = 1;
+                resetTransform();
             }
 
             function closePreview() {
                 overlay.classList.remove('open');
                 document.body.style.overflow = '';
+                resetTransform();
             }
 
             closeBtn.addEventListener('click', closePreview);
             overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
+                if (e.target === overlay || e.target === wrapper) {
                     closePreview();
                 }
             });
 
-            // 鼠标滚轮缩放（桌面端）
-            var currentScale = 1;
+            // ===== 鼠标滚轮缩放（桌面端） =====
             previewImg.addEventListener('wheel', function(e) {
                 e.preventDefault();
                 var delta = e.deltaY > 0 ? -0.1 : 0.1;
                 var newScale = Math.min(Math.max(currentScale + delta, 0.5), 3);
-                previewImg.style.transform = 'scale(' + newScale + ')';
                 currentScale = newScale;
+                previewImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + currentScale + ')';
             }, { passive: false });
 
-            // 触摸双指缩放（移动端）
+            // ===== 鼠标拖拽移动（桌面端） =====
+            previewImg.addEventListener('mousedown', function(e) {
+                if (currentScale <= 1) return;
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                dragStartX = posX;
+                dragStartY = posY;
+                previewImg.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+
+            window.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                var dx = e.clientX - startX;
+                var dy = e.clientY - startY;
+                posX = dragStartX + dx;
+                posY = dragStartY + dy;
+                previewImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + currentScale + ')';
+            });
+
+            window.addEventListener('mouseup', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    previewImg.style.cursor = currentScale > 1 ? 'grab' : 'default';
+                }
+            });
+
+            // ===== 触摸双指缩放 + 单指拖拽（移动端） =====
             var initialPinchDist = 0;
-            var initialScale = 1;
+            var initialScaleTouch = 1;
+            var initialPosXTouch = 0,
+                initialPosYTouch = 0;
+            var lastTouchX = 0,
+                lastTouchY = 0;
+            var isTouching = false;
 
             previewImg.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 2) {
+                if (e.touches.length === 1) {
+                    // 单指拖拽
+                    isTouching = true;
+                    lastTouchX = e.touches[0].clientX;
+                    lastTouchY = e.touches[0].clientY;
+                    initialPosXTouch = posX;
+                    initialPosYTouch = posY;
+                } else if (e.touches.length === 2) {
+                    // 双指缩放
                     var dx = e.touches[0].clientX - e.touches[1].clientX;
                     var dy = e.touches[0].clientY - e.touches[1].clientY;
                     initialPinchDist = Math.sqrt(dx * dx + dy * dy);
-                    initialScale = currentScale;
+                    initialScaleTouch = currentScale;
+                    initialPosXTouch = posX;
+                    initialPosYTouch = posY;
                 }
             }, { passive: true });
 
             previewImg.addEventListener('touchmove', function(e) {
-                if (e.touches.length === 2) {
+                if (e.touches.length === 1 && isTouching && currentScale > 1) {
+                    var dx = e.touches[0].clientX - lastTouchX;
+                    var dy = e.touches[0].clientY - lastTouchY;
+                    posX = initialPosXTouch + dx;
+                    posY = initialPosYTouch + dy;
+                    previewImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + currentScale +
+                        ')';
+                } else if (e.touches.length === 2) {
                     e.preventDefault();
                     var dx = e.touches[0].clientX - e.touches[1].clientX;
                     var dy = e.touches[0].clientY - e.touches[1].clientY;
                     var dist = Math.sqrt(dx * dx + dy * dy);
                     var scaleChange = dist / initialPinchDist;
-                    var newScale = Math.min(Math.max(initialScale * scaleChange, 0.5), 3);
-                    previewImg.style.transform = 'scale(' + newScale + ')';
+                    var newScale = Math.min(Math.max(initialScaleTouch * scaleChange, 0.5), 3);
                     currentScale = newScale;
+                    previewImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + currentScale +
+                        ')';
                 }
             }, { passive: false });
+
+            previewImg.addEventListener('touchend', function() {
+                isTouching = false;
+            }, { passive: true });
 
             // 键盘 ESC 关闭
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closePreview();
+                }
+            });
+
+            // 窗口大小变化时重置预览
+            window.addEventListener('resize', function() {
+                if (overlay.classList.contains('open')) {
+                    resetTransform();
                 }
             });
 
@@ -889,6 +1012,31 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
+
+            // 监听窗口大小变化，重新判断平板端
+            window.addEventListener('resize', function() {
+                var isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
+                var images = document.querySelectorAll('.detail-gallery img');
+                images.forEach(function(img) {
+                    // 移除所有事件监听（简单处理：用新监听替换）
+                    img.replaceWith(img.cloneNode(true));
+                });
+                // 重新绑定
+                var newImages = document.querySelectorAll('.detail-gallery img');
+                newImages.forEach(function(img) {
+                    var src = img.dataset.src || img.src;
+                    img.dataset.src = src;
+                    if (!isTablet) {
+                        img.addEventListener('click', function(e) {
+                            openPreview(this.dataset.src);
+                        });
+                    }
+                });
+                // 重置滚动后重新渲染计数器
+                var total = Object.keys(projectData).length;
+                var idx = Object.keys(projectData).indexOf(String(currentId));
+                document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
+            });
 
             renderProject(currentId);
         })();
