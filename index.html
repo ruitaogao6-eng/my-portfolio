@@ -326,9 +326,11 @@
             color: var(--text-secondary);
             font-size: 1.1rem;
         }
-
+ <div class="more-wrapper">
+                <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
+            </div>
         .filter-tabs {
-    display: flex;
+    display: none !important;
     align-items: center;
     gap: 0;
     flex-wrap: wrap;
@@ -497,8 +499,9 @@
         }
 
         .more-wrapper {
-            text-align: center;
-            margin-top: 48px;
+            text-align: right;
+    margin-top: 0;
+    margin-bottom: 40px;
         }
         .more-wrapper .btn-more {
             display: inline-flex;
@@ -1025,9 +1028,6 @@
             </div>
             <div class="filter-tabs reveal" id="filterTabs"></div>
             <div class="work-grid" id="workGrid"></div>
-            <div class="more-wrapper">
-                <a href="category.html" class="btn-more">查看更多 <i class="fas fa-arrow-right"></i></a>
-            </div>
         </div>
     </section>
 
