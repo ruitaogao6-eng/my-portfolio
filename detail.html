@@ -111,7 +111,6 @@
             display: none !important;
         }
 
-        /* ===== 手机端下拉菜单 ===== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -361,10 +360,56 @@
             border-radius: 16px;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            cursor: pointer;
         }
         .detail-gallery img:hover {
             transform: scale(1.03);
             box-shadow: var(--shadow-md);
+        }
+
+        /* ===== 图片预览弹窗（仅手机/平板） ===== */
+        .image-preview-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-preview-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+        .image-preview-overlay img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            touch-action: none;
+            cursor: grab;
+        }
+        .image-preview-overlay .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 10;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .image-preview-overlay .close-btn:hover {
+            opacity: 1;
         }
 
         .footer {
@@ -466,6 +511,11 @@
             .detail-hero .hero-text .desc {
                 font-size: 1rem;
             }
+            .image-preview-overlay .close-btn {
+                font-size: 1.8rem;
+                top: 16px;
+                right: 20px;
+            }
         }
         @media (max-width: 640px) {
             .nav-links {
@@ -499,6 +549,11 @@
             }
             .detail-hero .hero-text {
                 padding: 20px;
+            }
+            .image-preview-overlay .close-btn {
+                font-size: 1.6rem;
+                top: 14px;
+                right: 16px;
             }
         }
     </style>
@@ -584,6 +639,12 @@
     <button class="back-to-top" id="backToTop" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- ===== 图片预览弹窗 ===== -->
+    <div class="image-preview-overlay" id="imagePreviewOverlay">
+        <button class="close-btn" id="imagePreviewClose">&times;</button>
+        <img id="imagePreviewImg" src="" alt="预览大图" />
+    </div>
 
     <script>
         (function() {
@@ -706,6 +767,15 @@
                     img.src = src;
                     img.alt = data.title + ' 细节';
                     img.loading = 'lazy';
+                    img.dataset.src = src;
+                    // 点击图片触发预览（仅手机/平板）
+                    img.addEventListener('click', function(e) {
+                        // 检测是否为触摸设备（手机/平板）
+                        var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                        if (isTouchDevice) {
+                            openPreview(this.dataset.src);
+                        }
+                    });
                     gallery.appendChild(img);
                 });
 
@@ -714,6 +784,68 @@
                 document.getElementById('detailCounter').textContent = (idx + 1) + ' / ' + total;
             }
 
+            // ===== 图片预览功能 =====
+            var overlay = document.getElementById('imagePreviewOverlay');
+            var previewImg = document.getElementById('imagePreviewImg');
+            var closeBtn = document.getElementById('imagePreviewClose');
+
+            function openPreview(src) {
+                previewImg.src = src;
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closePreview() {
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closePreview);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closePreview();
+                }
+            });
+
+            // 触摸缩放支持
+            var initialPinchDist = 0;
+            var currentScale = 1;
+            var initialScale = 1;
+
+            previewImg.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    var dx = e.touches[0].clientX - e.touches[1].clientX;
+                    var dy = e.touches[0].clientY - e.touches[1].clientY;
+                    initialPinchDist = Math.sqrt(dx * dx + dy * dy);
+                    initialScale = currentScale;
+                }
+            }, { passive: true });
+
+            previewImg.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    var dx = e.touches[0].clientX - e.touches[1].clientX;
+                    var dy = e.touches[0].clientY - e.touches[1].clientY;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    var scaleChange = dist / initialPinchDist;
+                    var newScale = Math.min(Math.max(initialScale * scaleChange, 0.5), 3);
+                    previewImg.style.transform = 'scale(' + newScale + ')';
+                    currentScale = newScale;
+                }
+            }, { passive: false });
+
+            previewImg.addEventListener('touchend', function() {
+                // 重置缩放（可选：保持当前缩放）
+            }, { passive: true });
+
+            // 键盘 ESC 关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePreview();
+                }
+            });
+
+            // ===== 汉堡菜单 =====
             var hamburger = document.getElementById('hamburger');
             var dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -739,6 +871,7 @@
                 });
             }
 
+            // ===== 回到顶部 =====
             var backToTopBtn = document.getElementById('backToTop');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function() {
