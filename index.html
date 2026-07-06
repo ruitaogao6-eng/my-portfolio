@@ -329,38 +329,76 @@
 
         .filter-tabs {
             display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-bottom: 48px;
-        }
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 8px 0;
+}
         .filter-tabs button {
             background: transparent;
-            border: none;
-            font-family: var(--font);
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-        }
+    border: none;
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6b6b6b;
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 40px;
+    gap: 4px;
+}
         .filter-tabs button .num {
             display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--border-light);
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b6b6b;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: transparent;
+    transition: color 0.25s ease, background 0.25s ease;
+    padding: 0 6px;   
+}
+        .filter-tabs button[data-filter="全部"] {
+    color: #6b6b6b;
+    background: transparent;
+    padding: 6px 20px;
+    transition: color 0.25s ease, background 0.25s ease, font-weight 0.25s ease;
+    border-radius: 40px;
+}
+
+.filter-tabs button[data-filter="全部"].active {
+    background: #c7a17a;
+    color: #1c1c1c;
+    font-weight: 700;
+}
+
+.filter-tabs button:not([data-filter="全部"]):hover {
+    color: #1c1c1c;
+}
+
+.filter-tabs button:not([data-filter="全部"]):hover .num {
+    color: #1c1c1c;
+}
+
+.filter-tabs button:not([data-filter="全部"]).active {
+    color: #1c1c1c;
+    font-weight: 700;
+}
+
+.filter-tabs button:not([data-filter="全部"]).active .num {
+    color: #1c1c1c;
+    background: #c7a17a;
+}
+
+.filter-tabs button:not([data-filter="全部"]):not(.active) .num {
+    background: transparent;
+}
         .filter-tabs button.active {
             color: var(--text-primary);
             font-weight: 700;
