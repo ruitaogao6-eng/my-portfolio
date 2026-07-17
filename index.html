@@ -582,9 +582,25 @@
         /* 全屏背景（铺满） */
 .contact-full-width {
     background: var(--text-primary);
-    padding: 80px 0 0 0;      /* 上边距保留，下边距为0 */
+    padding: 80px 0 0 0;
     margin-bottom: 0;
-    display: block;
+}
+
+/* 页脚在深色背景上时，文字颜色变浅 */
+.contact-full-width .footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    margin-top: 0;
+    background: transparent;
+}
+
+.contact-full-width .footer-socials a {
+    color: rgba(255,255,255,0.5);
+}
+
+.contact-full-width .footer-socials a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
 }
         .contact-section {
             color: #fff;
@@ -1042,9 +1058,7 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <footer class="footer container">
+         <footer class="footer container">
         <span>&copy; 2026 高瑞涛 · 工业设计</span>
         <div class="footer-socials">
             <a href="javascript:void(0)" id="wechatBtn" aria-label="微信"><i class="fab fa-weixin"></i></a>
@@ -1053,7 +1067,8 @@
             <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站"><i class="fab fa-bilibili"></i></a>
         </div>
     </footer>
-
+    </section>
+    
     <div class="qr-modal" id="wechatModal">
         <div class="qr-modal-content">
             <button class="close-btn" id="qrCloseBtn">&times;</button>
