@@ -579,15 +579,19 @@
             letter-spacing: 0.04em;
             margin-top: 2px;
         }
-
+        /* 全屏背景（铺满） */
+.contact-full-width {
+    background: var(--text-primary);
+    padding: 80px 0;
+    margin-bottom: 40px;
+}
         .contact-section {
-            background: var(--text-primary);
             color: #fff;
             border-radius: 0;
             padding: 80px 60px;
-            margin-bottom: 40px;
             position: relative;
             overflow: hidden;
+            background: transparent;
         }
         .contact-section::before {
             content: '';
@@ -1015,10 +1019,10 @@
         </div>
     </section>
 
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="contact-section reveal">
-                <div class="contact-grid">
+    <section class="section contact-full-width" id="contact">
+    <div class="container">
+        <div class="contact-section reveal">
+            <div class="contact-grid">
                     <div class="contact-info">
                         <h2>一起创造 <br />更好的产品</h2>
                         <p>无论是一个新概念、产品迭代还是设计咨询，欢迎随时与我沟通。</p>
