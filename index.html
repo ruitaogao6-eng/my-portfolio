@@ -31,12 +31,22 @@
             scroll-behavior: smooth;
         }
         body {
-            font-family: var(--font);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+    font-family: var(--font);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-y: auto;              /* 从 scroll 改成 auto */
+    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;      /* IE/Edge */
+}
+
+/* 隐藏 Chrome/Safari 滚动条 */
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
         a {
             text-decoration: none;
             color: inherit;
