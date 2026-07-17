@@ -30,6 +30,23 @@
         html {
             scroll-behavior: smooth;
         }
+       html,
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+body {
+    font-family: var(--font);
+    /* 下面是你原来的样式 */
+}
         body {
     font-family: var(--font);
     background-color: var(--bg-primary);
