@@ -559,6 +559,53 @@
             gap: 16px;
             margin-top: 32px;
         }
+        /* ===== 合作客户 ===== */
+.clients-section {
+    padding: 40px 0 60px 0;
+}
+
+.clients-section h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: var(--text-primary);
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.client-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 140px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.client-item:hover {
+    opacity: 1;
+}
+
+.client-item img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.client-item:hover img {
+    filter: grayscale(0%);
+}
         .stat-item {
             background: var(--bg-card);
             padding: 20px 16px;
@@ -936,6 +983,10 @@
             .phone-number {
                 font-size: 0.75rem;
             }
+            .clients-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px 15px;
+           }
         }
     </style>
 </head>
@@ -1034,8 +1085,41 @@
                 </div>
             </div>
         </div>
-    </section>
+    <!-- ===== 合作客户 ===== -->
+<div class="clients-section reveal" style="padding-top:60px;border-top:1px solid var(--border-light);margin-top:40px;">
+    <h3 style="text-align:center;font-size:1.4rem;font-weight:600;margin-bottom:40px;color:var(--text-primary);">合作客户</h3>
+    <div class="clients-grid">
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg" alt="Tesla" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung" loading="lazy" /></div>
 
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Intel_logo_%282023%29.svg" alt="Intel" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Sony_logo.svg" alt="Sony" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Panasonic_logo.svg" alt="Panasonic" loading="lazy" /></div>
+
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Philips_logo_new.svg" alt="Philips" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Bosch_logo.svg" alt="Bosch" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Dyson_logo.svg" alt="Dyson" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Siemens_AG_logo.svg" alt="Siemens" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/GE_logo.svg" alt="GE" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/3M_Logo.svg" alt="3M" loading="lazy" /></div>
+
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Huawei_Logo.svg" alt="Huawei" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Xiaomi_logo.svg" alt="Xiaomi" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Lenovo_logo.svg" alt="Lenovo" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/DJI_Logo.svg" alt="DJI" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Midea_Group_logo.svg" alt="Midea" loading="lazy" /></div>
+        <div class="client-item"><img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Gree_Logo.svg" alt="Gree" loading="lazy" /></div>
+    </div>
+</div>
+    </section>
+    
     <section class="section contact-full-width" id="contact">
     <div class="container">
         <div class="contact-section reveal">
