@@ -492,6 +492,29 @@
                 text-align: center;
             }
         }
+        /* ===== 深色背景区域（页脚） ===== */
+.contact-full-width {
+    background: var(--text-primary);
+    padding: 60px 0 0 0;
+    margin-bottom: 0;
+    margin-top: 40px;
+}
+
+.contact-full-width .footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    margin-top: 0;
+    background: transparent;
+}
+
+.contact-full-width .footer-socials a {
+    color: rgba(255,255,255,0.5);
+}
+
+.contact-full-width .footer-socials a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
     </style>
 </head>
 <body>
@@ -538,6 +561,8 @@
         </div>
     </section>
 
+    <!-- ===== 深色背景区域（包括页脚） ===== -->
+<div class="contact-full-width">
     <footer class="footer container">
         <span>&copy; 2026 高瑞涛 · 工业设计</span>
         <div class="footer-socials">
@@ -547,6 +572,7 @@
             <a href="https://space.bilibili.com/your-id" target="_blank" aria-label="B站"><i class="fab fa-bilibili"></i></a>
         </div>
     </footer>
+</div>
 
     <button class="back-to-top" id="backToTop" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
