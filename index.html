@@ -658,14 +658,14 @@
 
         }
         .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            width: 100%;  /* 新增：确保撑满 */
-        }
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
         .contact-info h2 {
             font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 700;
