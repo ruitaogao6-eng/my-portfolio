@@ -27,19 +27,40 @@
             --transition: 0.25s ease;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        html,
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+body {
+    font-family: var(--font);
+    /* 下面是你原来的样式 */
+}
         body {
             font-family: var(--font);
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-    overflow-y: scroll;
-    scrollbar-width: none;        /* Firefox 隐藏滚动条 */
-    -ms-overflow-style: none;     /* IE/Edge 隐藏滚动条 */
-        }
-        body::-webkit-scrollbar {
-    display: none;                /* Chrome/Safari 隐藏滚动条 */
-             }
+    overflow-y: auto;              /* 从 scroll 改成 auto */
+    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;      /* IE/Edge */
+}
+
+/* 隐藏 Chrome/Safari 滚动条 */
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
         a {
             text-decoration: none;
             color: inherit;
