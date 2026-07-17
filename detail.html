@@ -31,6 +31,23 @@
         body {
             height: 100%;
         }
+        html,
+body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+body {
+    font-family: var(--font);
+    /* 下面是你原来的样式 */
+}
         body {
             font-family: var(--font);
             background-color: var(--bg-primary);
@@ -38,7 +55,17 @@
             line-height: 1.7;
             display: flex;
             flex-direction: column;
-        }
+            overflow-y: auto;              /* 从 scroll 改成 auto */
+            scrollbar-width: none;         /* Firefox */
+           -ms-overflow-style: none;      /* IE/Edge */
+}
+
+/* 隐藏 Chrome/Safari 滚动条 */
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
         a {
             text-decoration: none;
             color: inherit;
