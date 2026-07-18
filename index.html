@@ -815,6 +815,7 @@ body::-webkit-scrollbar {
         }
 
        /* ===== 微信二维码弹窗 ===== */
+/* ===== 微信二维码弹窗 ===== */
 .qr-modal {
     display: none;
     position: fixed;
@@ -828,10 +829,10 @@ body::-webkit-scrollbar {
 
 .qr-modal-content {
     background: #ffffff;
-    padding: 16px 16px 18px 16px;
-    border-radius: 12px;
-    max-width: 200px;
-    width: 200px;
+    padding: 12px 12px 14px 12px;
+    border-radius: 0;                    /* 去掉圆角 */
+    max-width: 180px;
+    width: 180px;
     text-align: center;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     position: relative;
@@ -839,58 +840,50 @@ body::-webkit-scrollbar {
     border: 1px solid var(--border-light);
 }
 
-/* 箭头指向下方（指向微信图标） */
+/* 箭头指向下方 */
 .qr-modal-content::after {
     content: '';
     position: absolute;
-    top: 100%;                    /* 在弹窗底部 */
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     border: 8px solid transparent;
-    border-top-color: #ffffff;    /* 箭头向下，颜色和弹窗背景一致 */
+    border-top-color: #ffffff;
 }
 
+/* 放大关闭按钮 */
 .qr-modal-content .close-btn {
     position: absolute;
-    top: 4px;
-    right: 8px;
-    font-size: 16px;
+    top: 2px;
+    right: 6px;
+    font-size: 22px;
     color: #999;
     cursor: pointer;
     background: none;
     border: none;
+    line-height: 1;
+    padding: 4px;
 }
 
 .qr-modal-content .close-btn:hover {
     color: #333;
 }
 
-.qr-modal-content h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 2px;
-    color: var(--text-primary);
-}
-
-.qr-modal-content .sub {
+/* 提示文字在二维码上方 */
+.qr-modal-content .hint {
     font-size: 0.7rem;
     color: var(--text-muted);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .qr-modal-content img {
-    width: 160px;                 /* 图片大小不变，但外框更贴合 */
-    height: 160px;
-    margin: 0 auto 8px;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
     display: block;
-    border-radius: 8px;
     border: 1px solid var(--border-light);
-}
-
-.qr-modal-content .hint {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    margin-top: 2px;
+    border-radius: 0;                   /* 去掉圆角 */
 }
         @keyframes qrFadeIn {
             from {
@@ -1232,10 +1225,8 @@ body::-webkit-scrollbar {
     <div class="qr-modal" id="wechatModal">
     <div class="qr-modal-content">
         <button class="close-btn" id="qrCloseBtn">&times;</button>
-        <h3>微信</h3>
-        <p class="sub">扫一扫添加好友</p>
+        <span class="hint">长按或扫码添加微信</span>
         <img src="https://picsum.photos/200/200?random=99" alt="微信二维码" />
-        <p class="hint">长按或扫码添加微信</p>
     </div>
 </div>
 
@@ -1548,7 +1539,7 @@ function openModal() {
     const rect = wechatBtn.getBoundingClientRect();
     const modalWidth = 200;
     const modalHeight = 260;
-    const gap = 8;
+    const gap = 18;
 
     let left = rect.left + rect.width / 2 - modalWidth / 2;
     let top = rect.top - modalHeight - gap;
