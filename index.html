@@ -814,13 +814,12 @@ body::-webkit-scrollbar {
             transform: translateY(-2px);
         }
 
-       /* ===== 微信二维码弹窗（悬浮在图标旁边） ===== */
+       /* ===== 微信二维码弹窗 ===== */
 .qr-modal {
     display: none;
     position: fixed;
     z-index: 9999;
-    /* 位置由 JS 动态控制，这里不设 top/left */
-    pointer-events: none;  /* 让鼠标事件可以穿透背景，但内容区域可点击 */
+    pointer-events: none;
 }
 
 .qr-modal.open {
@@ -828,34 +827,34 @@ body::-webkit-scrollbar {
 }
 
 .qr-modal-content {
-    background: #fff;
-    padding: 20px 24px 24px 24px;
-    border-radius: 16px;
-    max-width: 240px;
-    width: 240px;
+    background: #ffffff;
+    padding: 16px 16px 18px 16px;
+    border-radius: 12px;
+    max-width: 200px;
+    width: 200px;
     text-align: center;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     position: relative;
-    pointer-events: auto;  /* 内容区域可交互 */
+    pointer-events: auto;
     border: 1px solid var(--border-light);
 }
 
-/* 箭头指向微信图标 */
+/* 箭头指向下方（指向微信图标） */
 .qr-modal-content::after {
     content: '';
     position: absolute;
-    bottom: 100%;
+    top: 100%;                    /* 在弹窗底部 */
     left: 50%;
     transform: translateX(-50%);
     border: 8px solid transparent;
-    border-bottom-color: #fff;
+    border-top-color: #ffffff;    /* 箭头向下，颜色和弹窗背景一致 */
 }
 
 .qr-modal-content .close-btn {
     position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 18px;
+    top: 4px;
+    right: 8px;
+    font-size: 16px;
     color: #999;
     cursor: pointer;
     background: none;
@@ -867,31 +866,31 @@ body::-webkit-scrollbar {
 }
 
 .qr-modal-content h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     color: var(--text-primary);
 }
 
 .qr-modal-content .sub {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .qr-modal-content img {
-    width: 160px;
+    width: 160px;                 /* 图片大小不变，但外框更贴合 */
     height: 160px;
-    margin: 0 auto 10px;
+    margin: 0 auto 8px;
     display: block;
     border-radius: 8px;
     border: 1px solid var(--border-light);
 }
 
 .qr-modal-content .hint {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 2px;
 }
         @keyframes qrFadeIn {
             from {
@@ -1546,21 +1545,20 @@ const closeBtn = document.getElementById('qrCloseBtn');
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 function openModal() {
-    // 计算微信图标的位置
     const rect = wechatBtn.getBoundingClientRect();
-    const modalWidth = 240;
-    const modalHeight = 280;
+    const modalWidth = 200;
+    const modalHeight = 260;
+    const gap = 8;
 
-    // 计算弹窗位置：在图标上方居中
     let left = rect.left + rect.width / 2 - modalWidth / 2;
-    let top = rect.top - modalHeight - 15;  // 15px 是箭头的高度
+    let top = rect.top - modalHeight - gap;
 
-    // 防止弹窗超出屏幕边界
     if (left < 10) left = 10;
-    if (left + modalWidth > window.innerWidth - 10) left = window.innerWidth - modalWidth - 10;
+    if (left + modalWidth > window.innerWidth - 10) {
+        left = window.innerWidth - modalWidth - 10;
+    }
     if (top < 10) {
-        // 如果上方放不下，改到下方
-        top = rect.bottom + 15;
+        top = rect.bottom + gap;
     }
 
     modal.style.left = left + 'px';
