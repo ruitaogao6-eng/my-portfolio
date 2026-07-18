@@ -814,68 +814,85 @@ body::-webkit-scrollbar {
             transform: translateY(-2px);
         }
 
-        .qr-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(6px);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-        .qr-modal.open {
-            display: flex;
-        }
-        .qr-modal-content {
-            background: #fff;
-            padding: 40px;
-            border-radius: 0;
-            max-width: 340px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            animation: qrFadeIn 0.3s ease;
-            position: relative;
-        }
-        .qr-modal-content .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 18px;
-            font-size: 24px;
-            color: #999;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .qr-modal-content .close-btn:hover {
-            color: #333;
-        }
-        .qr-modal-content h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .qr-modal-content .sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .qr-modal-content img {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 16px;
-            border-radius: 0;
-            border: 1px solid var(--border-light);
-        }
-        .qr-modal-content .hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
+       /* ===== 微信二维码弹窗（悬浮在图标旁边） ===== */
+.qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    /* 位置由 JS 动态控制，这里不设 top/left */
+    pointer-events: none;  /* 让鼠标事件可以穿透背景，但内容区域可点击 */
+}
+
+.qr-modal.open {
+    display: block;
+}
+
+.qr-modal-content {
+    background: #fff;
+    padding: 20px 24px 24px 24px;
+    border-radius: 16px;
+    max-width: 240px;
+    width: 240px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    position: relative;
+    pointer-events: auto;  /* 内容区域可交互 */
+    border: 1px solid var(--border-light);
+}
+
+/* 箭头指向微信图标 */
+.qr-modal-content::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-bottom-color: #fff;
+}
+
+.qr-modal-content .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.qr-modal-content .close-btn:hover {
+    color: #333;
+}
+
+.qr-modal-content h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.qr-modal-content .sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.qr-modal-content img {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 10px;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.qr-modal-content .hint {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
         @keyframes qrFadeIn {
             from {
                 opacity: 0;
@@ -1214,14 +1231,14 @@ body::-webkit-scrollbar {
 </section>
     
     <div class="qr-modal" id="wechatModal">
-        <div class="qr-modal-content">
-            <button class="close-btn" id="qrCloseBtn">&times;</button>
-            <h3>微信</h3>
-            <p class="sub">扫一扫添加好友</p>
-            <img src="https://picsum.photos/200/200?random=99" alt="微信二维码" />
-            <p class="hint">长按或扫码添加微信</p>
-        </div>
+    <div class="qr-modal-content">
+        <button class="close-btn" id="qrCloseBtn">&times;</button>
+        <h3>微信</h3>
+        <p class="sub">扫一扫添加好友</p>
+        <img src="https://picsum.photos/200/200?random=99" alt="微信二维码" />
+        <p class="hint">长按或扫码添加微信</p>
     </div>
+</div>
 
     <button class="back-to-top" id="backToTop" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
@@ -1521,51 +1538,76 @@ body::-webkit-scrollbar {
                 });
             }
 
-            // ===== 微信二维码弹窗（悬停/点击自适应） =====
+           // ===== 微信二维码弹窗（悬浮在图标旁边） =====
 const modal = document.getElementById('wechatModal');
 const wechatBtn = document.getElementById('wechatBtn');
 const closeBtn = document.getElementById('qrCloseBtn');
 
-// 检测是否为触摸设备（手机/平板）
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 function openModal() {
-    if (modal) { modal.classList.add('open');
-        document.body.style.overflow = 'hidden'; }
+    // 计算微信图标的位置
+    const rect = wechatBtn.getBoundingClientRect();
+    const modalWidth = 240;
+    const modalHeight = 280;
+
+    // 计算弹窗位置：在图标上方居中
+    let left = rect.left + rect.width / 2 - modalWidth / 2;
+    let top = rect.top - modalHeight - 15;  // 15px 是箭头的高度
+
+    // 防止弹窗超出屏幕边界
+    if (left < 10) left = 10;
+    if (left + modalWidth > window.innerWidth - 10) left = window.innerWidth - modalWidth - 10;
+    if (top < 10) {
+        // 如果上方放不下，改到下方
+        top = rect.bottom + 15;
+    }
+
+    modal.style.left = left + 'px';
+    modal.style.top = top + 'px';
+    modal.classList.add('open');
 }
 
 function closeModal() {
-    if (modal) { modal.classList.remove('open');
-        document.body.style.overflow = ''; }
+    modal.classList.remove('open');
 }
 
-if (isTouchDevice) {
+// 网页端：悬停触发
+if (!isTouchDevice) {
+    let hoverTimer;
+
+    wechatBtn.addEventListener('mouseenter', function() {
+        clearTimeout(hoverTimer);
+        openModal();
+    });
+
+    wechatBtn.addEventListener('mouseleave', function() {
+        hoverTimer = setTimeout(function() {
+            // 检查鼠标是否移到了弹窗上
+            if (!modal.matches(':hover')) {
+                closeModal();
+            }
+        }, 200);
+    });
+
+    modal.addEventListener('mouseenter', function() {
+        clearTimeout(hoverTimer);
+    });
+
+    modal.addEventListener('mouseleave', function() {
+        hoverTimer = setTimeout(function() {
+            closeModal();
+        }, 200);
+    });
+} else {
     // 手机/平板：点击触发
     wechatBtn.addEventListener('click', function(e) {
         e.preventDefault();
         openModal();
     });
-} else {
-    // 网页端（鼠标）：悬停触发
-    wechatBtn.addEventListener('mouseenter', function() {
-        openModal();
-    });
-    wechatBtn.addEventListener('mouseleave', function() {
-        setTimeout(function() {
-            const isHovering = wechatBtn.matches(':hover') || (modal && modal.matches(':hover'));
-            if (!isHovering) {
-                closeModal();
-            }
-        }, 300);
-    });
-    if (modal) {
-        modal.addEventListener('mouseenter', function() {});
-        modal.addEventListener('mouseleave', function() {
-            closeModal();
-        });
-    }
 }
 
+// 关闭按钮
 if (closeBtn) {
     closeBtn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -1573,6 +1615,7 @@ if (closeBtn) {
     });
 }
 
+// 点击其他地方关闭（手机端）
 if (modal) {
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -1581,12 +1624,12 @@ if (modal) {
     });
 }
 
+// ESC 关闭
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeModal();
     }
 });
-
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 const action = this.getAttribute('action');
                 if (!action || action === 'https://formspree.io/f/your-form-id') {
