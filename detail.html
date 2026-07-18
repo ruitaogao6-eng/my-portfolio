@@ -307,6 +307,14 @@ body::-webkit-scrollbar {
         .detail-hero {
     padding: 0;
     margin: 0;
+    width: 100%;
+}
+
+.detail-hero .container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
 }
 
 .detail-hero .hero-inner {
@@ -317,6 +325,7 @@ body::-webkit-scrollbar {
     aspect-ratio: 16/9;
     max-height: 520px;
     background: #1a1a2e;
+    margin: 0;
 }
 
 .detail-hero .hero-image {
@@ -333,23 +342,18 @@ body::-webkit-scrollbar {
     object-fit: cover;
 }
 
-/* 去掉黑色半透明图层，用色块代替 */
 .detail-hero .hero-text {
     position: absolute;
-    bottom: 0;                    /* 从底部开始 */
+    bottom: 0;
     left: 0;
     width: 100%;
     padding: 30px 50px 35px 50px;
-    background: rgba(20, 25, 50, 0.75); /* 黑色偏蓝，半透明 */
-    backdrop-filter: blur(4px);   /* 轻微毛玻璃效果 */
+    background: rgba(20, 25, 50, 0.75);
+    backdrop-filter: blur(4px);
     z-index: 2;
     box-sizing: border-box;
-    display: block;               /* 改为块级，不用 flex */
-}
-
-/* 色块和主图搭边（重叠一点点），通过负的 margin-top 或 padding 实现 */
-.detail-hero .hero-text {
-    margin-top: -10px;            /* 向上移动10px，和图片重叠 */
+    display: block;
+    margin-top: -10px;
 }
 
 .detail-hero .hero-text h1 {
@@ -367,12 +371,6 @@ body::-webkit-scrollbar {
     font-size: 0.95rem;
     margin-bottom: 10px;
     flex-wrap: wrap;
-}
-
-.detail-hero .hero-text .meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .detail-hero .hero-text .desc {
@@ -550,6 +548,9 @@ body::-webkit-scrollbar {
     .detail-hero .hero-text .desc {
         font-size: 0.95rem;
     }
+    .detail-hero .container {
+    padding: 0 !important;
+}
 }
         @media (max-width: 768px) {
             .navbar .container {
@@ -656,6 +657,9 @@ body::-webkit-scrollbar {
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+            .detail-hero .container {
+    padding: 0 !important;
+}
 }
             .contact-full-width {
     background: var(--text-primary);
