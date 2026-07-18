@@ -793,14 +793,20 @@ body::-webkit-scrollbar {
         .footer-socials a {
             color: var(--text-muted);
             transition: all 0.3s ease;
-            font-size: 10rem;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);  /* 半透明灰色圆底 */
+            text-decoration: none;
+}
+
+.footer-socials a i {
+    font-size: 24px;
+    line-height: 1;
         }
         .footer-socials a:hover {
             color: var(--text-primary);
