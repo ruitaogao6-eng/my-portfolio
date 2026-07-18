@@ -1521,19 +1521,71 @@ body::-webkit-scrollbar {
                 });
             }
 
-            const modal = document.getElementById('wechatModal');
-            const wechatBtn = document.getElementById('wechatBtn');
-            const closeBtn = document.getElementById('qrCloseBtn');
+            // ===== 微信二维码弹窗（悬停/点击自适应） =====
+const modal = document.getElementById('wechatModal');
+const wechatBtn = document.getElementById('wechatBtn');
+const closeBtn = document.getElementById('qrCloseBtn');
 
-            function openModal() { modal.classList.add('open');
-                document.body.style.overflow = 'hidden'; }
+// 检测是否为触摸设备（手机/平板）
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-            function closeModal() { modal.classList.remove('open');
-                document.body.style.overflow = ''; }
-            wechatBtn.addEventListener('click', openModal);
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+function openModal() {
+    if (modal) { modal.classList.add('open');
+        document.body.style.overflow = 'hidden'; }
+}
+
+function closeModal() {
+    if (modal) { modal.classList.remove('open');
+        document.body.style.overflow = ''; }
+}
+
+if (isTouchDevice) {
+    // 手机/平板：点击触发
+    wechatBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+    });
+} else {
+    // 网页端（鼠标）：悬停触发
+    wechatBtn.addEventListener('mouseenter', function() {
+        openModal();
+    });
+    wechatBtn.addEventListener('mouseleave', function() {
+        setTimeout(function() {
+            const isHovering = wechatBtn.matches(':hover') || (modal && modal.matches(':hover'));
+            if (!isHovering) {
+                closeModal();
+            }
+        }, 300);
+    });
+    if (modal) {
+        modal.addEventListener('mouseenter', function() {});
+        modal.addEventListener('mouseleave', function() {
+            closeModal();
+        });
+    }
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeModal();
+    });
+}
+
+if (modal) {
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
 
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 const action = this.getAttribute('action');
