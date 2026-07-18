@@ -305,69 +305,76 @@ body::-webkit-scrollbar {
         }
 
         .detail-hero {
-            padding: 50px 0 70px 0;
-        }
-        .detail-hero .hero-inner {
-            position: relative;
-            background: #ffffff;
-            border-radius: 0;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: stretch;
-            min-height: 380px;
-        }
-        .detail-hero .hero-image {
-            flex: 0 0 55%;
-            min-height: 380px;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            order: 2;
-        }
-        .detail-hero .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            aspect-ratio: 16/9;
-        }
-        .detail-hero .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 50px 60px;
-            background: #ffffff;
-            order: 1;
-        }
-        .detail-hero .hero-text h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 14px;
-            color: var(--text-primary);
-        }
-        .detail-hero .hero-text .meta {
-            display: flex;
-            gap: 28px;
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-        }
-        .detail-hero .hero-text .meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .detail-hero .hero-text .desc {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 640px;
-            line-height: 1.9;
-        }
+    padding: 50px 0 70px 0;
+}
 
+.detail-hero .hero-inner {
+    position: relative;
+    border-radius: 0;
+    overflow: hidden;
+    min-height: 420px;
+    background: #1c1c1c;
+}
+
+.detail-hero .hero-image {
+    width: 100%;
+    min-height: 420px;
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-hero .hero-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+    opacity: 0.75;
+}
+
+.detail-hero .hero-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 60px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 70%, transparent 100%);
+}
+
+.detail-hero .hero-text h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+    color: #fff;
+}
+
+.detail-hero .hero-text .meta {
+    display: flex;
+    gap: 28px;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.detail-hero .hero-text .meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-hero .hero-text .desc {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 640px;
+    line-height: 1.9;
+}
         .detail-content {
             padding: 20px 0 70px 0;
         }
@@ -678,22 +685,20 @@ body::-webkit-scrollbar {
 
         <section class="detail-hero">
             <div class="container">
-                <div class="hero-inner">
-                    <div class="hero-text">
-                        <h1 id="detailTitle">流线椅</h1>
-                        <div class="meta">
-                            <span><i class="fas fa-tag"></i> <span id="detailCategory">专业设备</span></span>
-                            <span><i class="far fa-calendar-alt"></i> 2025</span>
-                            <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
-                        </div>
-                        <p class="desc" id="detailDesc">
-                            流线椅以极简的曲线语言，将人体工学与雕塑感结合。采用可持续胡桃木与再生皮革，每一个曲面都经过反复推敲，既提供舒适的支撑，又成为空间中的视觉焦点。
-                        </p>
-                    </div>
-                    <div class="hero-image">
-                        <img id="detailMainImg" src="https://picsum.photos/800/450?random=10" alt="作品主图" loading="lazy" />
-                    </div>
-                </div>
+               <div class="hero-inner">
+    <div class="hero-image">
+        <img id="detailMainImg" src="..." alt="作品主图" />
+    </div>
+    <div class="hero-text">
+        <h1 id="detailTitle">流线椅</h1>
+        <div class="meta">
+            <span><i class="fas fa-tag"></i> <span id="detailCategory">家具</span></span>
+            <span><i class="far fa-calendar-alt"></i> 2025</span>
+            <span><i class="far fa-clock"></i> 设计周期 · 6 个月</span>
+        </div>
+        <p class="desc" id="detailDesc">流线椅以极简的曲线语言...</p>
+    </div>
+</div>
             </div>
         </section>
 
