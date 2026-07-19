@@ -604,7 +604,7 @@ body::-webkit-scrollbar {
 /* ===== 合作客户 ===== */
 .clients-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 80px 40px;
     align-items: center;
     
@@ -621,12 +621,12 @@ body::-webkit-scrollbar {
     padding: 4px 0;
 }
         /* 每行第1个 → 左对齐 */
-.client-item:nth-child(6n+1) {
+.client-item:nth-child(5n+1) {
     justify-content: flex-start;
 }
 
 /* 每行第6个 → 右对齐 */
-.client-item:nth-child(6n) {
+.client-item:nth-child(5n) {
     justify-content: flex-end;
 }
 
