@@ -667,13 +667,24 @@ body::-webkit-scrollbar {
     box-sizing: border-box;
 }
         .contact-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
     gap: 60px !important;
     align-items: center !important;
+    justify-content: space-between !important;
     position: relative;
     z-index: 1;
     width: 100%;
+}
+        .contact-info {
+    flex: 1 1 40%;
+    min-width: 280px;
+}
+
+.contact-form {
+    flex: 1 1 40%;
+    min-width: 280px;
 }
         .contact-info h2 {
             font-size: clamp(2rem, 3.5vw, 2.8rem);
