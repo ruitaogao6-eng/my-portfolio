@@ -600,11 +600,12 @@ body::-webkit-scrollbar {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    min-width: 100%;           /* 新增：确保容器占满 */
 }
 
 .clients-image {
     width: 100%;
-    max-width: 800px;
+    max-width: 1600px;
     height: auto;
     display: block;
     object-fit: contain;
