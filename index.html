@@ -606,8 +606,8 @@ body::-webkit-scrollbar {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 80px 40px;
-    align-items: start;           /* 每列内容左对齐 */
-    justify-items: space-between; /* 列之间均匀分布，首列靠左，末列靠右 */
+    align-items: center;
+    
     max-width: 1800px;
     margin: 0 auto;
 }
@@ -615,10 +615,14 @@ body::-webkit-scrollbar {
 .client-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;    /* 左对齐 */
     width: 100%;
     height: 60px;              /* 固定高度，所有 logo 统一 */
     padding: 4px 0;
+}
+        /* 如果是最后一列，右对齐 */
+.client-item:nth-child(6n) {
+    justify-content: flex-end;      /* 每行第6个右对齐 */
 }
 
 .client-item img {
