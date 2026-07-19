@@ -617,8 +617,8 @@ body::-webkit-scrollbar {
     align-items: center;
     justify-content: center;       /* 默认全部居中 */
     width: 100%;
-    height: 60px;              /* 固定高度，所有 logo 统一 */
-    padding: 4px 0;
+    height: auto;              /* 高度自适应 */
+    padding: 8px 0;
 }
         /* 每行第1个 → 左对齐 */
 .client-item:nth-child(5n+1) {
@@ -632,9 +632,9 @@ body::-webkit-scrollbar {
 
 .client-item img {
     width: auto;
-    height: 50px;              /* 固定高度，所有logo统一 */
+    height: auto;
     max-width: 100%;
-    max-height: 60px;
+    max-height: none;          /* 去掉最大高度限制 */
     object-fit: contain;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
