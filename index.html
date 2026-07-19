@@ -593,55 +593,21 @@ body::-webkit-scrollbar {
     padding: 40px 0 60px 0;
 }
 
-.clients-section h3 {
-    text-align: center;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: var(--text-primary);
-}
-
-/* ===== 合作客户 ===== */
 .clients-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 80px 40px;
-    align-items: center;
-    
-    max-width: 1800px;
-    margin: 0 auto;
-}
-
-.client-item {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center;       /* 默认全部居中 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.clients-image {
     width: 100%;
-    height: auto;              /* 高度自适应 */
-    padding: 8px 0;
-}
-        /* 每行第1个 → 左对齐 */
-.client-item:nth-child(5n+1) {
-    justify-content: flex-start;
-}
-
-/* 每行第6个 → 右对齐 */
-.client-item:nth-child(5n) {
-    justify-content: flex-end;
-}
-
-.client-item img {
-    width: auto;
+    max-width: 1200px;
     height: auto;
-    max-width: 100%;
-    max-height: none;          /* 去掉最大高度限制 */
+    display: block;
     object-fit: contain;
-    filter: grayscale(100%);
-    transition: filter 0.3s ease;
-}
-
-.client-item:hover img {
-    filter: grayscale(0%);
 }
         .stat-item {
             background: var(--bg-card);
@@ -1159,34 +1125,15 @@ body::-webkit-scrollbar {
             </div>
         </div>
     <!-- ===== 合作客户 ===== -->
-<div class="clients-section reveal" style="padding-top:60px;margin-top:40px;">
-    <h3 style="text-align:center;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:12px;color:var(--text-primary);">合作客户</h3>
-    <p style="text-align:center;color:var(--text-secondary);font-size:1.1rem;margin-bottom:40px;">值得信赖的合作伙伴，下一个爆品由你打造...</p>
-    <div class="clients-grid">
-        <div class="client-item"><img src="https://i.postimg.cc/BvyR0CZS/1yk.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/xdqBhZQQ/1bj.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/fbF1NvWh/1mk.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/CKd9X20Y/1et.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/nL5NJ1Vf/1lh.png" loading="lazy" /></div>
-        
-        <div class="client-item"><img src="https://i.postimg.cc/1zTbQKRx/1jt.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/jj9BbhqR/1tsd.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/YSVTHx2M/1tj.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/hGhN6Ync/1gl.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/ZqgXSLY5/1zkydz.png" loading="lazy" /></div>
-        
-        <div class="client-item"><img src="https://i.postimg.cc/0NrhF4vs/1cjfz.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/s21bqLzR/1bk.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/25JgDxj8/1zhbt.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/d0XgY9sz/1hs.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/8C3xSbkS/1mk-1.png" loading="lazy" /></div>
-        
-        <div class="client-item"><img src="https://i.postimg.cc/zfM4rkzM/1gt.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/g051WKcc/1zh.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/VNT28Ffp/1hc.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/wBPnpkxB/1zx.png" loading="lazy" /></div>
-        <div class="client-item"><img src="https://i.postimg.cc/7LcjkNPx/1tur.png" loading="lazy" /></div>
-
+<div class="clients-section reveal">
+    <div class="container">
+        <div class="section-header">
+            <h2>合作客户</h2>
+            <p>值得信赖的合作伙伴</p>
+        </div>
+        <div class="clients-grid">
+            <img src="你的图片链接.png" alt="合作客户" class="clients-image" />
+        </div>
     </div>
 </div>
     </section>
