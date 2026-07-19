@@ -606,8 +606,8 @@ body::-webkit-scrollbar {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 80px 40px;
-    align-items: center;
-    justify-items: center;
+    align-items: start;           /* 每列内容左对齐 */
+    justify-items: space-between; /* 列之间均匀分布，首列靠左，末列靠右 */
     max-width: 1800px;
     margin: 0 auto;
 }
